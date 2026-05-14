@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Revenue Commander — MoreProfitUSA.com</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --orange: #ff4500;
+    --orange-dim: #cc3700;
+    --bg: #080808;
+    --surface: #111111;
+    --surface2: #161616;
+    --border: #1f1f1f;
+    --border2: #2a2a2a;
+    --text: #f0f0f0;
+    --muted: #666666;
+    --green: #4ade80;
+    --red: #ff6b6b;
+    --amber: #ffaa00;
+  }
+  body { background: var(--bg); color: var(--text); font-family: 'Rajdhani', sans-serif; min-height: 100vh; }
+  h1,h2,h3,.label { font-family: 'Oswald', sans-serif; }
+
+  /* TOP BAR */
+  #topbar {
+    background: #0d0d0d;
+    border-bottom: 1px solid var(--border);
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 56px;
+    position: sticky; top: 0; z-index: 100;
+  }
+  .logo-mark { width: 34px; height: 34px; background: var(--orange); border-radius: 6px; display:flex; align-items:center; justify-content:center; font-family:'Oswald'; font-weight:700; font-size:14px; color:#fff; flex-shrink:0; }
+  .logo-text { margin-left: 10px; }
+  .logo-text strong { display:block; font-family:'Oswald'; font-weight:700; font-size:15px; color:#fff; letter-spacing:1px; text-transform:uppercase; line-height:1; }
+  .logo-text span { font-size:10px; color:var(--muted); letter-spacing:2px; text-transform:uppercase; }
+  .logo-wrap { display:flex; align-items:center; }
+  .cta-top { background: var(--orange); border: none; border-radius: 6px; padding: 9px 18px; color: #fff; font-family: 'Oswald'; font-weight: 700; font-size: 12px; letter-spacing: 1px; cursor: pointer; text-transform: uppercase; transition: background .2s; }
+  .cta-top:hover { background: var(--orange-dim); }
+
+  /* NAV */
+  #nav {
+    background: #0d0d0d;
+    border-bottom: 1px solid #151515;
+    padding: 0 24px;
+    display: flex;
+    gap: 2px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  #nav::-webkit-scrollbar { display: none; }
+  .nav-btn {
+    background: none; border: none; border-bottom: 2px solid transparent;
+    padding: 13px 16px; color: var(--muted); font-family: 'Oswald'; font-weight: 600;
+    font-size: 12px; letter-spacing: 1px; cursor: pointer; text-transform: uppercase;
+    white-space: nowrap; transition: color .2s, border-color .2s;
+  }
+  .nav-btn:hover { color: #ccc; }
+  .nav-btn.active { color: var(--orange); border-bottom-color: var(--orange); }
+
+  /* CONTENT */
+  #content { padding: 36px 24px; max-width: 1080px; margin: 0 auto; }
+  .page { display: none; }
+  .page.active { display: block; }
+
+  /* CARDS */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px 24px;
+  }
+  .card-orange { border-color: var(--orange); background: #120800; }
+  .card-green  { border-color: var(--green);  background: #071209; }
+
+  /* GRIDS */
+  .grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 14px; }
+  .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; }
+  .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px; }
+  .grid-lead { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,320px); gap: 28px; align-items: start; }
+  @media(max-width:700px){ .grid-lead { grid-template-columns: 1fr; } }
+
+  /* TYPOGRAPHY HELPERS */
+  .eyebrow { font-family:'Oswald'; font-size:11px; color:var(--orange); letter-spacing:3px; text-transform:uppercase; margin-bottom:10px; }
+  .page-title { font-family:'Oswald'; font-size:38px; font-weight:700; color:#fff; text-transform:uppercase; line-height:1.1; margin-bottom:12px; }
+  .page-title span { color: var(--orange); }
+  .page-sub { font-size:14px; color:var(--muted); max-width:520px; line-height:1.6; }
+  .section-label { font-family:'Oswald'; font-size:13px; font-weight:700; color:#fff; text-transform:uppercase; letter-spacing:1px; margin-bottom:14px; }
+  .metric-label { font-family:'Oswald'; font-size:10px; color:var(--muted); letter-spacing:2px; text-transform:uppercase; margin-bottom:5px; }
+  .metric-big { font-family:'Oswald'; font-size:34px; font-weight:700; line-height:1; }
+  .metric-sub { font-size:12px; color:var(--muted); margin-top:7px; }
+
+  /* BADGE */
+  .badge { display:inline-block; font-family:'Oswald'; font-size:10px; font-weight:700; letter-spacing:1px; padding:3px 9px; border-radius:4px; }
+  .badge-red    { background:#2a0000; color:#ff6b6b; }
+  .badge-orange { background:#1f0900; color:var(--orange); }
+  .badge-amber  { background:#1f1400; color:var(--amber); }
+  .badge-green  { background:#071209; color:var(--green); }
+
+  /* DIVIDER */
+  .divider { display:flex; align-items:center; gap:14px; margin-bottom:20px; }
+  .divider-line { flex:1; height:1px; background:var(--border); }
+
+  /* SPACING */
+  .mt8  { margin-top:8px; }
+  .mt12 { margin-top:12px; }
+  .mt16 { margin-top:16px; }
+  .mt24 { margin-top:24px; }
+  .mt32 { margin-top:32px; }
+  .mb8  { margin-bottom:8px; }
+  .mb12 { margin-bottom:12px; }
+  .mb16 { margin-bottom:16px; }
+  .mb20 { margin-bottom:20px; }
+  .mb24 { margin-bottom:24px; }
+  .mb32 { margin-bottom:32px; }
+
+  /* FORM INPUTS */
+  .field-label { font-family:'Oswald'; font-size:11px; color:var(--muted); letter-spacing:2px; text-transform:uppercase; margin-bottom:6px; }
+  input[type=text], input[type=email], input[type=tel], select {
+    width:100%; background:#181818; border:1px solid var(--border2);
+    border-radius:6px; padding:10px 14px; color:#fff;
+    font-family:'Rajdhani'; font-size:14px; outline:none;
+    transition: border-color .2s;
+  }
+  input[type=text]:focus, input[type=email]:focus, input[type=tel]:focus, select:focus {
+    border-color: var(--orange);
+  }
+  select option { background: #181818; }
+
+  /* BUTTONS */
+  .btn-primary { background:var(--orange); border:none; border-radius:6px; padding:12px 24px; color:#fff; font-family:'Oswald'; font-weight:700; font-size:13px; letter-spacing:1px; cursor:pointer; text-transform:uppercase; transition:background .2s; }
+  .btn-primary:hover { background:var(--orange-dim); }
+  .btn-primary:disabled { background:#333; cursor:wait; }
+  .btn-ghost { background:#1a1a1a; border:1px solid var(--border2); border-radius:6px; padding:11px 20px; color:#ccc; font-family:'Oswald'; font-weight:600; font-size:12px; letter-spacing:1px; cursor:pointer; text-transform:uppercase; transition:background .2s; }
+  .btn-ghost:hover { background:#222; }
+  .btn-generate { background:var(--orange); border:none; border-radius:6px; padding:9px 18px; color:#fff; font-family:'Oswald'; font-weight:600; font-size:12px; letter-spacing:1px; cursor:pointer; text-transform:uppercase; transition:background .2s; }
+  .btn-generate:hover { background:var(--orange-dim); }
+  .btn-generate:disabled { background:#2a1000; color:var(--orange); cursor:wait; }
+
+  /* PACKAGE SELECTOR */
+  .pkg-card { border:1px solid var(--border); border-radius:8px; padding:12px 16px; cursor:pointer; transition:border-color .2s, background .2s; }
+  .pkg-card:hover { border-color: var(--border2); }
+  .pkg-card.selected { border-color:var(--orange); background:#120800; }
+  .pkg-name { font-family:'Oswald'; font-size:13px; font-weight:700; color:#fff; }
+  .pkg-card.selected .pkg-name { color:var(--orange); }
+  .pkg-price { font-size:11px; color:var(--muted); margin-top:2px; }
+
+  /* TABLE */
+  table { width:100%; border-collapse:collapse; }
+  th { font-family:'Oswald'; font-size:11px; color:var(--muted); text-align:left; padding:8px 12px; text-transform:uppercase; letter-spacing:1px; border-bottom:1px solid var(--border2); }
+  td { padding:11px 12px; font-size:13px; border-bottom:1px solid var(--border); }
+  tr.you-row td { background:#120800; }
+
+  /* BAR CHART */
+  .bar-wrap { display:flex; align-items:flex-end; gap:6px; height:80px; }
+  .bar-col { flex:1; display:flex; flex-direction:column; align-items:center; gap:4px; }
+  .bar { width:100%; border-radius:3px 3px 0 0; transition: height .5s; }
+  .bar-mo { font-family:'Oswald'; font-size:10px; color:var(--muted); }
+
+  /* CALL LOG ROW */
+  .call-row { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; padding:14px 0; border-bottom:1px solid var(--border); }
+  .call-row:last-child { border-bottom:none; }
+
+  /* REVIEW CARD */
+  .review-card { margin-bottom:12px; }
+  .review-response { background:#0a0a0a; border:1px solid var(--border); border-left:3px solid var(--orange); border-radius:6px; padding:10px 14px; margin-top:10px; }
+  .response-label { font-family:'Oswald'; font-size:10px; color:var(--orange); letter-spacing:1px; margin-bottom:5px; }
+  .response-text { font-size:12px; color:#aaa; line-height:1.6; }
+
+  /* GAP ROW */
+  .gap-row { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; margin-bottom:8px; }
+
+  /* SUCCESS STATE */
+  #success-state { display:none; text-align:center; padding:60px 20px; }
+
+  /* VERTICAL SELECTOR */
+  .vert-select { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:20px; }
+  .vert-btn { background:#181818; border:1px solid var(--border2); border-radius:6px; padding:8px 16px; color:var(--muted); font-family:'Oswald'; font-size:12px; font-weight:600; letter-spacing:1px; cursor:pointer; text-transform:uppercase; transition:all .2s; }
+  .vert-btn.active { background:#1f0900; border-color:var(--orange); color:var(--orange); }
+
+  /* MILESTONE ROW */
+  .milestone-row { display:flex; gap:12px; margin-bottom:8px; }
+  .milestone-day { font-family:'Oswald'; font-size:11px; font-weight:700; color:var(--orange); letter-spacing:1px; padding:8px 12px; border-left:3px solid var(--orange); background:var(--surface); border-radius:0 6px 6px 0; min-width:80px; display:flex; align-items:center; justify-content:center; white-space:nowrap; }
+  .milestone-text { background:var(--surface); border:1px solid var(--border); border-radius:6px; padding:10px 16px; flex:1; font-size:13px; color:#ccc; display:flex; align-items:center; }
+  .milestone-text::before { content:"✓ "; color:var(--green); margin-right:8px; }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div id="topbar">
+  <div class="logo-wrap">
+    <div class="logo-mark">RC</div>
+    <div class="logo-text">
+      <strong>Revenue Commander</strong>
+      <span>MoreProfitUSA.com</span>
+    </div>
+  </div>
+  <button class="cta-top" onclick="showPage('leads')">Get Started →</button>
+</div>
+
+<!-- NAV -->
+<div id="nav">
+  <button class="nav-btn active" data-page="dashboard" onclick="showPage('dashboard')">📊 Revenue Dashboard</button>
+  <button class="nav-btn" data-page="gap" onclick="showPage('gap')">🎯 Competitive Gap</button>
+  <button class="nav-btn" data-page="results" onclick="showPage('results')">📈 Client Results</button>
+  <button class="nav-btn" data-page="reviews" onclick="showPage('reviews')">⭐ AI Reviews</button>
+  <button class="nav-btn" data-page="calls" onclick="showPage('calls')">📞 AI Call System</button>
+</div>
+
+<!-- CONTENT -->
+<div id="content">
+
+<!-- ═══════════════════════════════════════════
+     PAGE 1: DASHBOARD
+═══════════════════════════════════════════ -->
+<div class="page active" id="page-dashboard">
+  <div class="mb32">
+    <div class="eyebrow">Revenue Commander · Client Intelligence Report</div>
+    <h1 class="page-title">Your Business Is Leaving<br><span>$127,400 on the Table</span><br>Every Year</h1>
+    <p class="page-sub">This dashboard shows the exact revenue gaps we identified in your market. Each number is a real opportunity — and a competitor already capturing it.</p>
+  </div>
+
+  <!-- Vertical selector -->
+  <div class="vert-select mb24" id="dash-verts">
+    <button class="vert-btn active" onclick="setDashVertical(this,'hvac')">🔥 HVAC</button>
+    <button class="vert-btn" onclick="setDashVertical(this,'plumber')">🔧 Plumber</button>
+    <button class="vert-btn" onclick="setDashVertical(this,'electrician')">⚡ Electrician</button>
+  </div>
+
+  <!-- Metric cards -->
+  <div class="grid-4 mb32" id="dash-metrics">
+    <div class="card" style="border-top:3px solid var(--orange)">
+      <div class="metric-label">Revenue at Risk (Missed Calls)</div>
+      <div class="metric-big" style="color:var(--orange)" id="m1">$127,400</div>
+      <div class="metric-sub" id="m1sub">Per year uncaptured</div>
+    </div>
+    <div class="card" style="border-top:3px solid var(--amber)">
+      <div class="metric-label">Google Ranking Gap</div>
+      <div class="metric-big" style="color:var(--amber)" id="m2">#11</div>
+      <div class="metric-sub" id="m2sub">vs top competitor at #3</div>
+    </div>
+    <div class="card" style="border-top:3px solid var(--red)">
+      <div class="metric-label">Review Score Deficit</div>
+      <div class="metric-big" style="color:var(--red)" id="m3">−1.2 ★</div>
+      <div class="metric-sub" id="m3sub">You: 3.8 · Market Leader: 5.0</div>
+    </div>
+    <div class="card" style="border-top:3px solid var(--orange)">
+      <div class="metric-label">Unanswered Calls / Mo</div>
+      <div class="metric-big" style="color:var(--orange)" id="m4">47</div>
+      <div class="metric-sub" id="m4sub">Avg $89 revenue per call</div>
+    </div>
+  </div>
+
+  <!-- Services -->
+  <div class="divider mb20"><div class="section-label" style="margin:0">The Fix — Revenue Commander System</div><div class="divider-line"></div></div>
+  <div class="grid-4 mb32">
+    <div class="card" style="display:flex;flex-direction:column">
+      <div style="font-family:'Oswald';font-size:13px;font-weight:700;color:#fff;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px">Professional Website</div>
+      <div style="font-family:'Oswald';font-size:24px;font-weight:700;color:var(--orange);margin-bottom:2px">$1,000</div>
+      <div style="font-size:11px;color:var(--muted);margin-bottom:14px">Live in 48 hours</div>
+      <div style="flex:1">
+        <div style="font-size:12px;color:#888;padding:5px 0;border-bottom:1px solid var(--border)"><span style="color:var(--orange);margin-right:8px">✓</span>Mobile optimized</div>
+        <div style="font-size:12px;color:#888;padding:5px 0;border-bottom:1px solid var(--border)"><span style="color:var(--orange);margin-right:8px">✓</span>Google Maps embed</div>
+        <div style="font-size:12px;color:#888;padding:5px 0;border-bottom:1px solid var(--border)"><span style="color:var(--orange);margin-right:8px">✓</span>Lead capture form</div>
+        <div style="font-size:12px;color:#888;padding:5px 0;border-bottom:1px solid var(--border)"><span style="color:var(--orange);margin-right:8px">✓</span>SEO foundation</div>
+        <div style="font-size:12px;color:#888;padding:5px 0"><span style="color:var(--orange);margin-right:8px">✓</span>Call-to-action pages</div>
+      </div>
+    </div>
+    <div class="card" style="display:flex;flex-direction:column">
+      <div style="font-family:'Oswald';font-size:13px;font-weight:700;color:#fff;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px">Revenue Dashboard</div>
+      <div style="font-family:'Oswald';font-size:24px;font-weight:700;color:var(--orange);margin-bottom:2px">$297/mo</div>
+      <div style="font-size:11px;color:var(--muted);margin-bottom:14px">Activated week 1</div>
+      <div style="flex:1">
+        <div style="font-size:12px;color:#888;padding:5px 0;border-bottom:1px solid var(--border)"><span style="color:var(--orange);margin-right:8px">✓</span>Live review monitoring</div>
+        <div style="font-size:12px;color:#888;padding:5px 0;border-bottom:1px solid var(--border)"><span style="color:var(--orange);margin-right:8px">✓</span>Missed call tracking</div>
+        <div style="font-size:12px;color:#888;padding:5px 0;border-bottom:1px solid var(--border)"><span style="color:var(--orange);margin-right:8px">✓</span>Competitor gap reports</div>
+        <div style="font-size:12px;color:#888;padding:5px 0;border-bottom:1px solid var(--border)"><span style="color:var(--orange);margin-right:8px">✓</span>Monthly ROI report</div>
+        <div style="font-size:12px;color:#888;padding:5px 0"><span style="color:var(--orange);margin-right:8px">✓</span>Priority support</div>
+      </div>
+    </div>
+    <div class="card" style="display:flex;flex-direction:column">
+      <div style="font-family:'Oswald';font-size:13px;font-weight:700;color:#fff;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px">AI Review System</div>
+      <div style="font-family:'Oswald';font-size:24px;font-weight:700;color:var(--orange);margin-bottom:2px">$197/mo</div>
+      <div style="font-size:11px;color:var(--muted);margin-bottom:14px">Running in 24 hrs</div>
+      <div style="flex:1">
+        <div style="font-size:12px;color:#888;padding:5px 0;border-bottom:1px solid var(--border)"><span style="color:var(--orange);margin-right:8px">✓</span>Auto-respond to reviews</div>
+        <div style="font-size:12px;color:#888;padding:5px 0;border-bottom:1px solid var(--border)"><span style="color:var(--orange);margin-right:8px">✓</span>5-star request texts</div>
+        <div style="font-size:12px;color:#888;padding:5px 0;border-bottom:1px solid var(--border)"><span style="color:var(--orange);margin-right:8px">✓</span>Negative review alerts</div>
+        <div style="font-size:12px;color:#888;padding:5px 0;border-bottom:1px solid var(--border)"><span style="color:var(--orange);margin-right:8px">✓</span>Response templates</div>
+        <div style="font-size:12px;color:#888;padding:5px 0"><span style="color:var(--orange);margin-right:8px">✓</span>Monthly audit</div>
+      </div>
+    </div>
+    <div class="card" style="display:flex;flex-direction:column">
+      <div style="font-family:'Oswald';font-size:13px;font-weight:700;color:#fff;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px">AI Call Assistant</div>
+      <div style="font-family:'Oswald';font-size:24px;font-weight:700;color:var(--orange);margin-bottom:2px">$247/mo</div>
+      <div style="font-size:11px;color:var(--muted);margin-bottom:14px">Live in 48 hrs</div>
+      <div style="flex:1">
+        <div style="font-size:12px;color:#888;padding:5px 0;border-bottom:1px solid var(--border)"><span style="color:var(--orange);margin-right:8px">✓</span>24/7 call answering</div>
+        <div style="font-size:12px;color:#888;padding:5px 0;border-bottom:1px solid var(--border)"><span style="color:var(--orange);margin-right:8px">✓</span>Lead qualification</div>
+        <div style="font-size:12px;color:#888;padding:5px 0;border-bottom:1px solid var(--border)"><span style="color:var(--orange);margin-right:8px">✓</span>Appointment booking</div>
+        <div style="font-size:12px;color:#888;padding:5px 0;border-bottom:1px solid var(--border)"><span style="color:var(--orange);margin-right:8px">✓</span>Call transcripts</div>
+        <div style="font-size:12px;color:#888;padding:5px 0"><span style="color:var(--orange);margin-right:8px">✓</span>CRM sync</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="card card-orange" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px">
+    <div>
+      <div style="font-family:'Oswald';font-size:22px;font-weight:700;color:#fff;text-transform:uppercase">Ready to Stop the Bleed?</div>
+      <div style="font-size:14px;color:#888;margin-top:4px">We deploy the full Revenue Commander system in under 1 week.</div>
+    </div>
+    <div style="display:flex;gap:12px;flex-wrap:wrap">
+      <button class="btn-ghost" onclick="showPage('gap')">See Gap Report →</button>
+      <button class="btn-primary" onclick="showPage('leads')">Get Started →</button>
+    </div>
+  </div>
+</div><!-- /dashboard -->
+
+
+<!-- ═══════════════════════════════════════════
+     PAGE 2: COMPETITIVE GAP
+═══════════════════════════════════════════ -->
+<div class="page" id="page-gap">
+  <div class="mb32">
+    <div class="eyebrow">Competitive Intelligence</div>
+    <h1 class="page-title">Competitive Gap <span>Report</span></h1>
+    <p class="page-sub">See exactly where your competitors are beating you — and the dollar value of each gap.</p>
+  </div>
+
+  <!-- Input row -->
+  <div class="card mb28" style="display:flex;gap:14px;align-items:flex-end;flex-wrap:wrap">
+    <div style="flex:1;min-width:180px">
+      <div class="field-label">Business Name</div>
+      <input type="text" id="gap-biz" placeholder="e.g. Superior HVAC Services" />
+    </div>
+    <div style="flex:1;min-width:150px">
+      <div class="field-label">City / Market</div>
+      <input type="text" id="gap-city" placeholder="e.g. Oklahoma City, OK" />
+    </div>
+    <div style="min-width:140px">
+      <div class="field-label">Vertical</div>
+      <select id="gap-vert" onchange="updateGapData()">
+        <option value="hvac">HVAC</option>
+        <option value="plumber">Plumber</option>
+        <option value="electrician">Electrician</option>
+      </select>
+    </div>
+    <button class="btn-primary" onclick="runGapReport()" style="white-space:nowrap">Run Report →</button>
+  </div>
+
+  <div id="gap-results">
+    <!-- Header -->
+    <div class="card card-orange mb20" style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:14px">
+      <div>
+        <div style="font-size:13px;color:var(--muted)">Report for:</div>
+        <div style="font-family:'Oswald';font-size:22px;font-weight:700;color:#fff" id="gr-biz-name">Superior HVAC Services</div>
+        <div style="font-size:13px;color:var(--muted)" id="gr-city-name">Oklahoma City, OK</div>
+      </div>
+      <div style="text-align:right">
+        <div class="metric-label">Total Revenue at Risk</div>
+        <div class="metric-big" style="color:var(--orange)" id="gr-total">$127,400</div>
+        <div style="font-size:11px;color:var(--muted)">per year</div>
+      </div>
+    </div>
+
+    <!-- Gap rows -->
+    <div class="section-label mb16">Revenue Gap Breakdown</div>
+    <div id="gap-rows" class="mb28"></div>
+
+    <!-- Comparison table -->
+    <div class="section-label mb16">Market Comparison</div>
+    <div class="card mb28" style="overflow-x:auto">
+      <table id="gap-table"></table>
+    </div>
+
+    <div class="card card-orange" style="text-align:center;padding:32px">
+      <div style="font-family:'Oswald';font-size:20px;font-weight:700;color:#fff;text-transform:uppercase;margin-bottom:8px">Close These Gaps in 7 Days</div>
+      <div style="font-size:14px;color:#888;margin-bottom:20px">The Revenue Commander system addresses every gap in this report.</div>
+      <button class="btn-primary" onclick="showPage('leads')">Start My Revenue Commander →</button>
+    </div>
+  </div>
+</div><!-- /gap -->
+
+
+<!-- ═══════════════════════════════════════════
+     PAGE 3: CLIENT RESULTS
+═══════════════════════════════════════════ -->
+<div class="page" id="page-results">
+  <div class="mb32">
+    <div class="eyebrow">Live Client Dashboard</div>
+    <h1 class="page-title">What <span>6 Months</span> Looks Like</h1>
+    <p class="page-sub">Real results from a Revenue Commander client — tracked live since Day 1.</p>
+  </div>
+
+  <!-- Vertical toggle -->
+  <div class="vert-select mb24">
+    <button class="vert-btn active" onclick="setResultsVertical(this,'hvac')">🔥 HVAC Client</button>
+    <button class="vert-btn" onclick="setResultsVertical(this,'plumber')">🔧 Plumber Client</button>
+    <button class="vert-btn" onclick="setResultsVertical(this,'electrician')">⚡ Electrician Client</button>
+  </div>
+
+  <!-- Client header -->
+  <div class="card card-orange mb20" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px">
+    <div>
+      <div style="font-family:'Oswald';font-size:20px;font-weight:700;color:#fff" id="res-client-name">Superior HVAC Services</div>
+      <div style="font-size:13px;color:var(--muted)" id="res-client-loc">Oklahoma City, OK · Revenue Commander Client since Jan 2026</div>
+    </div>
+    <div style="display:flex;gap:28px">
+      <div style="text-align:center">
+        <div class="metric-big" style="color:var(--orange)" id="res-added">$8,400</div>
+        <div class="metric-label mt4">ADDED/MO</div>
+      </div>
+      <div style="text-align:center">
+        <div class="metric-big" style="color:var(--green)" id="res-roi">312%</div>
+        <div class="metric-label mt4">ROI</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bar charts -->
+  <div class="grid-3 mb32" id="res-charts"></div>
+
+  <!-- Milestones -->
+  <div class="section-label mb16">Timeline of Wins</div>
+  <div class="mb32" id="res-milestones"></div>
+
+  <!-- Testimonials -->
+  <div class="section-label mb16">More Client Results</div>
+  <div class="grid-3 mb32" id="res-testimonials"></div>
+
+  <div class="card card-orange" style="text-align:center;padding:32px">
+    <div style="font-family:'Oswald';font-size:20px;font-weight:700;color:#fff;text-transform:uppercase;margin-bottom:8px">Your Dashboard Starts at Zero — Then Compounds</div>
+    <div style="font-size:14px;color:#888;margin-bottom:20px">Every client above started exactly where you are. We build the system, it runs itself.</div>
+    <button class="btn-primary" onclick="showPage('leads')">Start My Dashboard →</button>
+  </div>
+</div><!-- /results -->
+
+
+<!-- ═══════════════════════════════════════════
+     PAGE 4: AI REVIEWS
+═══════════════════════════════════════════ -->
+<div class="page" id="page-reviews">
+  <div class="mb32">
+    <div class="eyebrow">AI Review System</div>
+    <h1 class="page-title">Respond to Every Review<br><span>Automatically</span></h1>
+    <p class="page-sub">The AI Review Agent monitors your Google reviews 24/7, drafts brand-appropriate responses, and posts them — or queues them for your approval.</p>
+  </div>
+
+  <div class="grid-4 mb32">
+    <div class="card"><div class="metric-label">Reviews This Month</div><div class="metric-big" style="color:var(--orange)">23</div></div>
+    <div class="card"><div class="metric-label">Auto-Responded</div><div class="metric-big" style="color:var(--orange)">21</div></div>
+    <div class="card"><div class="metric-label">Avg Response Time</div><div class="metric-big" style="color:var(--orange)">4 min</div></div>
+    <div class="card"><div class="metric-label">Rating Change</div><div class="metric-big" style="color:var(--green)">+0.6 ★</div></div>
+  </div>
+
+  <div class="section-label mb16">Live Review Feed — Click "Generate Response" to See AI in Action</div>
+  <div id="review-feed"></div>
+
+  <div class="card card-orange mt24">
+    <div style="font-family:'Oswald';font-size:18px;font-weight:700;color:#fff;text-transform:uppercase;margin-bottom:6px">$197/mo — Fully Managed</div>
+    <div style="font-size:13px;color:#888;margin-bottom:16px">No login required. We monitor your reviews, post AI-crafted responses, and alert you if anything needs human attention. Your rating goes up. Your effort stays zero.</div>
+    <button class="btn-primary" onclick="showPage('leads')">Activate AI Reviews →</button>
+  </div>
+</div><!-- /reviews -->
+
+
+<!-- ═══════════════════════════════════════════
+     PAGE 5: AI CALL SYSTEM
+═══════════════════════════════════════════ -->
+<div class="page" id="page-calls">
+  <div class="mb32">
+    <div class="eyebrow">AI Call System</div>
+    <h1 class="page-title">Answer Every Call.<br><span>Book Every Job.</span><br>While You Sleep.</h1>
+    <p class="page-sub">The AI Call Assistant answers calls instantly, qualifies the lead, books appointments, and syncs to your calendar — 24 hours a day, 7 days a week.</p>
+  </div>
+
+  <div class="grid-4 mb32">
+    <div class="card" style="border-top:2px solid var(--orange)"><div class="metric-label">Calls Handled (30d)</div><div class="metric-big" style="color:var(--orange)">147</div></div>
+    <div class="card" style="border-top:2px solid var(--orange)"><div class="metric-label">Appointments Booked</div><div class="metric-big" style="color:var(--orange)">94</div></div>
+    <div class="card" style="border-top:2px solid var(--orange)"><div class="metric-label">After-Hours Saves</div><div class="metric-big" style="color:var(--orange)">31</div></div>
+    <div class="card" style="border-top:2px solid var(--green)"><div class="metric-label">Revenue Captured</div><div class="metric-big" style="color:var(--green)">$18,400</div></div>
+  </div>
+
+  <!-- How it works -->
+  <div class="section-label mb16">How It Works</div>
+  <div class="grid-4 mb32">
+    <div class="card">
+      <div style="font-family:'Oswald';font-size:40px;font-weight:700;color:#1c1c1c;margin-bottom:6px">01</div>
+      <div style="font-family:'Oswald';font-size:14px;font-weight:700;color:#fff;margin-bottom:6px">Customer Calls</div>
+      <div style="font-size:12px;color:var(--muted);line-height:1.5">AI answers instantly — no hold music, no voicemail. Sounds like your best receptionist.</div>
+    </div>
+    <div class="card">
+      <div style="font-family:'Oswald';font-size:40px;font-weight:700;color:#1c1c1c;margin-bottom:6px">02</div>
+      <div style="font-family:'Oswald';font-size:14px;font-weight:700;color:#fff;margin-bottom:6px">Qualifies Lead</div>
+      <div style="font-size:12px;color:var(--muted);line-height:1.5">Asks what service they need, confirms they're in your area, gets their contact info.</div>
+    </div>
+    <div class="card">
+      <div style="font-family:'Oswald';font-size:40px;font-weight:700;color:#1c1c1c;margin-bottom:6px">03</div>
+      <div style="font-family:'Oswald';font-size:14px;font-weight:700;color:#fff;margin-bottom:6px">Books Appointment</div>
+      <div style="font-size:12px;color:var(--muted);line-height:1.5">Offers available times from your calendar and confirms the booking on the spot.</div>
+    </div>
+    <div class="card">
+      <div style="font-family:'Oswald';font-size:40px;font-weight:700;color:#1c1c1c;margin-bottom:6px">04</div>
+      <div style="font-family:'Oswald';font-size:14px;font-weight:700;color:#fff;margin-bottom:6px">Notifies You</div>
+      <div style="font-size:12px;color:var(--muted);line-height:1.5">You get a text with the call summary, customer info, and booked appointment — instantly.</div>
+    </div>
+  </div>
+
+  <!-- Call log -->
+  <div class="section-label mb16">Recent Calls — Live Log</div>
+  <div class="card mb24" id="call-log"></div>
+
+  <div class="card card-orange">
+    <div style="font-family:'Oswald';font-size:18px;font-weight:700;color:#fff;text-transform:uppercase;margin-bottom:6px">$247/mo — Pays for Itself with One Saved Call</div>
+    <div style="font-size:13px;color:#888;margin-bottom:16px">One recovered after-hours job typically covers 3–6 months of service. The average HVAC call is worth $280+. This system never sleeps.</div>
+    <button class="btn-primary" onclick="showPage('leads')">Activate AI Call System →</button>
+  </div>
+</div><!-- /calls -->
+
+
+<!-- ═══════════════════════════════════════════
+     PAGE 6: LEAD CAPTURE
+═══════════════════════════════════════════ -->
+<div class="page" id="page-leads">
+  <div class="mb32">
+    <div class="eyebrow">Get Started</div>
+    <h1 class="page-title">Let's Close Your <span>Revenue Gaps</span></h1>
+    <p class="page-sub">Fill this out and we'll reach out same day with your competitive gap report and a full walkthrough of what we'd build for your market.</p>
+  </div>
+
+  <div id="lead-form-wrap">
+    <div class="grid-lead">
+      <!-- Form -->
+      <div class="card">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px">
+          <div>
+            <div class="field-label">Your Name *</div>
+            <input type="text" id="f-name" placeholder="Mike Johnson" />
+          </div>
+          <div>
+            <div class="field-label">Business Name *</div>
+            <input type="text" id="f-biz" placeholder="Superior HVAC" />
+          </div>
+          <div>
+            <div class="field-label">Phone Number *</div>
+            <input type="tel" id="f-phone" placeholder="(405) 555-0100" />
+          </div>
+          <div>
+            <div class="field-label">Email</div>
+            <input type="email" id="f-email" placeholder="mike@superiorrhvac.com" />
+          </div>
+          <div style="grid-column:span 2">
+            <div class="field-label">City / Market</div>
+            <input type="text" id="f-city" placeholder="Oklahoma City, OK" />
+          </div>
+        </div>
+
+        <div class="field-label mb12">I'm Interested In</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px" id="pkg-grid">
+          <div class="pkg-card" onclick="selectPkg(this,'website')">
+            <div class="pkg-name">Website Only</div>
+            <div class="pkg-price">$1,000 · Live in 48 hrs</div>
+          </div>
+          <div class="pkg-card" onclick="selectPkg(this,'commander')">
+            <div class="pkg-name">Full Revenue Commander</div>
+            <div class="pkg-price">$1,000 + $741/mo</div>
+          </div>
+          <div class="pkg-card" onclick="selectPkg(this,'reviews')">
+            <div class="pkg-name">AI Reviews Only</div>
+            <div class="pkg-price">$197/mo</div>
+          </div>
+          <div class="pkg-card" onclick="selectPkg(this,'calls')">
+            <div class="pkg-name">AI Call System Only</div>
+            <div class="pkg-price">$247/mo</div>
+          </div>
+          <div class="pkg-card" style="grid-column:span 2" onclick="selectPkg(this,'consult')">
+            <div class="pkg-name">Free 15-Min Consultation</div>
+            <div class="pkg-price">Zero commitment · Just a conversation</div>
+          </div>
+        </div>
+
+        <button class="btn-primary" id="submit-btn" onclick="submitLead()" style="width:100%;padding:14px;font-size:14px;letter-spacing:2px">
+          Send My Info — We'll Reach Out Today →
+        </button>
+        <div style="font-size:11px;color:#444;text-align:center;margin-top:10px">No spam. No pressure. Just your competitive report and a 15-min call.</div>
+      </div>
+
+      <!-- Side info -->
+      <div>
+        <div class="card mb16">
+          <div class="section-label mb12">What You Get Same Day</div>
+          <div style="font-size:13px;color:#888;padding:8px 0;border-bottom:1px solid var(--border)"><span style="color:var(--orange);margin-right:10px">→</span>Confirmation text from us</div>
+          <div style="font-size:13px;color:#888;padding:8px 0;border-bottom:1px solid var(--border)"><span style="color:var(--orange);margin-right:10px">→</span>Your competitive gap report pulled</div>
+          <div style="font-size:13px;color:#888;padding:8px 0;border-bottom:1px solid var(--border)"><span style="color:var(--orange);margin-right:10px">→</span>Revenue opportunity breakdown</div>
+          <div style="font-size:13px;color:#888;padding:8px 0"><span style="color:var(--orange);margin-right:10px">→</span>15-min walkthrough scheduled</div>
+        </div>
+        <div class="card card-green">
+          <div style="font-family:'Oswald';font-size:13px;font-weight:700;color:var(--green);text-transform:uppercase;margin-bottom:8px">Zero Risk</div>
+          <div style="font-size:12px;color:#666;line-height:1.6">The consultation is free. The website comes with a 30-day satisfaction guarantee. If you're not happy, we fix it or refund it.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Success state -->
+  <div id="success-state">
+    <div style="font-size:64px;margin-bottom:20px">✅</div>
+    <div style="font-family:'Oswald';font-size:32px;font-weight:700;color:#fff;text-transform:uppercase;margin-bottom:12px">You're In the System</div>
+    <div style="font-size:16px;color:#888;max-width:400px;margin:0 auto 32px;line-height:1.6">We'll reach out within 24 hours — usually same day. Get ready for your Revenue Commander walkthrough.</div>
+    <div class="card" style="display:inline-block;text-align:left;min-width:280px">
+      <div class="section-label mb12">What Happens Next</div>
+      <div style="font-size:13px;color:#888;padding:6px 0;border-bottom:1px solid var(--border)"><span style="color:var(--orange);margin-right:10px">1.</span>You get a confirmation text</div>
+      <div style="font-size:13px;color:#888;padding:6px 0;border-bottom:1px solid var(--border)"><span style="color:var(--orange);margin-right:10px">2.</span>We pull your competitive gap report</div>
+      <div style="font-size:13px;color:#888;padding:6px 0;border-bottom:1px solid var(--border)"><span style="color:var(--orange);margin-right:10px">3.</span>We schedule your 15-min walkthrough</div>
+      <div style="font-size:13px;color:#888;padding:6px 0"><span style="color:var(--orange);margin-right:10px">4.</span>You decide — zero pressure</div>
+    </div>
+  </div>
+</div><!-- /leads -->
+
+</div><!-- /content -->
+
+<script>
+// ─── SHEET URL ───────────────────────────────────────────────
+// STEP: After setting up Google Apps Script, paste your Web App URL here:
+const SHEET_URL = "YOUR_GOOGLE_APPS_SCRIPT_URL_HERE";
+
+// ─── NAV ─────────────────────────────────────────────────────
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  const btn = document.querySelector('[data-page="' + id + '"]');
+  if (btn) btn.classList.add('active');
+  window.scrollTo(0,0);
+}
+
+// ─── VERTICAL DATA ───────────────────────────────────────────
+const VERT = {
+  hvac: {
+    metrics: ["$127,400","#11","−1.2 ★","47"],
+    metricSubs: ["Per year uncaptured","vs top competitor at #3","You: 3.8 · Market Leader: 5.0","Avg $89 revenue per call"],
+    total: "$127,400",
+    gaps: [
+      {area:"Review Volume",   you:"41 reviews",    market:"312 reviews",   impact:"$43,200/yr", urgency:"HIGH"},
+      {area:"Google Ranking",  you:"Position #14",  market:"Position #2",   impact:"$61,000/yr", urgency:"CRITICAL"},
+      {area:"Missed Calls",    you:"40% missed",    market:"0% missed",     impact:"$18,700/yr", urgency:"HIGH"},
+      {area:"Website Quality", you:"Outdated",      market:"Professional",  impact:"$4,500/yr",  urgency:"MEDIUM"},
+    ],
+    competitors:[
+      {name:"OKC Climate Control",   reviews:312, rating:"4.8", website:"Yes", rank:2,  calls:"Answered 24/7", you:false},
+      {name:"Comfort King HVAC",     reviews:189, rating:"4.6", website:"Yes", rank:3,  calls:"Answered 24/7", you:false},
+      {name:"Your Business",         reviews:41,  rating:"3.8", website:"Outdated", rank:14, calls:"Missed 40%", you:true},
+      {name:"Aire Serv",             reviews:97,  rating:"4.4", website:"Yes", rank:6,  calls:"Answered",      you:false},
+    ],
+    client:{name:"Superior HVAC Services", loc:"Oklahoma City, OK · Revenue Commander Client since Jan 2026", added:"$8,400", roi:"312%"},
+    milestones:[
+      {day:"Day 2",    text:"New website live at SuperiorHVACOKC.com"},
+      {day:"Week 1",   text:"AI review request system launched — 6 new 5-star reviews"},
+      {day:"Week 1",   text:"AI call assistant activated — 0 missed calls since"},
+      {day:"Month 1",  text:"Google ranking jumped from #14 to #7"},
+      {day:"Month 2",  text:"First month with 20+ inbound leads from website"},
+      {day:"Month 3",  text:"Google ranking hit #3 — now in the Local Pack"},
+      {day:"Month 6",  text:"94 total reviews, 4.7 rating, $8,400 avg added revenue/mo"},
+    ],
+    charts:[
+      {label:"Monthly Leads",   values:[4,7,11,18,24,31], color:"#ff4500"},
+      {label:"Google Reviews",  values:[38,42,51,63,78,94], color:"#ffaa00"},
+      {label:"Call Answer Rate %", values:[67,71,68,74,79,85], color:"#4ade80"},
+    ],
+  },
+  plumber: {
+    metrics:["$98,200","#9","−0.9 ★","38"],
+    metricSubs:["Per year uncaptured","vs top competitor at #2","You: 3.9 · Market Leader: 4.8","Avg $120 revenue per call"],
+    total:"$98,200",
+    gaps:[
+      {area:"Review Volume",   you:"29 reviews",    market:"247 reviews",   impact:"$31,500/yr", urgency:"HIGH"},
+      {area:"Google Ranking",  you:"Position #9",   market:"Position #2",   impact:"$47,000/yr", urgency:"CRITICAL"},
+      {area:"Missed Calls",    you:"35% missed",    market:"0% missed",     impact:"$15,200/yr", urgency:"HIGH"},
+      {area:"Website Quality", you:"None / Basic",  market:"Professional",  impact:"$4,500/yr",  urgency:"MEDIUM"},
+    ],
+    competitors:[
+      {name:"Roto-Rooter OKC",       reviews:247, rating:"4.8", website:"Yes", rank:2,  calls:"Answered 24/7", you:false},
+      {name:"Benjamin Franklin",     reviews:184, rating:"4.6", website:"Yes", rank:4,  calls:"Answered 24/7", you:false},
+      {name:"Your Business",         reviews:29,  rating:"3.9", website:"Basic", rank:9, calls:"Missed 35%",  you:true},
+      {name:"Mr. Rooter Plumbing",   reviews:112, rating:"4.5", website:"Yes", rank:5,  calls:"Answered",     you:false},
+    ],
+    client:{name:"Premier Plumbing Solutions", loc:"Tulsa, OK · Revenue Commander Client since Feb 2026", added:"$6,200", roi:"276%"},
+    milestones:[
+      {day:"Day 2",   text:"New website live at PremierPlumbingTulsa.com"},
+      {day:"Week 1",  text:"AI review texts launched — 4 new 5-star reviews in 7 days"},
+      {day:"Week 2",  text:"AI call assistant activated — captured 8 after-hours calls"},
+      {day:"Month 1", text:"Google ranking moved from #9 to #5"},
+      {day:"Month 3", text:"Google ranking hit #2 — first time in Local Pack"},
+      {day:"Month 6", text:"71 total reviews, 4.6 rating, $6,200 avg added revenue/mo"},
+    ],
+    charts:[
+      {label:"Monthly Leads",   values:[3,5,9,14,19,26], color:"#ff4500"},
+      {label:"Google Reviews",  values:[29,33,40,51,62,71], color:"#ffaa00"},
+      {label:"Call Answer Rate %", values:[65,69,72,77,81,86], color:"#4ade80"},
+    ],
+  },
+  electrician: {
+    metrics:["$84,600","#12","−1.4 ★","33"],
+    metricSubs:["Per year uncaptured","vs top competitor at #3","You: 3.6 · Market Leader: 5.0","Avg $95 revenue per call"],
+    total:"$84,600",
+    gaps:[
+      {area:"Review Volume",   you:"22 reviews",    market:"198 reviews",   impact:"$27,400/yr", urgency:"HIGH"},
+      {area:"Google Ranking",  you:"Position #12",  market:"Position #3",   impact:"$39,000/yr", urgency:"CRITICAL"},
+      {area:"Missed Calls",    you:"42% missed",    market:"0% missed",     impact:"$13,700/yr", urgency:"HIGH"},
+      {area:"Website Quality", you:"None",          market:"Professional",  impact:"$4,500/yr",  urgency:"MEDIUM"},
+    ],
+    competitors:[
+      {name:"Mister Sparky Electric", reviews:198, rating:"4.9", website:"Yes", rank:3,  calls:"Answered 24/7", you:false},
+      {name:"Paschal Air Electric",   reviews:143, rating:"4.7", website:"Yes", rank:4,  calls:"Answered 24/7", you:false},
+      {name:"Your Business",          reviews:22,  rating:"3.6", website:"None", rank:12, calls:"Missed 42%",  you:true},
+      {name:"Powell Electric",        reviews:87,  rating:"4.5", website:"Yes", rank:6,  calls:"Answered",     you:false},
+    ],
+    client:{name:"Lone Star Electric", loc:"Dallas, TX · Revenue Commander Client since Mar 2026", added:"$5,100", roi:"248%"},
+    milestones:[
+      {day:"Day 2",   text:"New website live at LoneStarElectricDallas.com"},
+      {day:"Week 1",  text:"AI review system launched — 5 new 5-star reviews"},
+      {day:"Week 1",  text:"AI call assistant activated — first 3 after-hours jobs booked"},
+      {day:"Month 1", text:"Google ranking jumped from #12 to #6"},
+      {day:"Month 2", text:"12 new reviews — now at 4.4 stars"},
+      {day:"Month 4", text:"Google ranking hit #3 — Local Pack entry"},
+      {day:"Month 6", text:"59 total reviews, 4.6 rating, $5,100 avg added revenue/mo"},
+    ],
+    charts:[
+      {label:"Monthly Leads",   values:[2,4,7,12,16,22], color:"#ff4500"},
+      {label:"Google Reviews",  values:[22,27,34,42,51,59], color:"#ffaa00"},
+      {label:"Call Answer Rate %", values:[58,63,69,75,80,84], color:"#4ade80"},
+    ],
+  }
+};
+
+let currentVert = 'hvac';
+
+// ─── DASHBOARD VERTICAL ──────────────────────────────────────
+function setDashVertical(btn, vert) {
+  document.querySelectorAll('#dash-verts .vert-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  currentVert = vert;
+  const d = VERT[vert];
+  const ids = ['m1','m2','m3','m4'];
+  ids.forEach((id,i) => {
+    document.getElementById(id).textContent = d.metrics[i];
+    document.getElementById(id+'sub').textContent = d.metricSubs[i];
+  });
+}
+
+// ─── GAP REPORT ──────────────────────────────────────────────
+function updateGapData() {}
+
+function runGapReport() {
+  const biz  = document.getElementById('gap-biz').value.trim()  || 'Your Business';
+  const city = document.getElementById('gap-city').value.trim() || 'Your Market';
+  const vert = document.getElementById('gap-vert').value;
+  const d = VERT[vert];
+
+  document.getElementById('gr-biz-name').textContent = biz;
+  document.getElementById('gr-city-name').textContent = city;
+  document.getElementById('gr-total').textContent = d.total;
+
+  // Build gap rows
+  const gapContainer = document.getElementById('gap-rows');
+  gapContainer.innerHTML = d.gaps.map(g => {
+    const color = g.urgency==='CRITICAL'?'var(--red)':g.urgency==='HIGH'?'var(--orange)':'var(--amber)';
+    const bgc   = g.urgency==='CRITICAL'?'#2a0000':g.urgency==='HIGH'?'#1f0900':'#1f1400';
+    return `<div class="card gap-row mb8">
+      <div style="flex:1;min-width:120px;font-family:'Oswald';font-size:13px;font-weight:700;color:#fff">${g.area}</div>
+      <div style="flex:1;min-width:90px">
+        <div style="font-family:'Oswald';font-size:10px;color:var(--muted);letter-spacing:1px">YOUR STATUS</div>
+        <div style="font-size:13px;color:var(--red)">${g.you}</div>
+      </div>
+      <div style="flex:1;min-width:90px">
+        <div style="font-family:'Oswald';font-size:10px;color:var(--muted);letter-spacing:1px">MARKET LEADER</div>
+        <div style="font-size:13px;color:var(--green)">${g.market}</div>
+      </div>
+      <div style="text-align:right">
+        <div style="font-family:'Oswald';font-size:16px;font-weight:700;color:var(--orange)">${g.impact}</div>
+        <div class="badge" style="background:${bgc};color:${color};margin-top:4px">${g.urgency}</div>
+      </div>
+    </div>`;
+  }).join('');
+
+  // Build comparison table
+  const tbl = document.getElementById('gap-table');
+  tbl.innerHTML = `<thead><tr>
+    <th>Business</th><th>Reviews</th><th>Rating</th><th>Website</th><th>Google Rank</th><th>Calls</th>
+  </tr></thead><tbody>` + d.competitors.map(c => `
+    <tr class="${c.you?'you-row':''}">
+      <td style="font-size:13px;color:${c.you?'var(--orange)':'#fff'};font-weight:${c.you?700:400}">${c.name}${c.you?' ← YOU':''}</td>
+      <td style="color:${c.you?'var(--red)':'#aaa'}">${c.reviews}</td>
+      <td style="color:${c.you?'var(--red)':'#aaa'}">${c.rating} ★</td>
+      <td style="color:${c.you?'var(--red)':'var(--green)'}">${c.website}</td>
+      <td style="color:${c.you?'var(--red)':'#aaa'}">#${c.rank}</td>
+      <td style="color:${c.you?'var(--red)':'var(--green)'}">${c.calls}</td>
+    </tr>`).join('') + '</tbody>';
+}
+
+// ─── CLIENT RESULTS ──────────────────────────────────────────
+function setResultsVertical(btn, vert) {
+  document.querySelectorAll('#page-results .vert-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderResults(vert);
+}
+
+function renderResults(vert) {
+  const d = VERT[vert];
+  document.getElementById('res-client-name').textContent = d.client.name;
+  document.getElementById('res-client-loc').textContent  = d.client.loc;
+  document.getElementById('res-added').textContent = d.client.added;
+  document.getElementById('res-roi').textContent   = d.client.roi;
+
+  // Charts
+  const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun'];
+  document.getElementById('res-charts').innerHTML = d.charts.map(c => {
+    const max = Math.max(...c.values);
+    const bars = c.values.map((v,i) => `
+      <div class="bar-col">
+        <div class="bar" style="height:${Math.round((v/max)*64)}px;background:${c.color};opacity:${i===c.values.length-1?1:0.4}"></div>
+        <div class="bar-mo">${MONTHS[i]}</div>
+      </div>`).join('');
+    return `<div class="card">
+      <div class="metric-label mb8">${c.label}</div>
+      <div class="bar-wrap">${bars}</div>
+      <div style="font-family:'Oswald';font-size:22px;font-weight:700;color:${c.color};margin-top:8px">
+        ${c.values[c.values.length-1]}${c.label.includes('%')?'%':''}
+        <span style="font-size:11px;color:var(--muted);font-family:'Rajdhani';font-weight:400;margin-left:6px">this month</span>
+      </div>
+    </div>`;
+  }).join('');
+
+  // Milestones
+  document.getElementById('res-milestones').innerHTML = d.milestones.map(m =>
+    `<div class="milestone-row">
+      <div class="milestone-day">${m.day}</div>
+      <div class="milestone-text">${m.text}</div>
+    </div>`
+  ).join('');
+
+  // Testimonials (static)
+  document.getElementById('res-testimonials').innerHTML = [
+    {name:"Mike D.", biz:"Superior HVAC", city:"Oklahoma City", quote:"In 90 days my reviews went from 41 to 94. Phones haven't stopped ringing.", result:"+$8,400/mo"},
+    {name:"Terry L.", biz:"Lone Star Electric", city:"Dallas, TX", quote:"The AI call assistant paid for itself in week 1. I stopped missing jobs I didn't know I was missing.", result:"+$3,200/mo"},
+    {name:"Carlos P.", biz:"Premier Plumbing", city:"Tulsa, OK", quote:"Website was live in 48 hours. Booked two jobs from it the first week.", result:"+$4,100/mo"},
+  ].map(t => `<div class="card">
+    <div style="font-size:13px;color:#888;font-style:italic;line-height:1.5;margin-bottom:14px">"${t.quote}"</div>
+    <div style="display:flex;justify-content:space-between;align-items:flex-end">
+      <div>
+        <div style="font-family:'Oswald';font-size:13px;font-weight:700;color:#fff">${t.name}</div>
+        <div style="font-size:11px;color:var(--muted)">${t.biz} · ${t.city}</div>
+      </div>
+      <div style="font-family:'Oswald';font-size:16px;font-weight:700;color:var(--orange)">${t.result}</div>
+    </div>
+  </div>`).join('');
+}
+
+// ─── AI REVIEWS ──────────────────────────────────────────────
+const REVIEWS_DATA = [
+  {stars:5, name:"James T.", text:"Best HVAC company in OKC. Fixed our AC in 2 hours on the hottest day of the year.", responded:true,  response:"James, thank you so much! We pride ourselves on fast response times — especially in Oklahoma summer heat. We appreciate your trust and look forward to serving you again."},
+  {stars:2, name:"Angela R.", text:"Took 3 days to come out. Communication was poor.", responded:false, response:""},
+  {stars:5, name:"Carlos M.", text:"Professional, on time, and very fair pricing. Will definitely use again.", responded:true,  response:"Carlos, we appreciate you taking the time! Fair, transparent pricing is something we're committed to. Thank you for choosing us!"},
+  {stars:1, name:"David K.", text:"Never showed up for the appointment. No call, no text.", responded:false, response:""},
+];
+
+function renderReviews() {
+  document.getElementById('review-feed').innerHTML = REVIEWS_DATA.map((r,i) => {
+    const starStr = '★'.repeat(r.stars) + '☆'.repeat(5-r.stars);
+    const starColor = r.stars>=4?'var(--green)':r.stars===3?'var(--amber)':'var(--red)';
+    const resp = r.responded
+      ? `<div class="review-response"><div class="response-label">AI RESPONSE (POSTED)</div><div class="response-text">${r.response}</div></div>`
+      : `<button class="btn-generate" id="gen-btn-${i}" onclick="generateResponse(${i})">Generate AI Response →</button>`;
+    return `<div class="card review-card">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px">
+        <div>
+          <span style="font-family:'Oswald';font-size:14px;font-weight:700;color:${starColor}">${starStr}</span>
+          <span style="font-size:13px;color:#ccc;margin-left:10px">${r.name}</span>
+        </div>
+        <div class="badge ${r.responded?'badge-green':'badge-orange'}">${r.responded?'RESPONDED':'NEEDS REPLY'}</div>
+      </div>
+      <div style="font-size:13px;color:#888;line-height:1.5;margin-bottom:12px">"${r.text}"</div>
+      <div id="review-action-${i}">${resp}</div>
+    </div>`;
+  }).join('');
+}
+
+async function generateResponse(i) {
+  const btn = document.getElementById('gen-btn-'+i);
+  if(btn){ btn.disabled=true; btn.textContent='Generating…'; }
+  await new Promise(r => setTimeout(r, 1400));
+  const r = REVIEWS_DATA[i];
+  let resp;
+  if(r.stars>=4) resp=`${r.name.split(' ')[0]}, thank you so much for the kind words! We work hard to deliver exactly this experience for every customer. We look forward to serving you again soon!`;
+  else if(r.stars===3) resp=`${r.name.split(' ')[0]}, thank you for your honest feedback. We'd love to make this right — please reach out to us directly at (405) 555-0100.`;
+  else resp=`${r.name.split(' ')[0]}, we sincerely apologize for this experience. This is not our standard and we take full responsibility. Please contact us at (405) 555-0100 so we can make this right immediately.`;
+  REVIEWS_DATA[i].responded=true; REVIEWS_DATA[i].response=resp;
+  document.getElementById('review-action-'+i).innerHTML=`<div class="review-response"><div class="response-label">AI RESPONSE (POSTED)</div><div class="response-text">${resp}</div></div>`;
+  document.querySelector(`#page-reviews .card.review-card:nth-child(${i+1}) .badge`).className='badge badge-green';
+  document.querySelector(`#page-reviews .card.review-card:nth-child(${i+1}) .badge`).textContent='RESPONDED';
+}
+
+// ─── CALL LOG ────────────────────────────────────────────────
+function renderCallLog() {
+  const calls = [
+    {time:"Today 2:14 PM",    caller:"(405) 882-3301", dur:"2:47", outcome:"Booked — AC tune-up, Fri 3pm",          value:"$189"},
+    {time:"Today 11:02 AM",   caller:"(405) 559-7124", dur:"1:53", outcome:"Booked — Emergency repair, Today 5pm",  value:"$340+"},
+    {time:"Yesterday 7:43 PM",caller:"(405) 231-8840", dur:"3:12", outcome:"Booked — New install quote, Sat 10am",  value:"$2,400+"},
+    {time:"Yesterday 4:18 PM",caller:"(918) 774-2291", dur:"1:08", outcome:"Outside service area — referred",        value:"$0"},
+    {time:"Yesterday 1:55 PM",caller:"(405) 663-0014", dur:"2:29", outcome:"Booked — Heat pump service, Mon 9am",   value:"$275"},
+  ];
+  document.getElementById('call-log').innerHTML = calls.map(c => `
+    <div class="call-row">
+      <div style="min-width:130px"><div class="metric-label">TIME</div><div style="font-size:12px;color:#888">${c.time}</div></div>
+      <div style="min-width:130px"><div class="metric-label">CALLER</div><div style="font-size:12px;color:#ccc">${c.caller}</div></div>
+      <div style="flex:1;min-width:200px"><div class="metric-label">OUTCOME</div><div style="font-size:13px;color:${c.outcome.includes('Booked')?'var(--green)':'#888'}">${c.outcome.includes('Booked')?'✓ ':''  }${c.outcome}</div></div>
+      <div style="text-align:right"><div style="font-family:'Oswald';font-size:18px;font-weight:700;color:var(--orange)">${c.value}</div><div style="font-size:11px;color:var(--muted)">${c.dur}</div></div>
+    </div>`).join('');
+}
+
+// ─── PACKAGE SELECTOR ────────────────────────────────────────
+let selectedPkg = '';
+function selectPkg(el, val) {
+  document.querySelectorAll('.pkg-card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedPkg = val;
+}
+
+// ─── LEAD FORM ───────────────────────────────────────────────
+async function submitLead() {
+  const name  = document.getElementById('f-name').value.trim();
+  const biz   = document.getElementById('f-biz').value.trim();
+  const phone = document.getElementById('f-phone').value.trim();
+  if(!name || !biz || !phone){ alert('Please fill in Name, Business Name, and Phone.'); return; }
+
+  const btn = document.getElementById('submit-btn');
+  btn.disabled = true; btn.textContent = 'Sending…';
+
+  const payload = {
+    timestamp: new Date().toISOString(),
+    name, business: biz, phone,
+    email:   document.getElementById('f-email').value.trim(),
+    city:    document.getElementById('f-city').value.trim(),
+    package: selectedPkg || 'Not selected',
+    source:  'Revenue Commander — MoreProfitUSA.com'
+  };
+
+  try {
+    await fetch(SHEET_URL, {
+      method: 'POST', mode: 'no-cors',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify(payload)
+    });
+  } catch(e) { /* no-cors — treat as success */ }
+
+  document.getElementById('lead-form-wrap').style.display = 'none';
+  document.getElementById('success-state').style.display  = 'block';
+}
+
+// ─── INIT ────────────────────────────────────────────────────
+runGapReport();
+renderResults('hvac');
+renderReviews();
+renderCallLog();
+</script>
+</body>
+</html>
