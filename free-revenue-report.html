@@ -331,13 +331,15 @@ async function submitForm() {
     timestamp: new Date().toISOString()
   });
 
-  const iframe = document.createElement('iframe');
+const iframe = document.createElement('iframe');
   iframe.style.display = 'none';
   iframe.src = SHEET_URL + '?' + params.toString();
   document.body.appendChild(iframe);
 
-  window.location.href = 'revenue-commander.html?' +
-    new URLSearchParams({ biz: biz, city: city }).toString();
+  setTimeout(function() {
+    window.location.href = 'revenue-commander.html?' +
+      new URLSearchParams({ biz: biz, city: city }).toString();
+  }, 3000);
 }
 // ─── PRE-FILL FROM URL PARAMS (used when returning) ─────────
 // (Revenue Commander reads these on load — see note below)
