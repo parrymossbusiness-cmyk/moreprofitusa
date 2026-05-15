@@ -331,19 +331,18 @@ async function submitForm() {
     status: 'NEW LEAD'
   };
 
-  try {
-    const params = new URLSearchParams();
-    params.append('business', biz);
-    params.append('phone', phone);
-    params.append('email', email);
-    params.append('city', city);
-    params.append('package', selectedPkg || 'Not selected');
-    params.append('source', 'Free Revenue Report — MoreProfitUSA.com');
-    params.append('timestamp', new Date().toISOString());
-    await fetch(SHEET_URL, {
-      method: 'POST',
-      body: params
+ try {
+    const params = new URLSearchParams({
+      business:  biz,
+      phone:     phone,
+      email:     email,
+      city:      city,
+      package:   selectedPkg || 'Not selected',
+      source:    'Free Revenue Report — MoreProfitUSA.com',
+      timestamp: new Date().toISOString()
     });
+    new Image().src = SHEET_URL + '?' + params.toString();
+    await new Promise(r => setTimeout(r, 1500));
   } catch(e) {
     console.log('Submit error:', e);
   }
