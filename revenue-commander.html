@@ -952,19 +952,18 @@ async function submitLead() {
     source:  'Revenue Commander — MoreProfitUSA.com'
   };
 
-  try {
-    const params = new URLSearchParams();
-    params.append('business', payload.business);
-    params.append('phone', payload.phone);
-    params.append('email', payload.email);
-    params.append('city', payload.city);
-    params.append('package', payload.package);
-    params.append('source', payload.source);
-    params.append('timestamp', payload.timestamp);
-    await fetch(SHEET_URL, {
-      method: 'POST',
-      body: params
+ try {
+    const params = new URLSearchParams({
+      business:  payload.business,
+      phone:     payload.phone,
+      email:     payload.email,
+      city:      payload.city,
+      package:   payload.package,
+      source:    payload.source,
+      timestamp: payload.timestamp
     });
+    new Image().src = SHEET_URL + '?' + params.toString();
+    await new Promise(r => setTimeout(r, 1500));
   } catch(e) {
     console.log('Submit error:', e);
   }
