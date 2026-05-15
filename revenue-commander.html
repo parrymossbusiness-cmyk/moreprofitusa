@@ -953,12 +953,21 @@ async function submitLead() {
   };
 
   try {
+    const params = new URLSearchParams();
+    params.append('business', payload.business);
+    params.append('phone', payload.phone);
+    params.append('email', payload.email);
+    params.append('city', payload.city);
+    params.append('package', payload.package);
+    params.append('source', payload.source);
+    params.append('timestamp', payload.timestamp);
     await fetch(SHEET_URL, {
-      method: 'POST', mode: 'no-cors',
-      headers: {'Content-Type':'application/json'},
-      body: JSON.stringify(payload)
+      method: 'POST',
+      body: params
     });
-  } catch(e) { /* no-cors — treat as success */ }
+  } catch(e) {
+    console.log('Submit error:', e);
+  }
 
   document.getElementById('lead-form-wrap').style.display = 'none';
   document.getElementById('success-state').style.display  = 'block';
