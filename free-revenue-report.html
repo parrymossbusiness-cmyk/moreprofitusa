@@ -331,32 +331,26 @@ async function submitForm() {
     status: 'NEW LEAD'
   };
 
- try {
-    const params = new URLSearchParams({
-      business:  biz,
-      phone:     phone,
-      email:     email,
-      city:      city,
-      package:   selectedPkg || 'Not selected',
-      source:    'Free Revenue Report — MoreProfitUSA.com',
-      timestamp: new Date().toISOString()
-    });
-    new Image().src = SHEET_URL + '?' + params.toString();
-    await new Promise(r => setTimeout(r, 1500));
-  } catch(e) {
-    console.log('Submit error:', e);
-  }
-
-  // Pass their info into Revenue Commander via URL params
-  const params = new URLSearchParams({
-    biz:  biz,
-    city: city
+const params = new URLSearchParams({
+    business:  biz,
+    phone:     phone,
+    email:     email,
+    city:      city,
+    package:   selectedPkg || 'Not selected',
+    source:    'Free Revenue Report — MoreProfitUSA.com',
+    timestamp: new Date().toISOString()
   });
 
-  // Redirect to Revenue Commander with their info pre-filled
-  window.location.href = 'revenue-commander.html?' + params.toString();
-}
+  const iframe = document.createElement('iframe');
+  iframe.style.display = 'none';
+  iframe.src = SHEET_URL + '?' + params.toString();
+  document.body.appendChild(iframe);
 
+  await new Promise(r => setTimeout(r, 2000));
+
+  window.location.href = 'revenue-commander.html?' +
+    new URLSearchParams({ biz: biz, city: city }).toString();
+}
 // ─── PRE-FILL FROM URL PARAMS (used when returning) ─────────
 // (Revenue Commander reads these on load — see note below)
 </script>
