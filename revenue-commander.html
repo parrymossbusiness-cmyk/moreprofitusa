@@ -973,10 +973,32 @@ async function submitLead() {
 }
 
 // ─── INIT ────────────────────────────────────────────────────
-runGapReport();
+(function() {
+  const params = new URLSearchParams(window.location.search);
+  const biz  = params.get('biz');
+  const city = params.get('city');
+  if (biz || city) {
+    if (biz)  document.getElementById('gap-biz').value  = biz;
+    if (city) document.getElementById('gap-city').value = city;
+    showPage('gap');
+    runGapReport();
+    const welcome = document.createElement('div');
+    welcome.style.cssText = 'background:#120800;border:2px solid var(--orange);border-radius:10px;padding:24px 28px;margin-bottom:28px;font-family:Rajdhani;line-height:1.6';
+    welcome.innerHTML = `
+      <div style="font-family:Oswald;font-weight:700;color:var(--orange);font-size:16px;letter-spacing:2px;text-transform:uppercase;margin-bottom:10px">✅ We Got You — Your Custom Report Is On Its Way</div>
+      <div style="font-size:15px;color:#ccc;margin-bottom:16px">We're pulling your real Google ranking, review score, and competitor data right now. Within a few hours you'll receive a personalized revenue report built specifically for <strong style="color:#fff">${biz}</strong> in <strong style="color:#fff">${city}</strong>.</div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <div style="font-size:13px;color:#888"><span style="color:var(--orange);margin-right:10px">1.</span>Check your texts — we'll reach out shortly to confirm we received your info</div>
+        <div style="font-size:13px;color:#888"><span style="color:var(--orange);margin-right:10px">2.</span>Watch for your personalized Loom report in your email within a few hours</div>
+        <div style="font-size:13px;color:#888"><span style="color:var(--orange);margin-right:10px">3.</span>While you wait — explore what Revenue Commander found in your market below</div>
+      </div>
+    `;
+    const gapResults = document.getElementById('gap-results');
+    gapResults.insertBefore(welcome, gapResults.firstChild);
+  } else {
+    runGapReport();
+  }
+})();
 renderResults('hvac');
 renderReviews();
 renderCallLog();
-</script>
-</body>
-</html>
