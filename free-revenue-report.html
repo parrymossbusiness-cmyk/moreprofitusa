@@ -321,17 +321,7 @@ async function submitForm() {
   const email = document.getElementById('f-email').value.trim();
   const city  = document.getElementById('f-city').value.trim();
 
-  const payload = {
-    timestamp: new Date().toISOString(),
-    business:  biz,
-    phone,
-    email,
-    city,
-    source: 'Free Revenue Report — MoreProfitUSA.com',
-    status: 'NEW LEAD'
-  };
-
-const params = new URLSearchParams({
+  const params = new URLSearchParams({
     business:  biz,
     phone:     phone,
     email:     email,
@@ -341,7 +331,7 @@ const params = new URLSearchParams({
     timestamp: new Date().toISOString()
   });
 
-const iframe = document.createElement('iframe');
+  const iframe = document.createElement('iframe');
   iframe.style.display = 'none';
   iframe.src = SHEET_URL + '?' + params.toString();
   document.body.appendChild(iframe);
