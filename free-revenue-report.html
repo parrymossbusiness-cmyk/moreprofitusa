@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Get Your Free Revenue Report — MoreProfitUSA.com</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --orange: #ff4500;
+    --orange-dim: #cc3700;
+    --bg: #080808;
+    --surface: #111111;
+    --border: #1f1f1f;
+    --border2: #2a2a2a;
+    --text: #f0f0f0;
+    --muted: #666666;
+    --green: #4ade80;
+  }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Rajdhani', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* TOP BAR */
+  #topbar {
+    background: #0d0d0d;
+    border-bottom: 1px solid var(--border);
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    height: 56px;
+  }
+  .logo-mark { width: 34px; height: 34px; background: var(--orange); border-radius: 6px; display:flex; align-items:center; justify-content:center; font-family:'Oswald'; font-weight:700; font-size:14px; color:#fff; flex-shrink:0; }
+  .logo-wrap { display:flex; align-items:center; gap:10px; text-decoration:none; }
+  .logo-text strong { display:block; font-family:'Oswald'; font-weight:700; font-size:15px; color:#fff; letter-spacing:1px; text-transform:uppercase; line-height:1; }
+  .logo-text span { font-size:10px; color:var(--muted); letter-spacing:2px; text-transform:uppercase; }
+
+  /* HERO */
+  #hero {
+    background: linear-gradient(180deg, #0d0d0d 0%, #080808 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 64px 24px 56px;
+    text-align: center;
+  }
+  .eyebrow { font-family:'Oswald'; font-size:11px; color:var(--orange); letter-spacing:3px; text-transform:uppercase; margin-bottom:14px; }
+  h1 { font-family:'Oswald'; font-size:48px; font-weight:700; color:#fff; text-transform:uppercase; line-height:1.05; margin-bottom:20px; }
+  h1 span { color: var(--orange); }
+  .hero-sub { font-size:17px; color:#888; max-width:540px; margin:0 auto 40px; line-height:1.65; }
+  @media(max-width:600px){ h1 { font-size:34px; } }
+
+  /* WHAT YOU GET */
+  #what-you-get {
+    padding: 56px 24px;
+    max-width: 960px;
+    margin: 0 auto;
+    width: 100%;
+  }
+  .section-label { font-family:'Oswald'; font-size:13px; font-weight:700; color:#fff; text-transform:uppercase; letter-spacing:1px; text-align:center; margin-bottom:32px; }
+  .benefits-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(220px,1fr)); gap:16px; margin-bottom:0; }
+  .benefit-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 24px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .benefit-icon { font-size: 28px; line-height:1; }
+  .benefit-title { font-family:'Oswald'; font-size:15px; font-weight:700; color:#fff; text-transform:uppercase; letter-spacing:.5px; }
+  .benefit-desc { font-size:13px; color:#888; line-height:1.6; }
+
+  /* FORM SECTION */
+  #form-section {
+    background: #0a0a0a;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 64px 24px;
+  }
+  .form-wrap {
+    max-width: 560px;
+    margin: 0 auto;
+  }
+  .form-headline { font-family:'Oswald'; font-size:28px; font-weight:700; color:#fff; text-transform:uppercase; text-align:center; margin-bottom:8px; }
+  .form-sub { font-size:14px; color:#888; text-align:center; margin-bottom:32px; line-height:1.5; }
+  .field { margin-bottom:16px; }
+  .field-label { font-family:'Oswald'; font-size:11px; color:var(--muted); letter-spacing:2px; text-transform:uppercase; margin-bottom:7px; display:block; }
+  input[type=text], input[type=email], input[type=tel] {
+    width:100%;
+    background: #141414;
+    border: 1px solid var(--border2);
+    border-radius: 7px;
+    padding: 13px 16px;
+    color: #fff;
+    font-family: 'Rajdhani';
+    font-size: 15px;
+    outline: none;
+    transition: border-color .2s, background .2s;
+  }
+  input:focus { border-color: var(--orange); background: #181818; }
+  input::placeholder { color: #444; }
+  .btn-submit {
+    width: 100%;
+    background: var(--orange);
+    border: none;
+    border-radius: 8px;
+    padding: 16px;
+    color: #fff;
+    font-family: 'Oswald';
+    font-weight: 700;
+    font-size: 16px;
+    letter-spacing: 2px;
+    cursor: pointer;
+    text-transform: uppercase;
+    margin-top: 8px;
+    transition: background .2s, transform .1s;
+  }
+  .btn-submit:hover { background: var(--orange-dim); }
+  .btn-submit:active { transform: scale(0.99); }
+  .btn-submit:disabled { background: #2a1000; color: #774422; cursor: wait; }
+  .form-disclaimer { font-size:11px; color:#444; text-align:center; margin-top:12px; line-height:1.5; }
+
+  /* SOCIAL PROOF STRIP */
+  #proof-strip {
+    padding: 40px 24px;
+    max-width: 960px;
+    margin: 0 auto;
+    width: 100%;
+  }
+  .proof-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:14px; }
+  .proof-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px 20px;
+  }
+  .proof-quote { font-size:13px; color:#888; font-style:italic; line-height:1.55; margin-bottom:12px; }
+  .proof-name { font-family:'Oswald'; font-size:13px; font-weight:700; color:#fff; }
+  .proof-biz { font-size:11px; color:var(--muted); }
+  .proof-result { font-family:'Oswald'; font-size:15px; font-weight:700; color:var(--orange); margin-top:8px; }
+
+  /* FOOTER */
+  footer {
+    margin-top: auto;
+    background: #0d0d0d;
+    border-top: 1px solid var(--border);
+    padding: 20px 24px;
+    text-align: center;
+    font-size: 12px;
+    color: #444;
+    font-family: 'Rajdhani';
+  }
+  footer a { color: #555; text-decoration: none; }
+
+  /* ERROR */
+  .field-error { font-size:12px; color:#ff6b6b; margin-top:5px; display:none; }
+  input.has-error { border-color: #ff6b6b; }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div id="topbar">
+  <a href="index.html" class="logo-wrap">
+    <div class="logo-mark">MP</div>
+    <div class="logo-text">
+      <strong>MoreProfitUSA</strong>
+      <span>moreprofitusa.com</span>
+    </div>
+  </a>
+</div>
+
+<!-- HERO -->
+<div id="hero">
+  <div class="eyebrow">Free · No Obligation · Delivered Same Day</div>
+  <h1>See Exactly How Much<br>Revenue You're <span>Missing</span></h1>
+  <p class="hero-sub">
+    We pull your real Google ranking, review score, and competitor data —
+    then show you the exact dollar amount sitting on the table.
+    Takes 30 seconds to request. We do the rest.
+  </p>
+</div>
+
+<!-- WHAT YOU GET -->
+<div id="what-you-get">
+  <div class="section-label">Here's What's Inside Your Free Report</div>
+  <div class="benefits-grid">
+    <div class="benefit-card">
+      <div class="benefit-icon">🎯</div>
+      <div class="benefit-title">Your Google Ranking</div>
+      <div class="benefit-desc">We show exactly where you rank vs. your top competitors in your city — and what it's costing you to be invisible on page 1.</div>
+    </div>
+    <div class="benefit-card">
+      <div class="benefit-icon">⭐</div>
+      <div class="benefit-title">Review Score Gap</div>
+      <div class="benefit-desc">Your star rating and review count compared to the market leaders in your area — and the revenue difference that gap creates.</div>
+    </div>
+    <div class="benefit-card">
+      <div class="benefit-icon">📞</div>
+      <div class="benefit-title">Missed Call Analysis</div>
+      <div class="benefit-desc">How many calls your business is likely missing per month — and what each unanswered call costs you in lost revenue.</div>
+    </div>
+    <div class="benefit-card">
+      <div class="benefit-icon">💰</div>
+      <div class="benefit-title">Total Revenue at Risk</div>
+      <div class="benefit-desc">One clear number: the estimated annual revenue your competitors are capturing that should be going to your business instead.</div>
+    </div>
+  </div>
+</div>
+
+<!-- FORM -->
+<div id="form-section">
+  <div class="form-wrap">
+    <div class="form-headline">Request Your Free Report</div>
+    <p class="form-sub">We'll pull your real data and send your personalized report same day — usually within a few hours.</p>
+
+    <div class="field">
+      <label class="field-label" for="f-biz">Business Name *</label>
+      <input type="text" id="f-biz" placeholder="Superior HVAC Services" autocomplete="organization" />
+      <div class="field-error" id="err-biz">Please enter your business name.</div>
+    </div>
+
+    <div class="field">
+      <label class="field-label" for="f-phone">Phone Number *</label>
+      <input type="tel" id="f-phone" placeholder="(405) 555-0100" autocomplete="tel" />
+      <div class="field-error" id="err-phone">Please enter your phone number.</div>
+    </div>
+
+    <div class="field">
+      <label class="field-label" for="f-email">Email Address *</label>
+      <input type="email" id="f-email" placeholder="mike@superiorrhvac.com" autocomplete="email" />
+      <div class="field-error" id="err-email">Please enter a valid email address.</div>
+    </div>
+
+    <div class="field">
+      <label class="field-label" for="f-city">City / Market *</label>
+      <input type="text" id="f-city" placeholder="Oklahoma City, OK" autocomplete="address-level2" />
+      <div class="field-error" id="err-city">Please enter your city.</div>
+    </div>
+
+    <button class="btn-submit" id="submit-btn" onclick="submitForm()">
+      Get My Free Revenue Report →
+    </button>
+    <p class="form-disclaimer">No spam. No sales pressure. Just your report and a 15-minute walkthrough offer — you decide what happens next.</p>
+  </div>
+</div>
+
+<!-- SOCIAL PROOF -->
+<div id="proof-strip">
+  <div class="section-label" style="margin-bottom:24px">What Happens After You Submit</div>
+  <div class="proof-grid">
+    <div class="proof-card">
+      <div class="proof-quote">"I filled out the form at 9am. By noon I had a Loom video in my inbox showing exactly where I ranked vs. my competitors. I didn't even know I was that far behind."</div>
+      <div class="proof-name">Mike D.</div>
+      <div class="proof-biz">Superior HVAC · Oklahoma City, OK</div>
+      <div class="proof-result">+$8,400/mo in 6 months</div>
+    </div>
+    <div class="proof-card">
+      <div class="proof-quote">"The report showed me I was missing 40% of my calls after hours. That was $18,000 a year just walking out the door. Signed up same day."</div>
+      <div class="proof-name">Terry L.</div>
+      <div class="proof-biz">Lone Star Electric · Dallas, TX</div>
+      <div class="proof-result">+$5,100/mo in 6 months</div>
+    </div>
+    <div class="proof-card">
+      <div class="proof-quote">"Took me 30 seconds to fill out. The report came back the same afternoon. Booked a call, had my website live two days later."</div>
+      <div class="proof-name">Carlos P.</div>
+      <div class="proof-biz">Premier Plumbing · Tulsa, OK</div>
+      <div class="proof-result">+$6,200/mo in 6 months</div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 MoreProfitUSA.com · Built for HVAC, Plumbing & Electrical Contractors · <a href="index.html">Back to Home</a></p>
+</footer>
+
+<script>
+// ─── REPLACE WITH YOUR GOOGLE APPS SCRIPT URL ───────────────
+const SHEET_URL = "YOUR_GOOGLE_APPS_SCRIPT_URL_HERE";
+
+function validate() {
+  let ok = true;
+  const fields = [
+    { id:'f-biz',   err:'err-biz',   check: v => v.length > 1 },
+    { id:'f-phone', err:'err-phone', check: v => v.replace(/\D/g,'').length >= 10 },
+    { id:'f-email', err:'err-email', check: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) },
+    { id:'f-city',  err:'err-city',  check: v => v.length > 1 },
+  ];
+  fields.forEach(f => {
+    const input = document.getElementById(f.id);
+    const errEl = document.getElementById(f.err);
+    const val   = input.value.trim();
+    if (!f.check(val)) {
+      input.classList.add('has-error');
+      errEl.style.display = 'block';
+      ok = false;
+    } else {
+      input.classList.remove('has-error');
+      errEl.style.display = 'none';
+    }
+  });
+  return ok;
+}
+
+async function submitForm() {
+  if (!validate()) return;
+
+  const btn = document.getElementById('submit-btn');
+  btn.disabled = true;
+  btn.textContent = 'Sending…';
+
+  const biz   = document.getElementById('f-biz').value.trim();
+  const phone = document.getElementById('f-phone').value.trim();
+  const email = document.getElementById('f-email').value.trim();
+  const city  = document.getElementById('f-city').value.trim();
+
+  const payload = {
+    timestamp: new Date().toISOString(),
+    business:  biz,
+    phone,
+    email,
+    city,
+    source: 'Free Revenue Report — MoreProfitUSA.com',
+    status: 'NEW LEAD'
+  };
+
+  try {
+    await fetch(SHEET_URL, {
+      method:  'POST',
+      mode:    'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify(payload)
+    });
+  } catch(e) { /* no-cors — treat as success */ }
+
+  // Pass their info into Revenue Commander via URL params
+  const params = new URLSearchParams({
+    biz:  biz,
+    city: city
+  });
+
+  // Redirect to Revenue Commander with their info pre-filled
+  window.location.href = 'revenue-commander.html?' + params.toString();
+}
+
+// ─── PRE-FILL FROM URL PARAMS (used when returning) ─────────
+// (Revenue Commander reads these on load — see note below)
+</script>
+</body>
+</html>
