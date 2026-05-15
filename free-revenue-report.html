@@ -341,15 +341,14 @@ const params = new URLSearchParams({
     timestamp: new Date().toISOString()
   });
 
-  const iframe = document.createElement('iframe');
+const iframe = document.createElement('iframe');
   iframe.style.display = 'none';
   iframe.src = SHEET_URL + '?' + params.toString();
   document.body.appendChild(iframe);
 
-  await new Promise(r => setTimeout(r, 2000));
-
   window.location.href = 'revenue-commander.html?' +
     new URLSearchParams({ biz: biz, city: city }).toString();
+}
 }
 // ─── PRE-FILL FROM URL PARAMS (used when returning) ─────────
 // (Revenue Commander reads these on load — see note below)
