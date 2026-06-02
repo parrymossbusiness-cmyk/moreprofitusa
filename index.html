@@ -37,9 +37,11 @@
     .btn-outline:hover{border-color:var(--orange);color:var(--orange);}
     /* HERO */
     #hero{min-height:100vh;display:flex;align-items:center;padding:100px 40px 80px;position:relative;overflow:hidden;background:url('images/Hero_Technician.jpg') center center / cover no-repeat;}
-    .hero-overlay{position:absolute;inset:0;z-index:0;background:linear-gradient(to right,rgba(10,10,10,0.92) 0%,rgba(10,10,10,0.75) 55%,rgba(10,10,10,0.35) 100%);}
+    .hero-overlay{position:absolute;inset:0;z-index:0;background:linear-gradient(to right,rgba(10,10,10,0.95) 0%,rgba(10,10,10,0.85) 50%,rgba(10,10,10,0.50) 100%);}
     .hero-glow{position:absolute;top:-200px;left:-100px;width:700px;height:700px;background:radial-gradient(circle,rgba(255,69,0,0.10) 0%,transparent 70%);pointer-events:none;z-index:0;}
-    .hero-inner{position:relative;z-index:1;max-width:1100px;margin:0 auto;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;}
+    .hero-inner{position:relative;z-index:1;max-width:1100px;margin:0 auto;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;}
+    .score-card-wrap{position:relative;}
+    .score-card-label{font-family:var(--font-mono);font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--orange);text-align:center;margin-bottom:10px;}
     .hero-eyebrow{font-family:var(--font-mono);font-size:11px;letter-spacing:0.2em;color:var(--orange);text-transform:uppercase;margin-bottom:20px;display:flex;align-items:center;gap:10px;}
     .hero-eyebrow::before{content:'';display:block;width:32px;height:1px;background:var(--orange);}
     .hero-title{font-family:var(--font-display);font-size:clamp(60px,7vw,96px);line-height:0.95;letter-spacing:0.02em;margin-bottom:24px;}
@@ -145,8 +147,8 @@
       .nav-mobile-toggle{display:block;}
       section{padding:72px 20px;}
       #hero{padding:100px 20px 60px;min-height:auto;}
-      .hero-inner{grid-template-columns:1fr;gap:48px;}
-      .hero-inner>div:last-child{display:none;}
+      .hero-inner{grid-template-columns:1fr;gap:40px;}
+      .hero-inner>div:last-child{display:block;}
       .leaks-grid{grid-template-columns:1fr 1fr;}
       .why-grid{grid-template-columns:1fr;gap:40px;}
       .listen-grid{grid-template-columns:1fr;}
@@ -188,6 +190,8 @@
       </div>
     </div>
     <div>
+    <div class="score-card-wrap">
+      <div class="score-card-label">⚡ Example Revenue Assessment Report</div>
       <div class="score-card">
         <div class="score-header">
           <div class="score-badge">❄️ Phoenix, AZ — HVAC</div>
@@ -221,9 +225,10 @@
             <div class="score-opp-label">Estimated Revenue Opportunity</div>
             <div class="score-opp-val">$87,000+</div>
           </div>
-          <a href="/revenue-commander-v2.html" class="score-cta-sm">See Your Report →</a>
+          <a href="/revenue-commander-v2.html" class="score-cta-sm">Get Yours →</a>
         </div>
       </div>
+    </div>
     </div>
   </div>
 </section>
