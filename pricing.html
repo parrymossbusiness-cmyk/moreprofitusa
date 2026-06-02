@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HVAC Revenue Recovery Packages — More Profit USA</title>
+  <meta name="description" content="Choose the HVAC revenue recovery package that fits your business goals. Revenue Recovery Starter at $1,500 or HVAC Revenue Recovery System at $2,500." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root{--bg:#0A0A0A;--bg2:#111111;--bg3:#161616;--orange:#FF4500;--orange-dim:rgba(255,69,0,0.12);--border:rgba(255,255,255,0.08);--border-orange:rgba(255,69,0,0.3);--white:#FFFFFF;--gray:#A0A0A0;--gray-dark:#444444;--font-display:'Bebas Neue',sans-serif;--font-body:'DM Sans',sans-serif;--font-mono:'DM Mono',monospace;}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{background:var(--bg);color:var(--white);font-family:var(--font-body);font-size:16px;line-height:1.6;overflow-x:hidden;}
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 40px;height:64px;background:rgba(10,10,10,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);}
+    .nav-logo{font-family:var(--font-display);font-size:22px;letter-spacing:0.08em;color:var(--white);text-decoration:none;}
+    .nav-logo span{color:var(--orange);}
+    .nav-links{display:flex;align-items:center;gap:28px;}
+    .nav-links a{color:var(--gray);font-size:13px;font-weight:500;text-decoration:none;letter-spacing:0.04em;transition:color 0.2s;}
+    .nav-links a:hover{color:var(--white);}
+    .nav-cta{background:var(--orange)!important;color:var(--white)!important;padding:8px 18px;border-radius:4px;font-weight:700!important;transition:opacity 0.2s!important;}
+    .nav-cta:hover{opacity:0.88;}
+    .nav-mobile-toggle{display:none;background:none;border:none;cursor:pointer;color:var(--white);font-size:20px;}
+    section{padding:80px 40px;}
+    .section-inner{max-width:1000px;margin:0 auto;}
+    .section-label{font-family:var(--font-mono);font-size:11px;letter-spacing:0.2em;color:var(--orange);text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:10px;}
+    .section-label::before{content:'';display:block;width:24px;height:1px;background:var(--orange);}
+    .section-title{font-family:var(--font-display);font-size:clamp(38px,4.5vw,58px);line-height:1;letter-spacing:0.02em;margin-bottom:20px;}
+    .accent{color:var(--orange);}
+    .fade-up{opacity:0;transform:translateY(24px);transition:opacity 0.6s ease,transform 0.6s ease;}
+    .fade-up.visible{opacity:1;transform:translateY(0);}
+    /* HERO */
+    #hero{padding:120px 40px 80px;text-align:center;position:relative;overflow:hidden;}
+    .hero-grid{position:absolute;inset:0;z-index:0;background-image:linear-gradient(rgba(255,69,0,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,69,0,0.04) 1px,transparent 1px);background-size:60px 60px;}
+    .hero-glow{position:absolute;top:-200px;left:50%;transform:translateX(-50%);width:700px;height:500px;background:radial-gradient(circle,rgba(255,69,0,0.10) 0%,transparent 70%);pointer-events:none;z-index:0;}
+    .hero-inner{position:relative;z-index:1;max-width:740px;margin:0 auto;}
+    .hero-eyebrow{display:inline-flex;align-items:center;gap:8px;background:var(--orange-dim);border:1px solid var(--border-orange);border-radius:20px;padding:6px 16px;font-family:var(--font-mono);font-size:11px;color:var(--orange);letter-spacing:0.14em;text-transform:uppercase;margin-bottom:28px;}
+    .hero-title{font-family:var(--font-display);font-size:clamp(52px,6.5vw,88px);line-height:0.95;letter-spacing:0.02em;margin-bottom:20px;}
+    .hero-sub{font-size:19px;color:var(--gray);line-height:1.6;max-width:540px;margin:0 auto;}
+    /* PACKAGES */
+    #packages{background:var(--bg2);}
+    .pkg-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:start;}
+    .pkg-card{background:var(--bg3);border:1px solid var(--border);border-radius:10px;overflow:hidden;display:flex;flex-direction:column;transition:border-color 0.2s,transform 0.2s;}
+    .pkg-card:hover{border-color:var(--border-orange);transform:translateY(-4px);}
+    .pkg-card.featured{border-color:var(--orange);transform:translateY(-8px);}
+    .pkg-card.featured:hover{transform:translateY(-12px);}
+    .pkg-badge{background:var(--orange);color:var(--white);font-family:var(--font-mono);font-size:10px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;text-align:center;padding:8px;}
+    .pkg-header{padding:32px 32px 24px;}
+    .pkg-tier{font-family:var(--font-mono);font-size:11px;color:var(--orange);letter-spacing:0.14em;text-transform:uppercase;margin-bottom:10px;}
+    .pkg-name{font-family:var(--font-display);font-size:28px;letter-spacing:0.02em;line-height:1.1;margin-bottom:12px;}
+    .pkg-desc{font-size:14px;color:var(--gray);line-height:1.6;}
+    .pkg-price{padding:24px 32px;border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:rgba(255,255,255,0.02);}
+    .pkg-price-num{font-family:var(--font-display);font-size:72px;line-height:1;letter-spacing:0.02em;}
+    .pkg-price-num sup{font-size:32px;vertical-align:super;}
+    .pkg-price-note{font-family:var(--font-mono);font-size:11px;color:var(--gray);letter-spacing:0.08em;text-transform:uppercase;margin-top:6px;}
+    .pkg-features{padding:28px 32px;flex:1;}
+    .pkg-features-label{font-family:var(--font-mono);font-size:10px;color:var(--orange);letter-spacing:0.14em;text-transform:uppercase;margin-bottom:16px;}
+    .pkg-feature{display:flex;align-items:flex-start;gap:12px;font-size:14px;color:var(--gray);margin-bottom:12px;line-height:1.5;}
+    .pkg-feature::before{content:'✓';color:var(--orange);font-weight:700;flex-shrink:0;margin-top:1px;}
+    .pkg-feature strong{color:var(--white);}
+    .pkg-delivery{display:flex;align-items:center;gap:8px;padding:14px 32px;border-top:1px solid var(--border);font-family:var(--font-mono);font-size:11px;color:var(--orange);letter-spacing:0.08em;text-transform:uppercase;}
+    .pkg-footer{padding:20px 32px 32px;}
+    .pkg-cta-primary{display:block;text-align:center;background:var(--orange);color:var(--white);padding:16px;border-radius:4px;font-weight:700;font-size:15px;text-decoration:none;letter-spacing:0.04em;transition:all 0.2s;border:2px solid var(--orange);}
+    .pkg-cta-primary:hover{background:transparent;color:var(--orange);}
+    .pkg-cta-secondary{display:block;text-align:center;background:transparent;color:var(--white);padding:16px;border-radius:4px;font-weight:600;font-size:15px;text-decoration:none;letter-spacing:0.04em;transition:all 0.2s;border:2px solid var(--border);}
+    .pkg-cta-secondary:hover{border-color:var(--orange);color:var(--orange);}
+    /* COMPARISON */
+    #compare{background:var(--bg);}
+    table{width:100%;border-collapse:collapse;border:1px solid var(--border);border-radius:8px;overflow:hidden;}
+    th{background:var(--bg3);padding:16px 20px;font-family:var(--font-mono);font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--gray);text-align:left;border-bottom:1px solid var(--border);}
+    th.right,td.right{text-align:center;}
+    th.highlight{color:var(--orange);}
+    td{padding:14px 20px;font-size:14px;color:var(--gray);border-bottom:1px solid var(--border);vertical-align:middle;}
+    tr:last-child td{border-bottom:none;}
+    tr:hover td{background:rgba(255,255,255,0.02);}
+    .check{color:var(--orange);font-size:16px;font-weight:700;}
+    .dash{color:var(--gray-dark);font-size:18px;}
+    .section-row td{background:var(--bg3)!important;font-family:var(--font-mono);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--orange);padding:10px 20px;}
+    /* BOTTOM */
+    #bottom{background:var(--bg2);text-align:center;}
+    .bottom-inner{max-width:620px;margin:0 auto;}
+    .bottom-title{font-family:var(--font-display);font-size:clamp(44px,5vw,68px);line-height:0.95;letter-spacing:0.02em;margin-bottom:20px;}
+    .bottom-text{font-size:17px;color:var(--gray);line-height:1.7;margin-bottom:36px;}
+    footer{background:var(--bg);border-top:1px solid var(--border);padding:40px;text-align:center;}
+    .footer-logo{font-family:var(--font-display);font-size:20px;letter-spacing:0.08em;margin-bottom:14px;}
+    .footer-logo span{color:var(--orange);}
+    .footer-links{display:flex;justify-content:center;gap:24px;flex-wrap:wrap;margin-bottom:16px;}
+    .footer-links a{font-size:13px;color:var(--gray);text-decoration:none;transition:color 0.2s;}
+    .footer-links a:hover{color:var(--orange);}
+    .footer-copy{font-size:12px;color:var(--gray-dark);}
+    .btn-primary{display:inline-flex;align-items:center;gap:8px;background:var(--orange);color:var(--white);padding:16px 32px;border-radius:4px;font-weight:700;font-size:15px;letter-spacing:0.04em;text-decoration:none;transition:all 0.2s;border:2px solid var(--orange);}
+    .btn-primary:hover{background:transparent;color:var(--orange);}
+    @media(max-width:900px){
+      nav{padding:0 20px;}
+      .nav-links{display:none;flex-direction:column;position:absolute;top:64px;left:0;right:0;background:#0A0A0A;padding:20px;border-bottom:1px solid var(--border);gap:16px;}
+      .nav-links.open{display:flex;}
+      .nav-mobile-toggle{display:block;}
+      section{padding:60px 20px;}
+      #hero{padding:100px 20px 60px;}
+      .pkg-grid{grid-template-columns:1fr;}
+      .pkg-card.featured{transform:none;}
+      th,td{padding:12px 12px;font-size:13px;}
+    }
+  </style>
+</head>
+<body>
+<nav>
+  <a href="/index.html" class="nav-logo">MORE <span>PROFIT</span> USA</a>
+  <div class="nav-links" id="nav-links">
+    <a href="/index.html">Home</a>
+    <a href="/revenue-commander-v2.html">Revenue Commander</a>
+    <a href="/pricing.html">Pricing</a>
+    <a href="/about.html">About</a>
+    <a href="/contact.html">Contact</a>
+    <a href="/revenue-commander-v2.html" class="nav-cta">See My Revenue Gap</a>
+  </div>
+  <button class="nav-mobile-toggle" onclick="document.getElementById('nav-links').classList.toggle('open')" aria-label="Menu">☰</button>
+</nav>
+
+<section id="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-inner">
+    <div class="hero-eyebrow">❄️ HVAC Revenue Recovery</div>
+    <h1 class="hero-title">HVAC REVENUE RECOVERY <span class="accent">PACKAGES.</span></h1>
+    <p class="hero-sub">Choose the level of support that fits your business goals.</p>
+  </div>
+</section>
+
+<section id="packages">
+  <div class="section-inner">
+    <div class="pkg-grid fade-up">
+      <div class="pkg-card">
+        <div class="pkg-header">
+          <div class="pkg-tier">Package One</div>
+          <div class="pkg-name">Revenue Recovery Starter</div>
+          <div class="pkg-desc">Fix the most costly revenue leaks in your HVAC business.</div>
+        </div>
+        <div class="pkg-price">
+          <div class="pkg-price-num"><sup>$</sup>1,500</div>
+          <div class="pkg-price-note">One-time · No monthly fee</div>
+        </div>
+        <div class="pkg-features">
+          <div class="pkg-features-label">Includes</div>
+          <div class="pkg-feature">Revenue Gap Analysis</div>
+          <div class="pkg-feature">Review Gap Analysis</div>
+          <div class="pkg-feature">AI Search Optimization Foundations</div>
+          <div class="pkg-feature">Voice Search Optimization Foundations</div>
+          <div class="pkg-feature">Homepage Conversion Optimization</div>
+          <div class="pkg-feature">Mobile Optimization Improvements</div>
+          <div class="pkg-feature">Emergency Service Positioning</div>
+          <div class="pkg-feature">Trust Signal Improvements</div>
+          <div class="pkg-feature">Local HVAC SEO Foundations</div>
+          <div class="pkg-feature">AI-Friendly Content Structure</div>
+        </div>
+        <div class="pkg-delivery">⚡ 72-Hour Delivery</div>
+        <div class="pkg-footer">
+          <a href="/revenue-commander-v2.html" class="pkg-cta-secondary">Get Started →</a>
+        </div>
+      </div>
+      <div class="pkg-card featured">
+        <div class="pkg-badge">★ Most Popular</div>
+        <div class="pkg-header">
+          <div class="pkg-tier">Package Two</div>
+          <div class="pkg-name">HVAC Revenue Recovery System</div>
+          <div class="pkg-desc">Build a complete revenue recovery system designed to capture more calls, appointments, and installs.</div>
+        </div>
+        <div class="pkg-price">
+          <div class="pkg-price-num"><sup>$</sup>2,500</div>
+          <div class="pkg-price-note">One-time · No monthly fee</div>
+        </div>
+        <div class="pkg-features">
+          <div class="pkg-features-label">Includes Everything In Revenue Recovery Starter, Plus</div>
+          <div class="pkg-feature"><strong>Complete HVAC Website Build</strong></div>
+          <div class="pkg-feature"><strong>Missed Call Recovery System</strong></div>
+          <div class="pkg-feature"><strong>AI-Powered Lead Capture</strong></div>
+          <div class="pkg-feature"><strong>Google Business Profile Optimization</strong></div>
+          <div class="pkg-feature"><strong>Review Growth System</strong></div>
+          <div class="pkg-feature"><strong>HVAC Service Page Optimization</strong></div>
+          <div class="pkg-feature"><strong>AI Search Visibility Optimization</strong></div>
+          <div class="pkg-feature"><strong>Voice Search Optimization</strong></div>
+          <div class="pkg-feature"><strong>Conversion-Focused Call-To-Action Structure</strong></div>
+          <div class="pkg-feature"><strong>Local Market Competitive Positioning</strong></div>
+        </div>
+        <div class="pkg-delivery">⚡ 5-Day Delivery</div>
+        <div class="pkg-footer">
+          <a href="/revenue-commander-v2.html" class="pkg-cta-primary">Build My System →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="compare">
+  <div class="section-inner">
+    <div class="section-label">Side-by-Side</div>
+    <h2 class="section-title fade-up">WHAT'S INCLUDED IN <span class="accent">EACH PACKAGE.</span></h2>
+    <div class="fade-up" style="overflow-x:auto;margin-top:40px;">
+      <table>
+        <thead>
+          <tr>
+            <th style="width:44%">Feature</th>
+            <th class="right" style="width:28%">Revenue Recovery Starter<br><span style="color:var(--white);font-size:16px;font-family:var(--font-display);letter-spacing:0.02em;">$1,500</span></th>
+            <th class="right highlight" style="width:28%">HVAC Recovery System<br><span style="color:var(--orange);font-size:16px;font-family:var(--font-display);letter-spacing:0.02em;">$2,500</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="section-row"><td colspan="3">Analysis & Strategy</td></tr>
+          <tr><td>Revenue Gap Analysis</td><td class="right"><span class="check">✓</span></td><td class="right"><span class="check">✓</span></td></tr>
+          <tr><td>Review Gap Analysis</td><td class="right"><span class="check">✓</span></td><td class="right"><span class="check">✓</span></td></tr>
+          <tr class="section-row"><td colspan="3">Visibility & Search</td></tr>
+          <tr><td>AI Search Optimization Foundations</td><td class="right"><span class="check">✓</span></td><td class="right"><span class="check">✓</span></td></tr>
+          <tr><td>Voice Search Optimization Foundations</td><td class="right"><span class="check">✓</span></td><td class="right"><span class="check">✓</span></td></tr>
+          <tr><td>Local HVAC SEO Foundations</td><td class="right"><span class="check">✓</span></td><td class="right"><span class="check">✓</span></td></tr>
+          <tr><td>AI-Friendly Content Structure</td><td class="right"><span class="check">✓</span></td><td class="right"><span class="check">✓</span></td></tr>
+          <tr><td>AI Search Visibility Optimization (Full)</td><td class="right"><span class="dash">—</span></td><td class="right"><span class="check">✓</span></td></tr>
+          <tr><td>Voice Search Optimization (Full)</td><td class="right"><span class="dash">—</span></td><td class="right"><span class="check">✓</span></td></tr>
+          <tr><td>Google Business Profile Optimization</td><td class="right"><span class="dash">—</span></td><td class="right"><span class="check">✓</span></td></tr>
+          <tr><td>Local Market Competitive Positioning</td><td class="right"><span class="dash">—</span></td><td class="right"><span class="check">✓</span></td></tr>
+          <tr class="section-row"><td colspan="3">Website & Conversion</td></tr>
+          <tr><td>Homepage Conversion Optimization</td><td class="right"><span class="check">✓</span></td><td class="right"><span class="check">✓</span></td></tr>
+          <tr><td>Mobile Optimization Improvements</td><td class="right"><span class="check">✓</span></td><td class="right"><span class="check">✓</span></td></tr>
+          <tr><td>Emergency Service Positioning</td><td class="right"><span class="check">✓</span></td><td class="right"><span class="check">✓</span></td></tr>
+          <tr><td>Trust Signal Improvements</td><td class="right"><span class="check">✓</span></td><td class="right"><span class="check">✓</span></td></tr>
+          <tr><td>Complete HVAC Website Build</td><td class="right"><span class="dash">—</span></td><td class="right"><span class="check">✓</span></td></tr>
+          <tr><td>HVAC Service Page Optimization</td><td class="right"><span class="dash">—</span></td><td class="right"><span class="check">✓</span></td></tr>
+          <tr><td>Conversion-Focused CTA Structure</td><td class="right"><span class="dash">—</span></td><td class="right"><span class="check">✓</span></td></tr>
+          <tr class="section-row"><td colspan="3">Lead Recovery & Growth</td></tr>
+          <tr><td>Missed Call Recovery System</td><td class="right"><span class="dash">—</span></td><td class="right"><span class="check">✓</span></td></tr>
+          <tr><td>AI-Powered Lead Capture</td><td class="right"><span class="dash">—</span></td><td class="right"><span class="check">✓</span></td></tr>
+          <tr><td>Review Growth System</td><td class="right"><span class="dash">—</span></td><td class="right"><span class="check">✓</span></td></tr>
+          <tr class="section-row"><td colspan="3">Delivery</td></tr>
+          <tr><td>Delivery Timeline</td><td class="right" style="color:var(--white);font-weight:600;">72 Hours</td><td class="right" style="color:var(--orange);font-weight:600;">5 Business Days</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="bottom">
+  <div class="section-inner">
+    <div class="bottom-inner fade-up">
+      <h2 class="bottom-title">NOT SURE WHICH PACKAGE <span class="accent">FITS?</span></h2>
+      <p class="bottom-text">Start with Revenue Commander and discover your biggest revenue opportunities. The assessment is free and takes 2 minutes.</p>
+      <a href="/revenue-commander-v2.html" class="btn-primary">⚡ See My Revenue Gap</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">MORE <span>PROFIT</span> USA</div>
+  <div class="footer-links">
+    <a href="/index.html">Home</a>
+    <a href="/revenue-commander-v2.html">Revenue Commander</a>
+    <a href="/pricing.html">Pricing</a>
+    <a href="/about.html">About</a>
+    <a href="/contact.html">Contact</a>
+  </div>
+  <div class="footer-copy">© 2026 More Profit USA. All rights reserved.</div>
+</footer>
+<script>
+  const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');}),{threshold:0.1});
+  document.querySelectorAll('.fade-up').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>

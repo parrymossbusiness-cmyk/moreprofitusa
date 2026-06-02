@@ -1,687 +1,408 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>More Profit USA — More Calls. More Jobs. More Profit for HVAC, Roofing &amp; Plumbing Companies</title>
-  <meta name="description" content="More Profit USA helps HVAC, roofing, and plumbing companies generate more calls, rank higher on Google Maps, recover missed leads, and convert more visitors into booked jobs.">
-  <link rel="stylesheet" href="styles.css">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📈</text></svg>">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>More Profit USA — Stop Losing HVAC Revenue To Competitors This Summer</title>
+  <meta name="description" content="Revenue Commander reveals where HVAC revenue is leaking and how to recover it. Review gaps, missed calls, AI search visibility, voice search, and mobile conversion." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root{--bg:#0A0A0A;--bg2:#111111;--bg3:#161616;--orange:#FF4500;--orange-dim:rgba(255,69,0,0.12);--border:rgba(255,255,255,0.08);--border-orange:rgba(255,69,0,0.3);--white:#FFFFFF;--gray:#A0A0A0;--gray-dark:#444444;--font-display:'Bebas Neue',sans-serif;--font-body:'DM Sans',sans-serif;--font-mono:'DM Mono',monospace;}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{background:var(--bg);color:var(--white);font-family:var(--font-body);font-size:16px;line-height:1.6;overflow-x:hidden;}
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 40px;height:64px;background:rgba(10,10,10,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);}
+    .nav-logo{font-family:var(--font-display);font-size:22px;letter-spacing:0.08em;color:var(--white);text-decoration:none;}
+    .nav-logo span{color:var(--orange);}
+    .nav-links{display:flex;align-items:center;gap:28px;}
+    .nav-links a{color:var(--gray);font-size:13px;font-weight:500;text-decoration:none;letter-spacing:0.04em;transition:color 0.2s;}
+    .nav-links a:hover{color:var(--white);}
+    .nav-cta{background:var(--orange)!important;color:var(--white)!important;padding:8px 18px;border-radius:4px;font-weight:700!important;transition:opacity 0.2s!important;}
+    .nav-cta:hover{opacity:0.88;}
+    .nav-mobile-toggle{display:none;background:none;border:none;cursor:pointer;color:var(--white);font-size:20px;}
+    section{padding:100px 40px;}
+    .section-inner{max-width:1100px;margin:0 auto;}
+    .section-label{font-family:var(--font-mono);font-size:11px;letter-spacing:0.2em;color:var(--orange);text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:10px;}
+    .section-label::before{content:'';display:block;width:24px;height:1px;background:var(--orange);}
+    .section-title{font-family:var(--font-display);font-size:clamp(40px,5vw,68px);line-height:1;letter-spacing:0.02em;margin-bottom:20px;}
+    .section-sub{font-size:17px;color:var(--gray);max-width:640px;line-height:1.7;}
+    .accent{color:var(--orange);}
+    .fade-up{opacity:0;transform:translateY(24px);transition:opacity 0.6s ease,transform 0.6s ease;}
+    .fade-up.visible{opacity:1;transform:translateY(0);}
+    .btn-primary{display:inline-flex;align-items:center;gap:8px;background:var(--orange);color:var(--white);padding:16px 32px;border-radius:4px;font-weight:700;font-size:15px;letter-spacing:0.04em;text-decoration:none;transition:all 0.2s;border:2px solid var(--orange);}
+    .btn-primary:hover{background:transparent;color:var(--orange);}
+    .btn-outline{display:inline-flex;align-items:center;gap:8px;background:transparent;color:var(--white);padding:16px 32px;border-radius:4px;font-weight:600;font-size:15px;letter-spacing:0.04em;text-decoration:none;transition:all 0.2s;border:2px solid var(--border);}
+    .btn-outline:hover{border-color:var(--orange);color:var(--orange);}
+    /* HERO */
+    #hero{min-height:100vh;display:flex;align-items:center;padding:100px 40px 80px;position:relative;overflow:hidden;}
+    .hero-grid{position:absolute;inset:0;z-index:0;background-image:linear-gradient(rgba(255,69,0,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,69,0,0.04) 1px,transparent 1px);background-size:60px 60px;}
+    .hero-glow{position:absolute;top:-200px;left:-100px;width:700px;height:700px;background:radial-gradient(circle,rgba(255,69,0,0.12) 0%,transparent 70%);pointer-events:none;z-index:0;}
+    .hero-inner{position:relative;z-index:1;max-width:1100px;margin:0 auto;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;}
+    .hero-eyebrow{font-family:var(--font-mono);font-size:11px;letter-spacing:0.2em;color:var(--orange);text-transform:uppercase;margin-bottom:20px;display:flex;align-items:center;gap:10px;}
+    .hero-eyebrow::before{content:'';display:block;width:32px;height:1px;background:var(--orange);}
+    .hero-title{font-family:var(--font-display);font-size:clamp(60px,7vw,96px);line-height:0.95;letter-spacing:0.02em;margin-bottom:24px;}
+    .hero-sub{font-size:18px;color:var(--gray);line-height:1.7;margin-bottom:16px;max-width:520px;}
+    .hero-trust{display:flex;gap:12px;align-items:flex-start;background:var(--orange-dim);border:1px solid var(--border-orange);border-radius:6px;padding:14px 18px;margin-bottom:36px;max-width:520px;}
+    .hero-trust-icon{font-size:20px;flex-shrink:0;margin-top:2px;}
+    .hero-trust p{font-size:13px;color:var(--gray);line-height:1.5;}
+    .hero-trust strong{color:var(--white);}
+    .hero-ctas{display:flex;gap:14px;flex-wrap:wrap;}
+    .score-card{background:var(--bg3);border:1px solid var(--border);border-radius:12px;overflow:hidden;box-shadow:0 40px 80px rgba(0,0,0,0.6);}
+    .score-header{background:linear-gradient(135deg,#0f1a2e,#0a0f1e);padding:24px 24px 18px;border-bottom:1px solid var(--border);}
+    .score-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,69,0,0.15);border:1px solid var(--border-orange);border-radius:20px;padding:4px 12px;font-size:11px;font-weight:600;color:var(--orange);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:12px;}
+    .score-company{font-size:18px;font-weight:700;margin-bottom:2px;}
+    .score-location{font-size:12px;color:var(--gray);}
+    .score-metrics{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);}
+    .score-metric{background:var(--bg3);padding:16px 18px;}
+    .score-metric-label{font-family:var(--font-mono);font-size:10px;color:var(--gray-dark);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:6px;}
+    .score-metric-val{font-size:24px;font-weight:700;line-height:1;}
+    .score-metric-val.low{color:#e74c3c;}
+    .score-metric-val.mid{color:#f39c12;}
+    .score-metric-sub{font-size:11px;color:var(--gray);margin-top:4px;}
+    .score-footer{padding:18px 20px;display:flex;align-items:center;justify-content:space-between;}
+    .score-opp-label{font-family:var(--font-mono);font-size:10px;color:var(--gray);text-transform:uppercase;letter-spacing:0.08em;}
+    .score-opp-val{font-size:24px;font-weight:700;color:var(--orange);}
+    .score-cta-sm{background:var(--orange);color:var(--white);padding:10px 18px;border-radius:4px;font-weight:700;font-size:12px;text-decoration:none;letter-spacing:0.04em;white-space:nowrap;}
+    /* TICKER */
+    .ticker{background:var(--orange);padding:10px 0;overflow:hidden;white-space:nowrap;}
+    .ticker-inner{display:inline-flex;animation:ticker 28s linear infinite;}
+    .ticker-item{display:inline-flex;align-items:center;gap:10px;padding:0 28px;font-family:var(--font-mono);font-size:11px;letter-spacing:0.12em;color:var(--white);font-weight:500;}
+    .ticker-dot{width:4px;height:4px;background:rgba(255,255,255,0.5);border-radius:50%;}
+    @keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+    /* NO MORE LEADS */
+    #no-leads{background:var(--bg2);}
+    .no-leads-inner{max-width:800px;margin:0 auto;text-align:center;}
+    .no-leads-title{font-family:var(--font-display);font-size:clamp(44px,5.5vw,72px);line-height:1;letter-spacing:0.02em;margin-bottom:16px;}
+    .no-leads-sub{font-family:var(--font-display);font-size:clamp(28px,3.5vw,46px);line-height:1;letter-spacing:0.02em;color:var(--orange);margin-bottom:28px;}
+    .no-leads-body{font-size:17px;color:var(--gray);line-height:1.7;max-width:620px;margin:0 auto;}
+    /* LEAKS */
+    #leaks{background:var(--bg);}
+    .leaks-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-top:56px;}
+    .leak-card{background:var(--bg);padding:32px 28px;transition:background 0.2s;}
+    .leak-card:hover{background:var(--bg3);}
+    .leak-icon{font-size:28px;margin-bottom:14px;}
+    .leak-title{font-size:16px;font-weight:700;margin-bottom:8px;}
+    .leak-text{font-size:14px;color:var(--gray);line-height:1.6;}
+    /* WHY CHOOSE */
+    #why{background:var(--bg2);}
+    .why-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;margin-top:56px;}
+    .why-list{display:flex;flex-direction:column;gap:12px;}
+    .why-item{display:flex;align-items:center;gap:16px;padding:18px 22px;background:var(--bg3);border:1px solid var(--border);border-radius:6px;font-size:16px;font-weight:600;transition:border-color 0.2s;}
+    .why-item:hover{border-color:var(--border-orange);}
+    .why-check{color:var(--orange);font-size:18px;flex-shrink:0;}
+    .why-box{background:linear-gradient(135deg,#1a0800,#0d0d0d);border:1px solid var(--border-orange);border-radius:8px;padding:40px;}
+    .why-box-title{font-family:var(--font-display);font-size:28px;letter-spacing:0.02em;line-height:1.2;margin-bottom:16px;}
+    .why-box-text{font-size:15px;color:var(--gray);line-height:1.7;margin-bottom:24px;}
+    /* LISTEN */
+    #listen{background:var(--bg);}
+    .listen-inner{max-width:860px;margin:0 auto;}
+    .listen-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:40px;}
+    .listen-item{display:flex;align-items:flex-start;gap:14px;padding:22px;background:var(--bg3);border:1px solid var(--border);border-radius:6px;transition:border-color 0.2s;}
+    .listen-item:hover{border-color:var(--border-orange);}
+    .listen-check{color:var(--orange);font-weight:700;font-size:16px;flex-shrink:0;margin-top:2px;}
+    .listen-text{font-size:14px;line-height:1.5;}
+    /* PRICING PREVIEW */
+    #pricing-preview{background:var(--bg2);}
+    .pricing-preview-inner{max-width:880px;margin:0 auto;}
+    .pricing-cards{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:48px;}
+    .pp-card{background:var(--bg3);border:1px solid var(--border);border-radius:8px;overflow:hidden;display:flex;flex-direction:column;transition:border-color 0.2s,transform 0.2s;}
+    .pp-card:hover{border-color:var(--border-orange);transform:translateY(-4px);}
+    .pp-card.featured{border-color:var(--orange);transform:translateY(-8px);}
+    .pp-card.featured:hover{transform:translateY(-12px);}
+    .pp-badge{background:var(--orange);color:var(--white);font-family:var(--font-mono);font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;text-align:center;padding:7px;}
+    .pp-header{padding:28px 28px 20px;}
+    .pp-tier{font-family:var(--font-mono);font-size:10px;color:var(--orange);letter-spacing:0.14em;text-transform:uppercase;margin-bottom:8px;}
+    .pp-name{font-family:var(--font-display);font-size:24px;letter-spacing:0.02em;margin-bottom:10px;line-height:1.1;}
+    .pp-desc{font-size:13px;color:var(--gray);line-height:1.5;}
+    .pp-price{padding:20px 28px;border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+    .pp-price-num{font-family:var(--font-display);font-size:60px;line-height:1;letter-spacing:0.02em;}
+    .pp-price-num sup{font-size:28px;vertical-align:super;}
+    .pp-price-note{font-family:var(--font-mono);font-size:10px;color:var(--gray);letter-spacing:0.08em;text-transform:uppercase;margin-top:4px;}
+    .pp-footer{padding:20px 28px 28px;margin-top:auto;}
+    .pp-cta-primary{display:block;text-align:center;background:var(--orange);color:var(--white);padding:14px;border-radius:4px;font-weight:700;font-size:14px;text-decoration:none;letter-spacing:0.04em;transition:all 0.2s;border:2px solid var(--orange);}
+    .pp-cta-primary:hover{background:transparent;color:var(--orange);}
+    .pp-cta-secondary{display:block;text-align:center;background:transparent;color:var(--white);padding:14px;border-radius:4px;font-weight:600;font-size:14px;text-decoration:none;letter-spacing:0.04em;transition:all 0.2s;border:2px solid var(--border);}
+    .pp-cta-secondary:hover{border-color:var(--orange);color:var(--orange);}
+    .pp-delivery{text-align:center;font-family:var(--font-mono);font-size:10px;color:var(--gray-dark);letter-spacing:0.08em;text-transform:uppercase;margin-top:10px;}
+    /* FINAL */
+    #final{background:linear-gradient(180deg,var(--bg2) 0%,#0d0500 50%,var(--bg) 100%);padding:120px 40px;text-align:center;}
+    .final-inner{max-width:680px;margin:0 auto;}
+    .final-title{font-family:var(--font-display);font-size:clamp(52px,6vw,80px);line-height:0.95;letter-spacing:0.02em;margin-bottom:22px;}
+    .final-sub{font-size:18px;color:var(--gray);margin-bottom:36px;line-height:1.6;}
+    footer{background:var(--bg);border-top:1px solid var(--border);padding:40px;text-align:center;}
+    .footer-logo{font-family:var(--font-display);font-size:20px;letter-spacing:0.08em;margin-bottom:14px;}
+    .footer-logo span{color:var(--orange);}
+    .footer-links{display:flex;justify-content:center;gap:24px;flex-wrap:wrap;margin-bottom:16px;}
+    .footer-links a{font-size:13px;color:var(--gray);text-decoration:none;transition:color 0.2s;}
+    .footer-links a:hover{color:var(--orange);}
+    .footer-copy{font-size:12px;color:var(--gray-dark);}
+    @media(max-width:900px){
+      nav{padding:0 20px;}
+      .nav-links{display:none;flex-direction:column;position:absolute;top:64px;left:0;right:0;background:#0A0A0A;padding:20px;border-bottom:1px solid var(--border);gap:16px;}
+      .nav-links.open{display:flex;}
+      .nav-mobile-toggle{display:block;}
+      section{padding:72px 20px;}
+      #hero{padding:100px 20px 60px;min-height:auto;}
+      .hero-inner{grid-template-columns:1fr;gap:48px;}
+      .hero-inner>div:last-child{display:none;}
+      .leaks-grid{grid-template-columns:1fr 1fr;}
+      .why-grid{grid-template-columns:1fr;gap:40px;}
+      .listen-grid{grid-template-columns:1fr;}
+      .pricing-cards{grid-template-columns:1fr;}
+      .pp-card.featured{transform:none;}
+    }
+    @media(max-width:560px){.leaks-grid{grid-template-columns:1fr;}}
+  </style>
 </head>
 <body>
-
-<!-- ==================== NAVIGATION ==================== -->
-<nav class="nav" id="nav">
-  <div class="container nav-inner">
-    <a href="#" class="nav-logo">MORE PROFIT <span>USA</span></a>
-    <div class="nav-links" id="navLinks">
-      <a href="#problems">Why Us</a>
-      <a href="#services">Services</a>
-      <a href="#industries">Industries</a>
-      <a href="#results">Results</a>
-      <a href="#about">About</a>
-      <a href="audit.html" class="btn btn-lime nav-cta">Free Audit</a>
-    </div>
-    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
-      <span></span><span></span><span></span>
-    </button>
+<nav>
+  <a href="/index.html" class="nav-logo">MORE <span>PROFIT</span> USA</a>
+  <div class="nav-links" id="nav-links">
+    <a href="/index.html">Home</a>
+    <a href="/revenue-commander-v2.html">Revenue Commander</a>
+    <a href="/pricing.html">Pricing</a>
+    <a href="/about.html">About</a>
+    <a href="/contact.html">Contact</a>
+    <a href="/revenue-commander-v2.html" class="nav-cta">See My Revenue Gap</a>
   </div>
+  <button class="nav-mobile-toggle" onclick="document.getElementById('nav-links').classList.toggle('open')" aria-label="Menu">☰</button>
 </nav>
 
-<!-- ==================== HERO SECTION ==================== -->
-<section class="hero" id="hero">
-  <div class="hero-bg">
-    <div class="hero-grid-bg"></div>
-    <div class="hero-img-overlay">
-      <img src="images/Hero_Technician.png" alt="Professional HVAC technician working on rooftop air conditioning unit" class="hero-img" loading="eager">
-    </div>
-  </div>
-  <div class="container">
-    <div class="hero-content">
-      <div class="hero-badge fade-up">
-        <span class="pulse"></span>
-        Built for Home Service Companies
+<section id="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-inner">
+    <div>
+      <div class="hero-eyebrow">HVAC Revenue Recovery</div>
+      <h1 class="hero-title">STOP LOSING<br>HVAC REVENUE<br>TO COMPETITORS<br><span class="accent">THIS SUMMER.</span></h1>
+      <p class="hero-sub">Every missed call, weak review profile, and invisible AI search result sends homeowners to your competitors. Revenue Commander reveals where revenue is leaking and how to recover it.</p>
+      <div class="hero-trust">
+        <div class="hero-trust-icon">🏠</div>
+        <p>Built by someone who has personally referred <strong>more than 1,000 homeowners to contractors</strong> and understands exactly how homeowners choose who to call during an HVAC emergency.</p>
       </div>
-      <h1 class="fade-up stagger-1">
-        <span class="hero-line">More Calls.</span>
-        <span class="hero-line">More Jobs.</span>
-        <span class="hero-line hero-line-accent"><em>More Profit.</em></span>
-      </h1>
-      <p class="subheadline hero-sub fade-up stagger-2">We help HVAC, roofing, and plumbing companies capture more leads, rank higher locally, and convert more visitors into booked jobs.</p>
-      <div class="btn-group fade-up stagger-3">
-        <a href="free-revenue-report.html" class="btn btn-lime">Get Your Free Revenue Report <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
-        <a href="demos.html" class="btn btn-outline">See Demo Sites</a>
-      </div>
-      <div class="hero-micro fade-up stagger-4">
-        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-        No contracts &bull; No setup fees &bull; Results-focused
+      <div class="hero-ctas">
+        <a href="/revenue-commander-v2.html" class="btn-primary">⚡ See My Revenue Gap</a>
+        <a href="/pricing.html" class="btn-outline">View Full Pricing</a>
       </div>
     </div>
-  </div>
-</section>
-
-<!-- ==================== PROBLEMS SECTION ==================== -->
-<section class="problems section-pad" id="problems">
-  <div class="container text-center">
-    <span class="section-label label-dark fade-up">The Hard Truth</span>
-    <h2 class="fade-up">Most Home Service Companies<br>Are <span style="color:#EF4444">Losing Jobs</span> Online.</h2>
-    <p class="subheadline text-dark-muted fade-up">If your phone isn't ringing, it's not because customers don't need you, it's because they're finding your competitors first.</p>
-  </div>
-  <div class="container">
-    <div class="problems-grid">
-      <div class="problem-card fade-up stagger-1">
-        <div class="problem-icon red">📵</div>
-        <h3>Missed Calls = Missed Revenue</h3>
-        <p>Every missed call is a job that goes to someone else. Most contractors don't have a system to catch and recover those leads.</p>
-      </div>
-      <div class="problem-card fade-up stagger-2">
-        <div class="problem-icon red">🌐</div>
-        <h3>Outdated Websites Kill Trust</h3>
-        <p>Homeowners judge your business in 3 seconds. If your site looks old, loads slow, or isn't mobile-friendly — they're gone.</p>
-      </div>
-      <div class="problem-card fade-up stagger-3">
-        <div class="problem-icon red">📍</div>
-        <h3>Invisible on Google Maps</h3>
-        <p>When someone searches "AC repair near me," you need to be in the top 3. If you're not, your competitor gets the call.</p>
-      </div>
-      <div class="problem-card fade-up stagger-4">
-        <div class="problem-icon red">📱</div>
-        <h3>Weak Mobile Experience</h3>
-        <p>Over 70% of emergency service searches happen on phones. If your site doesn't work perfectly on mobile, you're bleeding leads.</p>
-      </div>
-      <div class="problem-card fade-up stagger-5">
-        <div class="problem-icon red">⭐</div>
-        <h3>Low Trust = Low Conversions</h3>
-        <p>No reviews, no photos, no proof of work? Homeowners choose the company that looks more professional and trustworthy online.</p>
-      </div>
-      <div class="problem-card fade-up stagger-6">
-        <div class="problem-icon red">⏱️</div>
-        <h3>Slow Response Loses Emergencies</h3>
-        <p>A burst pipe or broken AC can't wait. If you're not set up to respond instantly, that emergency call goes to whoever answers first.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ==================== SERVICES SECTION ==================== -->
-<section class="services section-pad" id="services">
-  <div class="container text-center">
-    <span class="section-label label-lime fade-up">What We Build For You</span>
-    <h2 class="fade-up">Everything You Need to<br><span class="text-lime">Capture More Jobs</span></h2>
-    <p class="subheadline text-muted fade-up">Practical tools and strategies that make your phone ring, we don't load you with irrelevant metrics.</p>
-  </div>
-  <div class="container">
-    <div class="services-grid">
-      <div class="service-card fade-up stagger-1">
-        <div class="service-icon">🖥️</div>
-        <h3>Website Design</h3>
-        <p>Fast, mobile-first websites built to convert visitors into calls. No clutter, no fluff, just clear messaging and strong CTAs that make homeowners call your phone.</p>
-        <span class="service-tag">→ More Booked Jobs</span>
-      </div>
-      <div class="service-card fade-up stagger-2">
-        <div class="service-icon">📍</div>
-        <h3>Google Business Optimization</h3>
-        <p>Get found when locals search "near me." We optimize your Google Business Profile so you show up in the Google Maps pack where the real calls come from.</p>
-        <span class="service-tag">→ Higher Visibility</span>
-      </div>
-      <div class="service-card fade-up stagger-3">
-        <div class="service-icon">🔍</div>
-        <h3>Local SEO and AI Search</h3>
-        <p>Rank for the searches that matter in your service area. We build your local authority so your business appears when homeowners need you most, including when they increasingly use AI for home service searches.</p>
-        <span class="service-tag">→ More Organic Calls</span>
-      </div>
-      <div class="service-card fade-up stagger-4">
-        <div class="service-icon">📲</div>
-        <h3>Missed Call Recovery</h3>
-        <p>Automatically follow up with every missed call via text. Recover leads that would have gone to your competitor, even after hours.</p>
-        <span class="service-tag">→ Recovered Revenue</span>
-      </div>
-      <div class="service-card fade-up stagger-5">
-        <div class="service-icon">🤖</div>
-        <h3>AI Lead Capture</h3>
-        <p>Smart chat and forms that qualify and capture leads 24/7. Homeowners get instant responses, and you get booked appointments.</p>
-        <span class="service-tag">→ 24/7 Lead Flow</span>
-      </div>
-      <div class="service-card fade-up stagger-6">
-        <div class="service-icon">⭐</div>
-        <h3>Reputation Management</h3>
-        <p>Automate review requests, respond to feedback, and build the online reputation that makes homeowners trust you over the competition.</p>
-        <span class="service-tag">→ Stronger Trust</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-
-<!-- ==================== MOBILE TRANSFORMATION ==================== -->
-<section class="mobile-transform section-pad" id="mobile-transform">
-  <div class="container text-center">
-    <span class="section-label label-lime fade-up">Mobile Experience</span>
-    <h2 class="fade-up">Most Emergency Searches<br>Happen on <span class="text-lime">Phones.</span></h2>
-    <p class="subheadline text-muted fade-up">If your mobile experience feels outdated, homeowners leave in seconds. Your competitors are one tap away.</p>
-  </div>
-  <div class="container">
-    <div class="mt-layout">
-      <div class="mt-phones fade-up">
-        <!-- OLD phone -->
-        <div class="phone-mockup old">
-          <div class="phone-notch"></div>
-          <div class="phone-screen">
-            <div class="old-ui-header">ACME HVAC Services</div>
-            <div class="old-ui-nav">
-              <span>Home</span><span>Services</span><span>About</span><span>Contact</span>
-            </div>
-            <div class="old-ui-body">
-              <div class="old-img"></div>
-              <p>Welcome to our company! We have been serving the area since 1998. Call us for all your heating and cooling needs today!</p>
-              <p>We offer residential and commercial HVAC services including repair, maintenance, and installation...</p>
-              <span class="old-btn-bad">Click Here To Contact Us</span>
-            </div>
-            <div class="old-ui-footer">Copyright 2019 ACME HVAC. All Rights Reserved.</div>
-          </div>
-          <div class="phone-label">❌ Losing Calls</div>
+    <div>
+      <div class="score-card">
+        <div class="score-header">
+          <div class="score-badge">❄️ Phoenix, AZ — HVAC</div>
+          <div class="score-company">Desert Air Pro HVAC</div>
+          <div class="score-location">Revenue Commander Assessment</div>
         </div>
-        <!-- NEW phone -->
-        <div class="phone-mockup new">
-          <div class="phone-notch"></div>
-          <div class="phone-screen">
-            <div class="new-ui-header">
-              <div class="new-ui-logo">ELITE <span>HVAC</span></div>
-              <div class="new-ui-menu"></div>
-            </div>
-            <div class="new-ui-hero">
-              <h4>24/7 Emergency<br>AC Repair</h4>
-              <p>Fast, trusted cooling repair in your area</p>
-              <div class="new-ui-cta-row">
-                <div class="new-ui-cta green">📞 Tap to Call</div>
-                <div class="new-ui-cta outline">Book Online</div>
-              </div>
-            </div>
-            <div class="new-ui-trust">
-              <span><span class="dot"></span> Licensed & Insured</span>
-              <span><span class="dot"></span> 4.9★ Reviews</span>
-            </div>
-            <div class="new-ui-services">
-              <h5>Our Services</h5>
-              <div class="new-svc-card"><div class="new-svc-icon">❄️</div><span>AC Repair & Install</span></div>
-              <div class="new-svc-card"><div class="new-svc-icon">🔥</div><span>Heating Systems</span></div>
-              <div class="new-svc-card"><div class="new-svc-icon">🔧</div><span>Emergency Service</span></div>
-            </div>
+        <div class="score-metrics">
+          <div class="score-metric">
+            <div class="score-metric-label">Review Score</div>
+            <div class="score-metric-val low">42<span style="font-size:16px;color:var(--gray-dark)">/100</span></div>
+            <div class="score-metric-sub">41 reviews · 4.3★</div>
           </div>
-          <div class="phone-label">✅ Capturing Calls</div>
+          <div class="score-metric">
+            <div class="score-metric-label">AI Search Visibility</div>
+            <div class="score-metric-val low">18<span style="font-size:16px;color:var(--gray-dark)">/100</span></div>
+            <div class="score-metric-sub">Not found in AI results</div>
+          </div>
+          <div class="score-metric">
+            <div class="score-metric-label">Voice Search</div>
+            <div class="score-metric-val mid">25<span style="font-size:16px;color:var(--gray-dark)">/100</span></div>
+            <div class="score-metric-sub">Weak visibility</div>
+          </div>
+          <div class="score-metric">
+            <div class="score-metric-label">Review Gap</div>
+            <div class="score-metric-val low">4,612</div>
+            <div class="score-metric-sub">Behind top competitor</div>
+          </div>
         </div>
-      </div>
-      <div class="mt-content fade-up">
-        <h3>Your Website on a Phone Is Your Most Important Sales Tool.</h3>
-        <div class="mt-points">
-          <div class="mt-point">
-            <div class="mt-point-icon">📞</div>
-            <div class="mt-point-text">
-              <h4>Tap-to-Call in 1 Second</h4>
-              <p>Large, visible call buttons that work instantly. No hunting for a phone number.</p>
-            </div>
+        <div class="score-footer">
+          <div>
+            <div class="score-opp-label">Estimated Revenue Opportunity</div>
+            <div class="score-opp-val">$87,000+</div>
           </div>
-          <div class="mt-point">
-            <div class="mt-point-icon">🚨</div>
-            <div class="mt-point-text">
-              <h4>Emergency CTA Visibility</h4>
-              <p>When someone's AC breaks at 2am, your emergency button needs to be the first thing they see.</p>
-            </div>
-          </div>
-          <div class="mt-point">
-            <div class="mt-point-icon">⭐</div>
-            <div class="mt-point-text">
-              <h4>Trust Signals Upfront</h4>
-              <p>Ratings, licensing, and reviews visible immediately — no scrolling required.</p>
-            </div>
-          </div>
-          <div class="mt-point">
-            <div class="mt-point-icon">👆</div>
-            <div class="mt-point-text">
-              <h4>Thumb-Friendly Design</h4>
-              <p>Larger touch targets, cleaner spacing, and simplified navigation built for real hands.</p>
-            </div>
-          </div>
+          <a href="/revenue-commander-v2.html" class="score-cta-sm">See Your Report →</a>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ==================== INDUSTRIES SECTION ==================== -->
-<section class="industries section-pad" id="industries">
-  <div class="container text-center">
-    <span class="section-label label-blue fade-up">Industries We Serve</span>
-    <h2 class="fade-up">Built for the Trades.<br><span class="text-blue">Focused on Growth.</span></h2>
-    <p class="subheadline text-dark-muted fade-up">We don't work with everyone. We specialize in home service companies that want more calls and more revenue.</p>
+<div class="ticker">
+  <div class="ticker-inner">
+    <span class="ticker-item">REVIEW GROWTH <span class="ticker-dot"></span></span>
+    <span class="ticker-item">AI SEARCH VISIBILITY <span class="ticker-dot"></span></span>
+    <span class="ticker-item">VOICE SEARCH OPTIMIZATION <span class="ticker-dot"></span></span>
+    <span class="ticker-item">MISSED-CALL RECOVERY <span class="ticker-dot"></span></span>
+    <span class="ticker-item">HVAC REVENUE RECOVERY <span class="ticker-dot"></span></span>
+    <span class="ticker-item">CONVERSION-FOCUSED WEBSITES <span class="ticker-dot"></span></span>
+    <span class="ticker-item">REVIEW GROWTH <span class="ticker-dot"></span></span>
+    <span class="ticker-item">AI SEARCH VISIBILITY <span class="ticker-dot"></span></span>
+    <span class="ticker-item">VOICE SEARCH OPTIMIZATION <span class="ticker-dot"></span></span>
+    <span class="ticker-item">MISSED-CALL RECOVERY <span class="ticker-dot"></span></span>
+    <span class="ticker-item">HVAC REVENUE RECOVERY <span class="ticker-dot"></span></span>
+    <span class="ticker-item">CONVERSION-FOCUSED WEBSITES <span class="ticker-dot"></span></span>
   </div>
-  <div class="container">
-    <div class="industry-cards">
-      <!-- HVAC -->
-      <div class="industry-card fade-up">
-        <img src="images/HVAC_Industry.png" alt="HVAC technician installing air conditioning system" class="industry-img">
-        <div class="industry-content">
-          <span class="section-label label-lime">HVAC Companies</span>
-          <h3>Capture Every Cooling &amp; Heating Call</h3>
-          <p>When a homeowner's AC dies in July, they're calling whoever shows up first on Google. We make sure that's you.</p>
-          <div class="industry-points">
-            <div class="industry-point">
-              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>
-              Rank for "AC repair near me" searches
-            </div>
-            <div class="industry-point">
-              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>
-              Recover after-hours missed calls
-            </div>
-            <div class="industry-point">
-              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>
-              Emergency-ready website &amp; booking
-            </div>
-            <div class="industry-point">
-              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>
-              Google Maps dominance in your area
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- Roofing -->
-      <div class="industry-card fade-up">
-        <img src="images/Roofing_Industry.png" alt="Professional roofer working on residential roof" class="industry-img">
-        <div class="industry-content">
-          <span class="section-label label-lime">Roofing Companies</span>
-          <h3>Win More Storm &amp; Replacement Jobs</h3>
-          <p>Roofing is competitive. We help you stand out with a trusted online presence that homeowners pick over the other 10 companies they're comparing.</p>
-          <div class="industry-points">
-            <div class="industry-point">
-              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>
-              Storm damage lead capture systems
-            </div>
-            <div class="industry-point">
-              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>
-              Before/after project galleries
-            </div>
-            <div class="industry-point">
-              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>
-              Review generation for social proof
-            </div>
-            <div class="industry-point">
-              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>
-              Local SEO for your service areas
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- Plumbing -->
-      <div class="industry-card fade-up">
-        <img src="images/Plumbing_Industry.png" alt="Professional plumber working on kitchen pipes" class="industry-img">
-        <div class="industry-content">
-          <span class="section-label label-lime">Plumbing Companies</span>
-          <h3>Be the First Call for Every Leak</h3>
-          <p>Plumbing emergencies don't wait — and neither should your response. We build systems that capture every lead, day and night.</p>
-          <div class="industry-points">
-            <div class="industry-point">
-              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>
-              24/7 emergency lead capture
-            </div>
-            <div class="industry-point">
-              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>
-              Missed call text-back automation
-            </div>
-            <div class="industry-point">
-              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>
-              Rank for emergency plumbing searches
-            </div>
-            <div class="industry-point">
-              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>
-              Trust-building review systems
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ==================== AI SEARCH VISIBILITY ==================== -->
-<section class="ai-search section-pad" id="ai-search">
-  <div class="container text-center">
-    <span class="section-label label-blue fade-up">Search Is Changing</span>
-    <h2 class="fade-up">Visibility Now Goes Beyond<br><span class="text-blue">Traditional Rankings.</span></h2>
-    <p class="subheadline text-dark-muted fade-up">Homeowners are searching differently — through AI assistants, voice search, and conversational queries. Your business needs to be structured to show up everywhere.</p>
-  </div>
-  <div class="container">
-    <div class="ai-layout">
-      <div class="ai-mockup fade-up">
-        <div class="ai-mockup-bar">
-          <div class="ai-mockup-dots"><span></span><span></span><span></span></div>
-          <div class="ai-mockup-url">search · ai-assisted results</div>
-        </div>
-        <div class="ai-mockup-body">
-          <div class="ai-search-input">
-            <svg width="16" height="16" fill="none" stroke="#9CA3AF" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
-            <span>"best emergency plumber near me open now"</span>
-            <div class="cursor-blink"></div>
-          </div>
-          <div class="ai-answer-card">
-            <div class="ai-answer-label"><span class="sparkle">✦</span> AI Overview</div>
-            <p class="ai-answer-text">Based on local reviews, response times, and service availability, here are the <strong>top-rated emergency plumbers</strong> currently serving your area with <strong>24/7 availability</strong>:</p>
-          </div>
-          <div class="ai-sources">
-            <div class="ai-source">
-              <div class="ai-source-rank">1</div>
-              <div class="ai-source-info">
-                <h5>Elite Plumbing Co. ⭐ 4.9</h5>
-                <span>24/7 Emergency · Licensed & Insured · 15min Response</span>
-              </div>
-            </div>
-            <div class="ai-source">
-              <div class="ai-source-rank">2</div>
-              <div class="ai-source-info">
-                <h5>Reliable Pipe Pros ⭐ 4.7</h5>
-                <span>Same-Day Service · Free Estimates · 10+ Years</span>
-              </div>
-            </div>
-            <div class="ai-source">
-              <div class="ai-source-rank">3</div>
-              <div class="ai-source-info">
-                <h5>QuickFix Plumbing ⭐ 4.5</h5>
-                <span>Residential & Commercial · Open Weekends</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="ai-content fade-up">
-        <h3>The Businesses That Show Up Are the Ones Structured for It.</h3>
-        <div class="ai-points">
-          <div class="ai-point">
-            <div class="ai-point-num">01</div>
-            <div>
-              <h4>Conversational Search</h4>
-              <p>People ask questions, not keywords. "Who can fix my AC tonight?" beats "HVAC repair." Your content needs to match how people actually talk.</p>
-            </div>
-          </div>
-          <div class="ai-point">
-            <div class="ai-point-num">02</div>
-            <div>
-              <h4>Structured Local Authority</h4>
-              <p>AI-driven results favor businesses with strong reviews, complete profiles, accurate information, and consistent local signals.</p>
-            </div>
-          </div>
-          <div class="ai-point">
-            <div class="ai-point-num">03</div>
-            <div>
-              <h4>Trust Signals Matter More</h4>
-              <p>Ratings, response times, licensing, and review volume are weighted heavily in how AI surfaces recommendations to homeowners.</p>
-            </div>
-          </div>
-          <div class="ai-point">
-            <div class="ai-point-num">04</div>
-            <div>
-              <h4>Multi-Surface Visibility</h4>
-              <p>Your business needs to appear in Google Maps, AI Overviews, voice results, and traditional search — not just one channel.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ==================== RESULTS SECTION ==================== -->
-<section class="results section-pad" id="results">
-  <div class="container text-center">
-    <span class="section-label label-lime fade-up">Real Outcomes</span>
-    <h2 class="fade-up">What Better Online Positioning<br><span class="text-lime">Actually Creates</span></h2>
-    <p class="subheadline text-muted fade-up">We don't promise vanity metrics. Here's what happens when your online presence actually works.</p>
-  </div>
-  <div class="container">
-    <div class="results-grid">
-      <div class="result-card fade-up stagger-1">
-        <div class="result-icon">📞</div>
-        <h3>More Phone Calls</h3>
-        <p>Your phone rings more because homeowners can actually find you — and trust you enough to call.</p>
-      </div>
-      <div class="result-card fade-up stagger-2">
-        <div class="result-icon">📍</div>
-        <h3>Stronger Local Visibility</h3>
-        <p>Show up in Google Maps and local search results when people in your area need your services.</p>
-      </div>
-      <div class="result-card fade-up stagger-3">
-        <div class="result-icon">🤝</div>
-        <h3>Better Trust Online</h3>
-        <p>A professional website and strong reviews make homeowners choose you over the competition.</p>
-      </div>
-      <div class="result-card fade-up stagger-4">
-        <div class="result-icon">📈</div>
-        <h3>Higher Conversion Rates</h3>
-        <p>More of your website visitors actually become booked jobs instead of bouncing to competitors.</p>
-      </div>
-      <div class="result-card fade-up stagger-5">
-        <div class="result-icon">⚡</div>
-        <h3>Faster Customer Response</h3>
-        <p>Automated follow-ups and instant lead capture mean you never lose a lead to slow response times again.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ==================== SPEED-TO-LEAD ==================== -->
-<section class="speed-to-lead section-pad" id="speed-to-lead">
-  <div class="container text-center">
-    <span class="section-label label-lime fade-up">Response Speed</span>
-    <h2 class="fade-up">The First Company to Respond<br><span class="text-lime">Usually Wins the Job.</span></h2>
-    <p class="subheadline text-muted fade-up">Leads don't wait. Every minute of delay is revenue walking to your competitor.</p>
-  </div>
-  <div class="container">
-    <div class="stl-timeline">
-      <div class="stl-line"></div>
-      <div class="stl-step fade-up stagger-1">
-        <div class="stl-node green">⚡</div>
-        <div class="stl-step-content">
-          <span class="stl-time t-green">Under 1 Minute</span>
-          <h3>Lead Captured & Routed Instantly</h3>
-          <p>The homeowner gets an immediate response. Your team gets the lead details. The job is yours to lose.</p>
-        </div>
-      </div>
-      <div class="stl-step fade-up stagger-2">
-        <div class="stl-node yellow">⏱️</div>
-        <div class="stl-step-content">
-          <span class="stl-time t-yellow">5 Minutes</span>
-          <h3>Conversion Rate Starts Dropping</h3>
-          <p>After 5 minutes without a response, the homeowner is already looking at your competitor's website.</p>
-        </div>
-      </div>
-      <div class="stl-step fade-up stagger-3">
-        <div class="stl-node orange">📉</div>
-        <div class="stl-step-content">
-          <span class="stl-time t-orange">30 Minutes</span>
-          <h3>You've Likely Lost the Lead</h3>
-          <p>Most homeowners have already called 2-3 other companies. Your chance of winning this job has dropped significantly.</p>
-        </div>
-      </div>
-      <div class="stl-step fade-up stagger-4">
-        <div class="stl-node red">💸</div>
-        <div class="stl-step-content">
-          <span class="stl-time t-red">1 Hour+</span>
-          <h3>Revenue Gone. Job Booked Elsewhere.</h3>
-          <p>The homeowner already booked someone else. Your callback becomes an annoyance, not an opportunity.</p>
-        </div>
-      </div>
-    </div>
-    <div class="stl-bottom fade-up">
-      <h3>We Build Systems That Respond Before You Even Check Your Phone.</h3>
-      <p>Automated text-backs, instant lead routing, smart intake forms, and real-time notifications — so you never lose a job to slow follow-up again.</p>
-    </div>
-  </div>
-</section>
-
-<!-- ==================== AFTER-HOURS LEAD CAPTURE ==================== -->
-<section class="after-hours section-pad" id="after-hours">
-  <div class="container text-center">
-    <span class="section-label label-lime fade-up">After-Hours Revenue</span>
-    <h2 class="fade-up">Your Business Shouldn't Stop<br>When You <span class="text-lime">Stop Answering.</span></h2>
-    <p class="subheadline text-muted fade-up">Emergency searches peak after hours. If you're not capturing those leads automatically, your competitors are.</p>
-  </div>
-  <div class="container">
-    <div class="ah-layout">
-      <div class="ah-visual fade-up">
-        <div class="ah-clock">
-          <div class="ah-time">11:47 PM</div>
-          <div class="ah-time-label">After Hours</div>
-        </div>
-        <div class="ah-notifications">
-          <div class="ah-notif">
-            <div class="ah-notif-icon missed">📵</div>
-            <div class="ah-notif-body">
-              <h4>Missed Call — (512) 555-0194</h4>
-              <p>"AC stopped working, house is 90°"</p>
-            </div>
-            <span class="ah-notif-time">11:32 PM</span>
-          </div>
-          <div class="ah-notif">
-            <div class="ah-notif-icon captured">📱</div>
-            <div class="ah-notif-body">
-              <h4>Auto Text-Back Sent</h4>
-              <p>"Thanks for calling! We'll have a tech reach out within 15 minutes."</p>
-            </div>
-            <span class="ah-notif-time">11:32 PM</span>
-          </div>
-          <div class="ah-notif">
-            <div class="ah-notif-icon chat">💬</div>
-            <div class="ah-notif-body">
-              <h4>AI Chat Lead Captured</h4>
-              <p>Emergency plumbing — burst pipe, kitchen flooding</p>
-            </div>
-            <span class="ah-notif-time">11:41 PM</span>
-          </div>
-          <div class="ah-notif">
-            <div class="ah-notif-icon booked">✅</div>
-            <div class="ah-notif-body">
-              <h4>Appointment Auto-Booked</h4>
-              <p>Tomorrow 7:00 AM — Water heater replacement</p>
-            </div>
-            <span class="ah-notif-time">11:47 PM</span>
-          </div>
-        </div>
-      </div>
-      <div class="ah-content fade-up">
-        <h3>Capture Every Lead. Even at 2 AM.</h3>
-        <p>Homeowners don't care about your business hours. They care about who responds first. We build systems that capture, respond, and qualify leads around the clock — so you wake up to booked jobs, not missed opportunities.</p>
-        <div class="ah-features">
-          <div class="ah-feat">
-            <div class="ah-feat-icon">📵</div>
-            <h4>Missed-Call Text-Back</h4>
-            <p>Every missed call triggers an instant, personalized text response.</p>
-          </div>
-          <div class="ah-feat">
-            <div class="ah-feat-icon">🤖</div>
-            <h4>AI Chat Assistance</h4>
-            <p>Smart chat captures lead details and qualifies inquiries 24/7.</p>
-          </div>
-          <div class="ah-feat">
-            <div class="ah-feat-icon">📋</div>
-            <h4>Instant Lead Forms</h4>
-            <p>Mobile-optimized forms that capture the right info fast.</p>
-          </div>
-          <div class="ah-feat">
-            <div class="ah-feat-icon">🌙</div>
-            <h4>Overnight Recovery</h4>
-            <p>Wake up to qualified leads and pre-booked appointments.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ==================== AUDIT CTA SECTION ==================== -->
-<section class="audit section-pad" id="audit">
-  <div class="container">
-    <div class="audit-inner">
-      <span class="section-label label-lime fade-up">Free — No Strings Attached</span>
-      <h2 class="fade-up">Free Home Service<br>Website &amp; Google Audit</h2>
-      <p class="subheadline fade-up">We'll review your website, Google Business Profile, and local visibility — then show you exactly where you're losing leads and how to fix it.</p>
-      <div class="audit-urgency fade-up">
-        <span class="urgency-tag">🔥 Peak season is coming</span>
-        <span class="urgency-tag">🔍 Emergency searches are surging</span>
-        <span class="urgency-tag">⚠️ Your competitors aren't waiting</span>
-      </div>
-      <div class="btn-group fade-up" style="justify-content:center">
-        <a href="audit.html" class="btn btn-lime">Get My Free Audit <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ==================== ABOUT SECTION ==================== -->
-<section class="about section-pad" id="about">
-  <div class="container">
-    <div class="about-grid">
-      <div>
-        <span class="section-label label-dark fade-up">Who We Are</span>
-        <h2 class="fade-up">We Build Growth Systems<br>for Home Service Companies.</h2>
-        <p class="fade-up">More Profit USA exists for one reason: to help HVAC, roofing, and plumbing companies stop losing money online and start capturing the calls they deserve.</p>
-        <p class="fade-up">We're not a generic marketing agency. We don't do social media dances or brand awareness campaigns. We build practical, revenue-focused systems that make your phone ring more.</p>
-        <p class="fade-up">We move fast, we communicate clearly, and we measure everything by one standard: did it create more business for you?</p>
-      </div>
-      <div class="fade-up">
-        <div class="about-values">
-          <div class="about-value">
-            <div class="about-value-icon">🎯</div>
-            <h4>Revenue-Focused</h4>
-            <p>Every decision tied to more calls and more jobs.</p>
-          </div>
-          <div class="about-value">
-            <div class="about-value-icon">⚡</div>
-            <h4>Fast-Moving</h4>
-            <p>No 6-month timelines. We build and launch quickly.</p>
-          </div>
-          <div class="about-value">
-            <div class="about-value-icon">🔧</div>
-            <h4>Trade-Specialized</h4>
-            <p>We only work with home service companies.</p>
-          </div>
-          <div class="about-value">
-            <div class="about-value-icon">🤝</div>
-            <h4>No BS</h4>
-            <p>Straight talk, real results, no corporate fluff.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ==================== FINAL CTA ==================== -->
-<section class="final-cta section-pad" id="final-cta">
-  <div class="container">
-    <span class="section-label label-lime fade-up">Ready?</span>
-    <h2 class="fade-up">Stop Losing Jobs Online.</h2>
-    <p class="subheadline fade-up">Your competitors are capturing calls you should be getting. Let's fix that.</p>
-    <div class="btn-group fade-up" style="justify-content:center">
-      <<a href="free-revenue-report.html" class="btn btn-lime">Get Your Free Revenue Report <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
-      <a href="schedule.html" class="btn btn-outline">Schedule A Call</a>
-    </div>
-  </div>
-</section>
-
-<!-- ==================== FOOTER ==================== -->
-<footer class="footer">
-  <div class="container">
-    <p>&copy; 2026 More Profit USA. All rights reserved.</p>
-    <div class="footer-links">
-      <a href="#">Privacy Policy</a>
-      <a href="#">Terms of Service</a>
-    </div>
-  </div>
-</footer>
-
-<!-- ==================== STICKY MOBILE CTA ==================== -->
-<div class="sticky-cta" id="stickyCta">
-  <a href="audit.html" class="btn btn-lime">Get My Free Audit <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
 </div>
 
-<script src="script.js"></script>
+<section id="no-leads">
+  <div class="section-inner">
+    <div class="no-leads-inner fade-up">
+      <div class="section-label" style="justify-content:center;">The Real Problem</div>
+      <h2 class="no-leads-title">MOST HVAC COMPANIES DON'T NEED MORE LEADS.</h2>
+      <h3 class="no-leads-sub">They Need To Stop Losing The Ones They're Already Getting.</h3>
+      <p class="no-leads-body">Every day, homeowners search for HVAC companies, find your competitors, and never see your business. Not because you don't do great work — because the signals homeowners rely on in an emergency are pointing them somewhere else.</p>
+    </div>
+  </div>
+</section>
+
+<section id="leaks">
+  <div class="section-inner">
+    <div class="section-label">Where The Revenue Goes</div>
+    <h2 class="section-title fade-up">THE REVENUE LEAKS COSTING<br>HVAC COMPANIES <span class="accent">MONEY.</span></h2>
+    <div class="leaks-grid fade-up">
+      <div class="leak-card">
+        <div class="leak-icon">⭐</div>
+        <div class="leak-title">Review Gap</div>
+        <div class="leak-text">When competitors have thousands more reviews than you, homeowners often choose them before visiting your website.</div>
+      </div>
+      <div class="leak-card">
+        <div class="leak-icon">📵</div>
+        <div class="leak-title">Missed Calls</div>
+        <div class="leak-text">Every missed emergency call is a homeowner calling the next HVAC company on the list.</div>
+      </div>
+      <div class="leak-card">
+        <div class="leak-icon">🤖</div>
+        <div class="leak-title">AI Search Visibility</div>
+        <div class="leak-text">Homeowners are increasingly asking ChatGPT, Gemini, and AI assistants who they should call for AC repair.</div>
+      </div>
+      <div class="leak-card">
+        <div class="leak-icon">🎙️</div>
+        <div class="leak-title">Voice Search</div>
+        <div class="leak-text">Customers are asking Siri and Google Assistant for emergency HVAC services near them.</div>
+      </div>
+      <div class="leak-card">
+        <div class="leak-icon">📱</div>
+        <div class="leak-title">Mobile Conversion Problems</div>
+        <div class="leak-text">If your website is difficult to use on a phone, potential customers leave before calling.</div>
+      </div>
+      <div class="leak-card" style="background:rgba(255,69,0,0.06);border-left:3px solid var(--orange);">
+        <div class="leak-icon">⚡</div>
+        <div class="leak-title" style="color:var(--orange);">See Your Specific Leaks</div>
+        <div class="leak-text">Revenue Commander identifies exactly which gaps are costing your business the most — using live data for your market.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="why">
+  <div class="section-inner">
+    <div class="section-label">The Pattern We've Seen</div>
+    <h2 class="section-title fade-up">WHY HOMEOWNERS CHOOSE ONE<br>HVAC COMPANY <span class="accent">OVER ANOTHER.</span></h2>
+    <p class="section-sub fade-up">After helping connect more than 1,000 homeowners with contractors, we've seen the same pattern repeatedly.</p>
+    <div class="why-grid">
+      <div class="fade-up">
+        <p style="font-size:16px;color:var(--gray);margin-bottom:20px;">Homeowners choose companies that:</p>
+        <div class="why-list">
+          <div class="why-item"><span class="why-check">✓</span>Appear trustworthy</div>
+          <div class="why-item"><span class="why-check">✓</span>Have strong reviews</div>
+          <div class="why-item"><span class="why-check">✓</span>Respond quickly</div>
+          <div class="why-item"><span class="why-check">✓</span>Look professional online</div>
+          <div class="why-item"><span class="why-check">✓</span>Are easy to contact</div>
+        </div>
+      </div>
+      <div class="why-box fade-up">
+        <div class="why-box-title">OUR SYSTEMS ARE DESIGNED TO HELP YOUR BUSINESS BECOME <span class="accent">THAT COMPANY.</span></div>
+        <p class="why-box-text">We didn't learn this from a textbook. We learned it from being in the room when homeowners with a dead AC unit in July heat decided who to call. Speed and trust. Every single time.</p>
+        <a href="/revenue-commander-v2.html" class="btn-primary" style="display:block;text-align:center;">⚡ See My Revenue Gap</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="listen">
+  <div class="section-inner">
+    <div class="listen-inner">
+      <div class="section-label">Our Qualifications</div>
+      <h2 class="section-title fade-up">WHY LISTEN <span class="accent">TO US?</span></h2>
+      <div class="listen-grid fade-up">
+        <div class="listen-item"><span class="listen-check">✓</span><span class="listen-text">20+ years of sales and business development experience</span></div>
+        <div class="listen-item"><span class="listen-check">✓</span><span class="listen-text">1,000+ homeowner referrals to contractors</span></div>
+        <div class="listen-item"><span class="listen-check">✓</span><span class="listen-text">Specialized in HVAC growth and revenue recovery</span></div>
+        <div class="listen-item"><span class="listen-check">✓</span><span class="listen-text">AI Search and Voice Search optimization expertise</span></div>
+        <div class="listen-item" style="grid-column:1/-1;"><span class="listen-check">✓</span><span class="listen-text">Focused exclusively on helping HVAC companies capture more revenue</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="pricing-preview">
+  <div class="section-inner">
+    <div class="pricing-preview-inner">
+      <div class="section-label">Packages</div>
+      <h2 class="section-title fade-up">CHOOSE YOUR HVAC<br>REVENUE RECOVERY <span class="accent">PLAN.</span></h2>
+      <div class="pricing-cards fade-up">
+        <div class="pp-card">
+          <div class="pp-header">
+            <div class="pp-tier">Package One</div>
+            <div class="pp-name">Revenue Recovery Starter</div>
+            <div class="pp-desc">Fix the most costly revenue leaks in your HVAC business.</div>
+          </div>
+          <div class="pp-price">
+            <div class="pp-price-num"><sup>$</sup>1,500</div>
+            <div class="pp-price-note">One-time · No monthly fee</div>
+          </div>
+          <div class="pp-footer">
+            <a href="/revenue-commander-v2.html" class="pp-cta-secondary">Get Started →</a>
+            <div class="pp-delivery">⚡ 72-Hour Delivery</div>
+          </div>
+        </div>
+        <div class="pp-card featured">
+          <div class="pp-badge">★ Most Popular</div>
+          <div class="pp-header">
+            <div class="pp-tier">Package Two</div>
+            <div class="pp-name">HVAC Revenue Recovery System</div>
+            <div class="pp-desc">A complete system to capture more calls, appointments, and installs.</div>
+          </div>
+          <div class="pp-price">
+            <div class="pp-price-num"><sup>$</sup>2,500</div>
+            <div class="pp-price-note">One-time · No monthly fee</div>
+          </div>
+          <div class="pp-footer">
+            <a href="/revenue-commander-v2.html" class="pp-cta-primary">Build My System →</a>
+            <div class="pp-delivery">⚡ 5-Day Delivery</div>
+          </div>
+        </div>
+      </div>
+      <div style="text-align:center;margin-top:28px;" class="fade-up">
+        <a href="/pricing.html" style="font-size:14px;color:var(--gray);text-decoration:none;border-bottom:1px solid var(--border);padding-bottom:2px;transition:color 0.2s;" onmouseover="this.style.color='var(--orange)';this.style.borderColor='var(--orange)'" onmouseout="this.style.color='var(--gray)';this.style.borderColor='var(--border)'">View Full Pricing →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="final">
+  <div class="final-inner fade-up">
+    <h2 class="final-title">STOP LOSING HVAC<br>REVENUE THIS <span class="accent">SUMMER.</span></h2>
+    <p class="final-sub">Revenue Commander identifies exactly where revenue is leaking from your business — in 2 minutes, using live data for your market.</p>
+    <a href="/revenue-commander-v2.html" class="btn-primary" style="font-size:16px;padding:18px 40px;">⚡ See My Revenue Gap</a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">MORE <span>PROFIT</span> USA</div>
+  <div class="footer-links">
+    <a href="/index.html">Home</a>
+    <a href="/revenue-commander-v2.html">Revenue Commander</a>
+    <a href="/pricing.html">Pricing</a>
+    <a href="/about.html">About</a>
+    <a href="/contact.html">Contact</a>
+  </div>
+  <div class="footer-copy">© 2026 More Profit USA. All rights reserved.</div>
+</footer>
+<script>
+  const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');}),{threshold:0.1});
+  document.querySelectorAll('.fade-up').forEach(el=>obs.observe(el));
+</script>
 </body>
 </html>
