@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact — More Profit USA</title>
+  <meta name="description" content="Questions about Revenue Commander or want help implementing a revenue recovery system? Let's talk about your HVAC revenue opportunities." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root{--bg:#0A0A0A;--bg2:#111111;--bg3:#161616;--orange:#FF4500;--orange-dim:rgba(255,69,0,0.12);--border:rgba(255,255,255,0.08);--border-orange:rgba(255,69,0,0.3);--white:#FFFFFF;--gray:#A0A0A0;--gray-dark:#444444;--font-display:'Bebas Neue',sans-serif;--font-body:'DM Sans',sans-serif;--font-mono:'DM Mono',monospace;}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{background:var(--bg);color:var(--white);font-family:var(--font-body);font-size:16px;line-height:1.6;overflow-x:hidden;}
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 40px;height:64px;background:rgba(10,10,10,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);}
+    .nav-logo{font-family:var(--font-display);font-size:22px;letter-spacing:0.08em;color:var(--white);text-decoration:none;}
+    .nav-logo span{color:var(--orange);}
+    .nav-links{display:flex;align-items:center;gap:28px;}
+    .nav-links a{color:var(--gray);font-size:13px;font-weight:500;text-decoration:none;letter-spacing:0.04em;transition:color 0.2s;}
+    .nav-links a:hover{color:var(--white);}
+    .nav-cta{background:var(--orange)!important;color:var(--white)!important;padding:8px 18px;border-radius:4px;font-weight:700!important;transition:opacity 0.2s!important;}
+    .nav-cta:hover{opacity:0.88;}
+    .nav-mobile-toggle{display:none;background:none;border:none;cursor:pointer;color:var(--white);font-size:20px;}
+    .accent{color:var(--orange);}
+    .fade-up{opacity:0;transform:translateY(24px);transition:opacity 0.6s ease,transform 0.6s ease;}
+    .fade-up.visible{opacity:1;transform:translateY(0);}
+    .btn-primary{display:inline-flex;align-items:center;gap:8px;background:var(--orange);color:var(--white);padding:16px 32px;border-radius:4px;font-weight:700;font-size:15px;letter-spacing:0.04em;text-decoration:none;transition:all 0.2s;border:2px solid var(--orange);}
+    .btn-primary:hover{background:transparent;color:var(--orange);}
+    /* HERO */
+    #hero{padding:140px 40px 80px;position:relative;overflow:hidden;text-align:center;}
+    .hero-grid{position:absolute;inset:0;z-index:0;background-image:linear-gradient(rgba(255,69,0,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,69,0,0.04) 1px,transparent 1px);background-size:60px 60px;}
+    .hero-glow{position:absolute;top:-200px;left:50%;transform:translateX(-50%);width:600px;height:500px;background:radial-gradient(circle,rgba(255,69,0,0.10) 0%,transparent 70%);pointer-events:none;z-index:0;}
+    .hero-inner{position:relative;z-index:1;max-width:680px;margin:0 auto;}
+    .hero-label{font-family:var(--font-mono);font-size:11px;letter-spacing:0.2em;color:var(--orange);text-transform:uppercase;margin-bottom:20px;display:flex;align-items:center;justify-content:center;gap:10px;}
+    .hero-label::before{content:'';display:block;width:24px;height:1px;background:var(--orange);}
+    .hero-title{font-family:var(--font-display);font-size:clamp(52px,6.5vw,84px);line-height:0.95;letter-spacing:0.02em;margin-bottom:20px;}
+    .hero-sub{font-size:19px;color:var(--gray);line-height:1.7;max-width:580px;margin:0 auto;}
+    /* MAIN CONTENT */
+    #content{padding:80px 40px;background:var(--bg2);}
+    .content-inner{max-width:900px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start;}
+    /* CONTACT FORM */
+    .form-wrap{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:40px;}
+    .form-section-label{font-family:var(--font-mono);font-size:11px;letter-spacing:0.2em;color:var(--orange);text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:10px;}
+    .form-section-label::before{content:'';display:block;width:24px;height:1px;background:var(--orange);}
+    .form-title{font-family:var(--font-display);font-size:28px;letter-spacing:0.02em;margin-bottom:8px;}
+    .form-sub{font-size:14px;color:var(--gray);margin-bottom:24px;line-height:1.6;}
+    .form-field{display:flex;flex-direction:column;gap:7px;margin-bottom:14px;}
+    .form-field label{font-size:11px;font-weight:600;color:var(--gray);letter-spacing:0.08em;text-transform:uppercase;}
+    .form-field input,.form-field textarea,.form-field select{background:var(--bg2);border:1px solid var(--border);border-radius:4px;padding:12px 14px;font-family:var(--font-body);font-size:15px;color:var(--white);outline:none;transition:border-color 0.2s;width:100%;}
+    .form-field input:focus,.form-field textarea:focus,.form-field select:focus{border-color:var(--orange);}
+    .form-field input::placeholder,.form-field textarea::placeholder{color:var(--gray-dark);}
+    .form-field textarea{resize:vertical;min-height:100px;}
+    .form-field select{cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23A0A0A0' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;}
+    .form-field select option{background:#161616;}
+    .form-submit{width:100%;background:var(--orange);color:var(--white);border:none;padding:16px;border-radius:4px;font-family:var(--font-body);font-weight:700;font-size:15px;letter-spacing:0.04em;cursor:pointer;transition:opacity 0.2s;margin-top:6px;}
+    .form-submit:hover{opacity:0.88;}
+    .form-submit:disabled{opacity:0.6;cursor:not-allowed;}
+    .form-success{display:none;text-align:center;padding:40px 20px;}
+    .form-success-icon{font-size:48px;margin-bottom:16px;}
+    .form-success-title{font-family:var(--font-display);font-size:32px;letter-spacing:0.02em;margin-bottom:12px;}
+    .form-success-text{font-size:15px;color:var(--gray);line-height:1.7;}
+    /* RIGHT SIDE */
+    .contact-right{}
+    .contact-block{margin-bottom:36px;padding-bottom:36px;border-bottom:1px solid var(--border);}
+    .contact-block:last-child{margin-bottom:0;padding-bottom:0;border-bottom:none;}
+    .contact-block-label{font-family:var(--font-mono);font-size:10px;letter-spacing:0.14em;color:var(--orange);text-transform:uppercase;margin-bottom:10px;}
+    .contact-block-title{font-size:18px;font-weight:700;margin-bottom:8px;}
+    .contact-block-text{font-size:14px;color:var(--gray);line-height:1.6;}
+    .rc-prompt{background:linear-gradient(135deg,#1a0800,#0d0d0d);border:1px solid var(--border-orange);border-radius:8px;padding:28px;margin-top:32px;}
+    .rc-prompt-label{font-family:var(--font-mono);font-size:10px;letter-spacing:0.14em;color:var(--orange);text-transform:uppercase;margin-bottom:10px;}
+    .rc-prompt-title{font-family:var(--font-display);font-size:24px;letter-spacing:0.02em;margin-bottom:10px;line-height:1.1;}
+    .rc-prompt-text{font-size:13px;color:var(--gray);line-height:1.6;margin-bottom:20px;}
+    footer{background:var(--bg);border-top:1px solid var(--border);padding:40px;text-align:center;}
+    .footer-logo{font-family:var(--font-display);font-size:20px;letter-spacing:0.08em;margin-bottom:14px;}
+    .footer-logo span{color:var(--orange);}
+    .footer-links{display:flex;justify-content:center;gap:24px;flex-wrap:wrap;margin-bottom:16px;}
+    .footer-links a{font-size:13px;color:var(--gray);text-decoration:none;transition:color 0.2s;}
+    .footer-links a:hover{color:var(--orange);}
+    .footer-copy{font-size:12px;color:var(--gray-dark);}
+    @media(max-width:900px){
+      nav{padding:0 20px;}
+      .nav-links{display:none;flex-direction:column;position:absolute;top:64px;left:0;right:0;background:#0A0A0A;padding:20px;border-bottom:1px solid var(--border);gap:16px;}
+      .nav-links.open{display:flex;}
+      .nav-mobile-toggle{display:block;}
+      #hero,#content{padding:60px 20px;}
+      #hero{padding-top:100px;}
+      .content-inner{grid-template-columns:1fr;gap:40px;}
+    }
+  </style>
+</head>
+<body>
+<nav>
+  <a href="/index.html" class="nav-logo">MORE <span>PROFIT</span> USA</a>
+  <div class="nav-links" id="nav-links">
+    <a href="/index.html">Home</a>
+    <a href="/revenue-commander-v2.html">Revenue Commander</a>
+    <a href="/pricing.html">Pricing</a>
+    <a href="/about.html">About</a>
+    <a href="/contact.html">Contact</a>
+    <a href="/revenue-commander-v2.html" class="nav-cta">See My Revenue Gap</a>
+  </div>
+  <button class="nav-mobile-toggle" onclick="document.getElementById('nav-links').classList.toggle('open')" aria-label="Menu">☰</button>
+</nav>
+
+<section id="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-inner">
+    <div class="hero-label">Get In Touch</div>
+    <h1 class="hero-title">LET'S TALK ABOUT YOUR REVENUE <span class="accent">OPPORTUNITIES.</span></h1>
+    <p class="hero-sub">Whether you have questions about Revenue Commander or want help implementing a revenue recovery system, we're here to help.</p>
+  </div>
+</section>
+
+<section id="content">
+  <div class="content-inner">
+    <div class="fade-up">
+      <div class="form-wrap">
+        <div class="form-section-label">Send a Message</div>
+        <div class="form-title">CONTACT US</div>
+        <div class="form-sub">We typically respond within one business day.</div>
+        <form id="contact-form">
+          <div class="form-field">
+            <label>Your Name *</label>
+            <input type="text" id="c-name" required placeholder="Mike Torres" />
+          </div>
+          <div class="form-field">
+            <label>Email *</label>
+            <input type="email" id="c-email" required placeholder="mike@desertairpro.com" />
+          </div>
+          <div class="form-field">
+            <label>Phone</label>
+            <input type="tel" id="c-phone" placeholder="(602) 555-0194" />
+          </div>
+          <div class="form-field">
+            <label>Company Name</label>
+            <input type="text" id="c-company" placeholder="Desert Air Pro HVAC" />
+          </div>
+          <div class="form-field">
+            <label>What can we help with?</label>
+            <select id="c-topic">
+              <option value="">Select a topic…</option>
+              <option value="Revenue Commander">Revenue Commander assessment</option>
+              <option value="Revenue Recovery Starter">Revenue Recovery Starter ($1,500)</option>
+              <option value="HVAC Revenue Recovery System">HVAC Revenue Recovery System ($2,500)</option>
+              <option value="General Question">General question</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label>Message</label>
+            <textarea id="c-message" placeholder="Tell us a bit about your business and what you're looking to improve…"></textarea>
+          </div>
+          <button type="submit" id="c-submit" class="form-submit">Contact Us →</button>
+        </form>
+        <div id="contact-success" class="form-success">
+          <div class="form-success-icon">✅</div>
+          <div class="form-success-title">Message Received</div>
+          <p class="form-success-text">We'll be in touch within one business day. In the meantime, you can start your free Revenue Commander assessment to see your market gaps.</p>
+        </div>
+      </div>
+    </div>
+    <div class="contact-right fade-up">
+      <div class="contact-block">
+        <div class="contact-block-label">What We Do</div>
+        <div class="contact-block-title">HVAC Revenue Recovery</div>
+        <div class="contact-block-text">We help HVAC companies identify and recover revenue being lost through review gaps, missed calls, poor AI search visibility, voice search invisibility, and mobile conversion problems.</div>
+      </div>
+      <div class="contact-block">
+        <div class="contact-block-label">Response Time</div>
+        <div class="contact-block-title">Within One Business Day</div>
+        <div class="contact-block-text">We respond to every inquiry within one business day. For faster answers about pricing and packages, start a Revenue Commander assessment — it automatically notifies us.</div>
+      </div>
+      <div class="contact-block">
+        <div class="contact-block-label">Before You Write</div>
+        <div class="contact-block-title">Start With Revenue Commander</div>
+        <div class="contact-block-text">If you're not sure whether we can help, the fastest way to find out is to run a free Revenue Commander assessment. It takes 2 minutes and shows you exactly where your biggest gaps are.</div>
+      </div>
+      <div class="rc-prompt">
+        <div class="rc-prompt-label">Free Assessment</div>
+        <div class="rc-prompt-title">SEE YOUR REVENUE GAPS FIRST</div>
+        <div class="rc-prompt-text">Takes 2 minutes. Uses live data for your market. No credit card required.</div>
+        <a href="/revenue-commander-v2.html" class="btn-primary" style="display:block;text-align:center;font-size:14px;padding:14px 20px;">⚡ See My Revenue Gap</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">MORE <span>PROFIT</span> USA</div>
+  <div class="footer-links">
+    <a href="/index.html">Home</a>
+    <a href="/revenue-commander-v2.html">Revenue Commander</a>
+    <a href="/pricing.html">Pricing</a>
+    <a href="/about.html">About</a>
+    <a href="/contact.html">Contact</a>
+  </div>
+  <div class="footer-copy">© 2026 More Profit USA. All rights reserved.</div>
+</footer>
+
+<script>
+  const WEBHOOK='https://script.google.com/macros/s/AKfycbwc2pn-s-EQVhQEwY9pl_gRrj22GIJE2YYyiavgWYIVUQks7AY9_om5ojmbjnYXkuaQ7A/exec';
+  const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');}),{threshold:0.1});
+  document.querySelectorAll('.fade-up').forEach(el=>obs.observe(el));
+  document.getElementById('contact-form').addEventListener('submit',async function(e){
+    e.preventDefault();
+    const btn=document.getElementById('c-submit');
+    btn.textContent='Sending…';btn.disabled=true;
+    const payload={
+      businessName:document.getElementById('c-company').value.trim()||'Not provided',
+      phone:document.getElementById('c-phone').value.trim()||'Not provided',
+      email:document.getElementById('c-email').value.trim(),
+      city:'Contact Form',
+      notes:'Name: '+document.getElementById('c-name').value.trim()+' | Message: '+document.getElementById('c-message').value.trim(),
+      source:'Contact Page',
+      packageInterest:document.getElementById('c-topic').value||'General',
+      timestamp:new Date().toISOString()
+    };
+    try{await fetch(WEBHOOK,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});}catch(err){}
+    document.getElementById('contact-form').style.display='none';
+    document.getElementById('contact-success').style.display='block';
+  });
+</script>
+</body>
+</html>

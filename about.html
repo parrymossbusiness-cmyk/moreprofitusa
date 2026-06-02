@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About — More Profit USA</title>
+  <meta name="description" content="More Profit USA was built around a single question: why does a homeowner choose one HVAC company and ignore another? After 1,000+ referrals and 20+ years of experience, we know the answer." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root{--bg:#0A0A0A;--bg2:#111111;--bg3:#161616;--orange:#FF4500;--orange-dim:rgba(255,69,0,0.12);--border:rgba(255,255,255,0.08);--border-orange:rgba(255,69,0,0.3);--white:#FFFFFF;--gray:#A0A0A0;--gray-dark:#444444;--font-display:'Bebas Neue',sans-serif;--font-body:'DM Sans',sans-serif;--font-mono:'DM Mono',monospace;}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{background:var(--bg);color:var(--white);font-family:var(--font-body);font-size:16px;line-height:1.6;overflow-x:hidden;}
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 40px;height:64px;background:rgba(10,10,10,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);}
+    .nav-logo{font-family:var(--font-display);font-size:22px;letter-spacing:0.08em;color:var(--white);text-decoration:none;}
+    .nav-logo span{color:var(--orange);}
+    .nav-links{display:flex;align-items:center;gap:28px;}
+    .nav-links a{color:var(--gray);font-size:13px;font-weight:500;text-decoration:none;letter-spacing:0.04em;transition:color 0.2s;}
+    .nav-links a:hover{color:var(--white);}
+    .nav-cta{background:var(--orange)!important;color:var(--white)!important;padding:8px 18px;border-radius:4px;font-weight:700!important;transition:opacity 0.2s!important;}
+    .nav-cta:hover{opacity:0.88;}
+    .nav-mobile-toggle{display:none;background:none;border:none;cursor:pointer;color:var(--white);font-size:20px;}
+    .accent{color:var(--orange);}
+    .fade-up{opacity:0;transform:translateY(24px);transition:opacity 0.6s ease,transform 0.6s ease;}
+    .fade-up.visible{opacity:1;transform:translateY(0);}
+    .btn-primary{display:inline-flex;align-items:center;gap:8px;background:var(--orange);color:var(--white);padding:16px 32px;border-radius:4px;font-weight:700;font-size:15px;letter-spacing:0.04em;text-decoration:none;transition:all 0.2s;border:2px solid var(--orange);}
+    .btn-primary:hover{background:transparent;color:var(--orange);}
+    /* HERO */
+    #hero{padding:140px 40px 80px;position:relative;overflow:hidden;}
+    .hero-grid{position:absolute;inset:0;z-index:0;background-image:linear-gradient(rgba(255,69,0,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,69,0,0.04) 1px,transparent 1px);background-size:60px 60px;}
+    .hero-glow{position:absolute;top:-200px;right:-100px;width:600px;height:600px;background:radial-gradient(circle,rgba(255,69,0,0.10) 0%,transparent 70%);pointer-events:none;z-index:0;}
+    .hero-inner{position:relative;z-index:1;max-width:840px;margin:0 auto;}
+    .hero-label{font-family:var(--font-mono);font-size:11px;letter-spacing:0.2em;color:var(--orange);text-transform:uppercase;margin-bottom:20px;display:flex;align-items:center;gap:10px;}
+    .hero-label::before{content:'';display:block;width:24px;height:1px;background:var(--orange);}
+    .hero-title{font-family:var(--font-display);font-size:clamp(52px,6.5vw,84px);line-height:0.95;letter-spacing:0.02em;margin-bottom:32px;}
+    /* STORY */
+    #story{padding:80px 40px;background:var(--bg2);}
+    .story-inner{max-width:760px;margin:0 auto;}
+    .story-p{font-size:18px;line-height:1.85;color:var(--gray);margin-bottom:24px;}
+    .story-p strong{color:var(--white);}
+    .story-question{font-family:var(--font-display);font-size:clamp(32px,4vw,52px);line-height:1.1;letter-spacing:0.02em;color:var(--orange);margin:40px 0 32px;padding:28px 32px;border-left:4px solid var(--orange);background:var(--orange-dim);}
+    /* PATTERN */
+    #pattern{padding:80px 40px;background:var(--bg);}
+    .pattern-inner{max-width:840px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start;}
+    .pattern-text .story-p{font-size:17px;}
+    .pattern-list{display:flex;flex-direction:column;gap:12px;margin-top:8px;}
+    .pattern-item{display:flex;align-items:center;gap:16px;padding:18px 22px;background:var(--bg3);border:1px solid var(--border);border-radius:6px;font-size:16px;font-weight:600;transition:border-color 0.2s;}
+    .pattern-item:hover{border-color:var(--border-orange);}
+    .pattern-check{color:var(--orange);font-size:18px;flex-shrink:0;}
+    /* STATS */
+    #stats{padding:60px 40px;background:var(--bg2);border-top:1px solid var(--border-orange);border-bottom:1px solid var(--border-orange);}
+    .stats-inner{max-width:840px;margin:0 auto;display:flex;justify-content:space-between;gap:32px;flex-wrap:wrap;}
+    .stat{text-align:center;}
+    .stat-num{font-family:var(--font-display);font-size:64px;line-height:1;color:var(--orange);}
+    .stat-label{font-size:13px;color:var(--gray);margin-top:6px;}
+    /* MISSION */
+    #mission{padding:80px 40px;background:var(--bg);}
+    .mission-inner{max-width:700px;margin:0 auto;text-align:center;}
+    .mission-label{font-family:var(--font-mono);font-size:11px;letter-spacing:0.2em;color:var(--orange);text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;justify-content:center;gap:10px;}
+    .mission-label::before{content:'';display:block;width:24px;height:1px;background:var(--orange);}
+    .mission-title{font-family:var(--font-display);font-size:clamp(38px,4.5vw,56px);line-height:1;letter-spacing:0.02em;margin-bottom:24px;}
+    .mission-box{background:linear-gradient(135deg,#1a0800,#0d0d0d);border:1px solid var(--border-orange);border-radius:8px;padding:36px;margin-bottom:32px;}
+    .mission-text{font-size:20px;color:var(--gray);line-height:1.7;}
+    .mission-text strong{color:var(--white);}
+    footer{background:var(--bg);border-top:1px solid var(--border);padding:40px;text-align:center;}
+    .footer-logo{font-family:var(--font-display);font-size:20px;letter-spacing:0.08em;margin-bottom:14px;}
+    .footer-logo span{color:var(--orange);}
+    .footer-links{display:flex;justify-content:center;gap:24px;flex-wrap:wrap;margin-bottom:16px;}
+    .footer-links a{font-size:13px;color:var(--gray);text-decoration:none;transition:color 0.2s;}
+    .footer-links a:hover{color:var(--orange);}
+    .footer-copy{font-size:12px;color:var(--gray-dark);}
+    @media(max-width:900px){
+      nav{padding:0 20px;}
+      .nav-links{display:none;flex-direction:column;position:absolute;top:64px;left:0;right:0;background:#0A0A0A;padding:20px;border-bottom:1px solid var(--border);gap:16px;}
+      .nav-links.open{display:flex;}
+      .nav-mobile-toggle{display:block;}
+      #hero,#story,#pattern,#stats,#mission{padding:60px 20px;}
+      #hero{padding-top:100px;}
+      .pattern-inner{grid-template-columns:1fr;gap:40px;}
+      .stats-inner{justify-content:center;gap:40px;}
+    }
+  </style>
+</head>
+<body>
+<nav>
+  <a href="/index.html" class="nav-logo">MORE <span>PROFIT</span> USA</a>
+  <div class="nav-links" id="nav-links">
+    <a href="/index.html">Home</a>
+    <a href="/revenue-commander-v2.html">Revenue Commander</a>
+    <a href="/pricing.html">Pricing</a>
+    <a href="/about.html">About</a>
+    <a href="/contact.html">Contact</a>
+    <a href="/revenue-commander-v2.html" class="nav-cta">See My Revenue Gap</a>
+  </div>
+  <button class="nav-mobile-toggle" onclick="document.getElementById('nav-links').classList.toggle('open')" aria-label="Menu">☰</button>
+</nav>
+
+<section id="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-inner">
+    <div class="hero-label">About More Profit USA</div>
+    <h1 class="hero-title">BUILT AROUND HOW<br>HOMEOWNERS ACTUALLY<br>CHOOSE <span class="accent">CONTRACTORS.</span></h1>
+  </div>
+</section>
+
+<section id="story">
+  <div class="story-inner">
+    <p class="story-p fade-up">Most marketing agencies focus on websites, SEO, and advertising.</p>
+    <p class="story-p fade-up">More Profit USA was built around a different question:</p>
+    <div class="story-question fade-up">Why does a homeowner choose one HVAC company and ignore another?</div>
+    <p class="story-p fade-up">After helping connect <strong>more than 1,000 homeowners with contractors</strong> and spending <strong>more than 20 years in sales and business development</strong>, we noticed the same pattern repeatedly.</p>
+    <p class="story-p fade-up">Homeowners choose companies that appear trustworthy, respond quickly, have strong reviews, and are easy to contact.</p>
+    <p class="story-p fade-up">More Profit USA helps HVAC companies improve those factors through Revenue Commander, AI Search optimization, Voice Search optimization, missed-call recovery, and conversion-focused websites.</p>
+  </div>
+</section>
+
+<section id="pattern">
+  <div class="section-inner" style="max-width:840px;">
+    <div class="pattern-inner">
+      <div class="fade-up">
+        <div style="font-family:var(--font-mono);font-size:11px;letter-spacing:0.2em;color:var(--orange);text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:10px;"><span style="display:block;width:24px;height:1px;background:var(--orange);"></span>The Pattern</div>
+        <h2 style="font-family:var(--font-display);font-size:clamp(36px,4vw,52px);line-height:1;letter-spacing:0.02em;margin-bottom:20px;">WHAT WE'VE SEEN<br><span class="accent">OVER AND OVER.</span></h2>
+        <p class="story-p" style="font-size:16px;">In an HVAC emergency, homeowners don't have time to research. They call whoever shows up first, looks trustworthy, and responds immediately.</p>
+        <p class="story-p" style="font-size:16px;">Our systems are designed to help your business become that company.</p>
+      </div>
+      <div class="fade-up">
+        <p style="font-size:15px;color:var(--gray);margin-bottom:16px;">Homeowners choose companies that:</p>
+        <div class="pattern-list">
+          <div class="pattern-item"><span class="pattern-check">✓</span>Appear trustworthy</div>
+          <div class="pattern-item"><span class="pattern-check">✓</span>Have strong reviews</div>
+          <div class="pattern-item"><span class="pattern-check">✓</span>Respond quickly</div>
+          <div class="pattern-item"><span class="pattern-check">✓</span>Look professional online</div>
+          <div class="pattern-item"><span class="pattern-check">✓</span>Are easy to contact</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="stats">
+  <div class="stats-inner fade-up">
+    <div class="stat">
+      <div class="stat-num">20+</div>
+      <div class="stat-label">Years of sales and business development</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">1,000+</div>
+      <div class="stat-label">Homeowner referrals to contractors</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">100%</div>
+      <div class="stat-label">Focused on HVAC companies</div>
+    </div>
+  </div>
+</section>
+
+<section id="mission">
+  <div class="section-inner">
+    <div class="mission-inner">
+      <div class="mission-label">Our Mission</div>
+      <h2 class="mission-title fade-up">WHAT WE'RE <span class="accent">HERE TO DO.</span></h2>
+      <div class="mission-box fade-up">
+        <p class="mission-text"><strong>Help HVAC companies recover lost revenue and capture more service calls, appointments, and installs.</strong></p>
+      </div>
+      <p style="font-size:16px;color:var(--gray);margin-bottom:32px;line-height:1.7;" class="fade-up">We focus exclusively on HVAC because the problem is specific enough to solve well. Emergency service decisions happen fast. The companies that win are the ones that are visible, trustworthy, and responsive before anyone else.</p>
+      <a href="/revenue-commander-v2.html" class="btn-primary fade-up">⚡ See My Revenue Gap</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">MORE <span>PROFIT</span> USA</div>
+  <div class="footer-links">
+    <a href="/index.html">Home</a>
+    <a href="/revenue-commander-v2.html">Revenue Commander</a>
+    <a href="/pricing.html">Pricing</a>
+    <a href="/about.html">About</a>
+    <a href="/contact.html">Contact</a>
+  </div>
+  <div class="footer-copy">© 2026 More Profit USA. All rights reserved.</div>
+</footer>
+<script>
+  const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');}),{threshold:0.1});
+  document.querySelectorAll('.fade-up').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>
