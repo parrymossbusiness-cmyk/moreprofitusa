@@ -36,12 +36,19 @@
     .btn-outline{display:inline-flex;align-items:center;gap:8px;background:transparent;color:var(--white);padding:16px 32px;border-radius:4px;font-weight:600;font-size:15px;letter-spacing:0.04em;text-decoration:none;transition:all 0.2s;border:2px solid var(--border);}
     .btn-outline:hover{border-color:var(--orange);color:var(--orange);}
     /* HERO */
-    #hero{min-height:100vh;display:flex;align-items:center;padding:100px 40px 80px;position:relative;overflow:hidden;background:url('images/Hero_Technician.jpg') center center / cover no-repeat;}
-    .hero-overlay{position:absolute;inset:0;z-index:0;background:linear-gradient(to right,rgba(10,10,10,0.95) 0%,rgba(10,10,10,0.85) 50%,rgba(10,10,10,0.50) 100%);}
+    #hero{min-height:100vh;display:flex;align-items:center;padding:100px 40px 80px;position:relative;overflow:hidden;background:url('images/Hero_Technician.jpg') 70% center / cover no-repeat;}
+    .hero-overlay{position:absolute;inset:0;z-index:0;background:linear-gradient(to right,rgba(10,10,10,0.94) 0%,rgba(10,10,10,0.80) 55%,rgba(10,10,10,0.30) 100%);}
     .hero-glow{position:absolute;top:-200px;left:-100px;width:700px;height:700px;background:radial-gradient(circle,rgba(255,69,0,0.10) 0%,transparent 70%);pointer-events:none;z-index:0;}
-    .hero-inner{position:relative;z-index:1;max-width:1100px;margin:0 auto;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;}
+    .hero-inner{position:relative;z-index:1;max-width:680px;margin:0 auto 0 0;width:100%;}
     .score-card-wrap{position:relative;}
     .score-card-label{font-family:var(--font-mono);font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--orange);text-align:center;margin-bottom:10px;}
+    /* ASSESSMENT STRIP — desktop only */
+    #assessment-strip{background:var(--bg2);padding:60px 40px;border-bottom:1px solid var(--border);}
+    .assessment-strip-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:auto 1fr;gap:48px;align-items:center;}
+    .assessment-strip-left{max-width:340px;}
+    .assessment-strip-label{font-family:var(--font-mono);font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--orange);margin-bottom:10px;}
+    .assessment-strip-title{font-family:var(--font-display);font-size:32px;letter-spacing:0.02em;line-height:1.1;margin-bottom:10px;}
+    .assessment-strip-text{font-size:14px;color:var(--gray);line-height:1.6;}
     .hero-eyebrow{font-family:var(--font-mono);font-size:11px;letter-spacing:0.2em;color:var(--orange);text-transform:uppercase;margin-bottom:20px;display:flex;align-items:center;gap:10px;}
     .hero-eyebrow::before{content:'';display:block;width:32px;height:1px;background:var(--orange);}
     .hero-title{font-family:var(--font-display);font-size:clamp(60px,7vw,96px);line-height:0.95;letter-spacing:0.02em;margin-bottom:24px;}
@@ -146,9 +153,9 @@
       .nav-links.open{display:flex;}
       .nav-mobile-toggle{display:block;}
       section{padding:72px 20px;}
-      #hero{padding:100px 20px 60px;min-height:auto;}
-      .hero-inner{grid-template-columns:1fr;gap:40px;}
-      .hero-inner>div:last-child{display:block;}
+      #hero{padding:100px 20px 60px;min-height:auto;background-position:60% center;}
+      .hero-inner{max-width:100%;}
+      #assessment-strip{display:none;}
       .leaks-grid{grid-template-columns:1fr 1fr;}
       .why-grid{grid-template-columns:1fr;gap:40px;}
       .listen-grid{grid-template-columns:1fr;}
@@ -189,46 +196,52 @@
         <a href="/pricing.html" class="btn-outline">View Full Pricing</a>
       </div>
     </div>
-    <div>
-    <div class="score-card-wrap">
-      <div class="score-card-label">⚡ Example Revenue Assessment Report</div>
-      <div class="score-card">
-        <div class="score-header">
-          <div class="score-badge">❄️ Phoenix, AZ — HVAC</div>
-          <div class="score-company">Desert Air Pro HVAC</div>
-          <div class="score-location">Revenue Commander Assessment</div>
+  </div>
+</section>
+
+<!-- ASSESSMENT STRIP — desktop only, hidden on mobile -->
+<section id="assessment-strip">
+  <div class="assessment-strip-inner">
+    <div class="assessment-strip-left">
+      <div class="assessment-strip-label">⚡ Example Revenue Assessment Report</div>
+      <h2 class="assessment-strip-title">THIS IS WHAT YOUR REPORT <span class="accent">LOOKS LIKE.</span></h2>
+      <p class="assessment-strip-text">Revenue Commander analyzes your review gap, AI search visibility, voice search presence, and missed call exposure — then calculates your estimated revenue opportunity.</p>
+    </div>
+    <div class="score-card">
+      <div class="score-header">
+        <div class="score-badge">❄️ Phoenix, AZ — HVAC</div>
+        <div class="score-company">Desert Air Pro HVAC</div>
+        <div class="score-location">Revenue Commander Assessment</div>
+      </div>
+      <div class="score-metrics">
+        <div class="score-metric">
+          <div class="score-metric-label">Review Score</div>
+          <div class="score-metric-val low">42<span style="font-size:16px;color:var(--gray-dark)">/100</span></div>
+          <div class="score-metric-sub">41 reviews · 4.3★</div>
         </div>
-        <div class="score-metrics">
-          <div class="score-metric">
-            <div class="score-metric-label">Review Score</div>
-            <div class="score-metric-val low">42<span style="font-size:16px;color:var(--gray-dark)">/100</span></div>
-            <div class="score-metric-sub">41 reviews · 4.3★</div>
-          </div>
-          <div class="score-metric">
-            <div class="score-metric-label">AI Search Visibility</div>
-            <div class="score-metric-val low">18<span style="font-size:16px;color:var(--gray-dark)">/100</span></div>
-            <div class="score-metric-sub">Not found in AI results</div>
-          </div>
-          <div class="score-metric">
-            <div class="score-metric-label">Voice Search</div>
-            <div class="score-metric-val mid">25<span style="font-size:16px;color:var(--gray-dark)">/100</span></div>
-            <div class="score-metric-sub">Weak visibility</div>
-          </div>
-          <div class="score-metric">
-            <div class="score-metric-label">Review Gap</div>
-            <div class="score-metric-val low">4,612</div>
-            <div class="score-metric-sub">Behind top competitor</div>
-          </div>
+        <div class="score-metric">
+          <div class="score-metric-label">AI Search Visibility</div>
+          <div class="score-metric-val low">18<span style="font-size:16px;color:var(--gray-dark)">/100</span></div>
+          <div class="score-metric-sub">Not found in AI results</div>
         </div>
-        <div class="score-footer">
-          <div>
-            <div class="score-opp-label">Estimated Revenue Opportunity</div>
-            <div class="score-opp-val">$87,000+</div>
-          </div>
-          <a href="/revenue-commander-v2.html" class="score-cta-sm">Get Yours →</a>
+        <div class="score-metric">
+          <div class="score-metric-label">Voice Search</div>
+          <div class="score-metric-val mid">25<span style="font-size:16px;color:var(--gray-dark)">/100</span></div>
+          <div class="score-metric-sub">Weak visibility</div>
+        </div>
+        <div class="score-metric">
+          <div class="score-metric-label">Review Gap</div>
+          <div class="score-metric-val low">4,612</div>
+          <div class="score-metric-sub">Behind top competitor</div>
         </div>
       </div>
-    </div>
+      <div class="score-footer">
+        <div>
+          <div class="score-opp-label">Estimated Revenue Opportunity</div>
+          <div class="score-opp-val">$87,000+</div>
+        </div>
+        <a href="/revenue-commander-v2.html" class="score-cta-sm">Get Yours →</a>
+      </div>
     </div>
   </div>
 </section>
