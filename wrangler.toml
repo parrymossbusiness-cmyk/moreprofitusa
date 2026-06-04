@@ -1,0 +1,17 @@
+name = "moreprofitusa"
+compatibility_date = "2026-06-01"
+pages_build_output_dir = "."
+
+# Bind this D1 database in Cloudflare Pages > Settings > Bindings.
+# After creating D1, replace database_id below or configure binding in dashboard.
+[[d1_databases]]
+binding = "DB"
+database_name = "moreprofit_revenue_commander"
+database_id = "REPLACE_WITH_YOUR_D1_DATABASE_ID"
+
+[vars]
+# Set real values in Cloudflare dashboard, not here for production.
+# GOOGLE_MAPS_API_KEY = ""
+# PAGESPEED_API_KEY = ""
+# APOLLO_API_KEY = ""
+# ADMIN_TOKEN = "choose-a-long-random-password"
