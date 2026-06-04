@@ -7,7 +7,7 @@ pages_build_output_dir = "."
 [[d1_databases]]
 binding = "DB"
 database_name = "moreprofit_revenue_commander"
-database_id = "REPLACE_WITH_YOUR_D1_DATABASE_ID"
+database_id = "8e88dad9-8ec5-4897-8c54-dbb8ceed2452"
 
 [vars]
 # Set real values in Cloudflare dashboard, not here for production.
