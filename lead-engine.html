@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Lead Engine — MoreProfitUSA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #0A0A0A;
+    --panel: #141414;
+    --panel-2: #1c1c1c;
+    --line: #2a2a2a;
+    --orange: #FF4500;
+    --text: #f2f2f2;
+    --muted: #8a8a8a;
+    --green: #1db954;
+    --radius: 10px;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font-family: "DM Sans", system-ui, sans-serif; font-size: 15px; line-height: 1.5;
+  }
+  .wrap { max-width: 1280px; margin: 0 auto; padding: 28px 22px 80px; }
+  header h1 {
+    font-family: "Bebas Neue", sans-serif; font-size: 46px; letter-spacing: 1px;
+    margin: 0; line-height: 1;
+  }
+  header h1 span { color: var(--orange); }
+  header p { color: var(--muted); margin: 6px 0 0; max-width: 720px; }
+
+  .panel {
+    background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 20px 22px; margin-top: 22px;
+  }
+  .panel h2 {
+    font-family: "Bebas Neue", sans-serif; font-size: 24px; letter-spacing: 1px;
+    margin: 0 0 16px; color: var(--text);
+  }
+  label { display: block; font-size: 12px; text-transform: uppercase; letter-spacing: .5px;
+    color: var(--muted); margin: 0 0 6px; }
+  input, textarea, select {
+    width: 100%; background: var(--panel-2); border: 1px solid var(--line);
+    color: var(--text); border-radius: 8px; padding: 11px 12px; font: inherit;
+  }
+  input:focus, textarea:focus, select:focus { outline: 2px solid var(--orange); border-color: var(--orange); }
+  textarea { resize: vertical; min-height: 92px; font-family: "DM Sans", monospace; }
+  .grid { display: grid; gap: 14px; }
+  .g3 { grid-template-columns: 1fr 160px 120px; }
+  .g2 { grid-template-columns: 1fr 1fr; }
+  @media (max-width: 760px) { .g3, .g2 { grid-template-columns: 1fr; } }
+  .field { margin-bottom: 14px; }
+
+  .toggle { display: inline-flex; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; margin-bottom: 18px; }
+  .toggle button {
+    background: var(--panel-2); color: var(--muted); border: 0; padding: 9px 20px;
+    font: inherit; cursor: pointer; font-weight: 700;
+  }
+  .toggle button.active { background: var(--orange); color: #fff; }
+
+  .btn {
+    border: 0; border-radius: 8px; padding: 12px 20px; font: inherit; font-weight: 700;
+    cursor: pointer; color: #fff;
+  }
+  .btn-primary { background: var(--orange); }
+  .btn-ghost { background: var(--panel-2); border: 1px solid var(--line); }
+  .btn-green { background: var(--green); }
+  .btn:disabled { opacity: .5; cursor: not-allowed; }
+  .actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px; }
+
+  .status { margin-top: 14px; background: var(--panel-2); border: 1px solid var(--line);
+    border-radius: 8px; padding: 12px 14px; font-size: 13px; color: var(--muted);
+    white-space: pre-wrap; min-height: 20px; }
+  .status .ok { color: var(--green); }
+  .status .err { color: var(--orange); }
+
+  table { width: 100%; border-collapse: collapse; margin-top: 6px; font-size: 13px; }
+  th, td { text-align: left; padding: 9px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: .5px; position: sticky; top: 0; background: var(--panel); }
+  .score { font-family: "Bebas Neue", sans-serif; font-size: 22px; color: var(--orange); line-height: 1; }
+  .pitch { display: inline-block; font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 5px; white-space: nowrap; }
+  .pitch.NEWWEBSITE { background: rgba(255,69,0,.15); color: var(--orange); }
+  .pitch.CALLVOLUME { background: rgba(29,185,84,.15); color: var(--green); }
+  .pitch.REVIEWMGMT { background: rgba(120,120,255,.15); color: #8a8aff; }
+  .hook { color: var(--text); max-width: 360px; }
+  .no { color: var(--orange); font-weight: 700; }
+  .yes { color: var(--muted); }
+  a.map { color: #6bb3ff; text-decoration: none; }
+  .tablewrap { max-height: 620px; overflow: auto; border: 1px solid var(--line); border-radius: 8px; }
+  .count { color: var(--muted); font-size: 13px; margin-left: 8px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>LEAD <span>ENGINE</span></h1>
+    <p>Phone-verified daily call sheets. Discovers businesses, gates on a working phone number, ranks by opportunity, and tags the pitch to lead with. No email, no audit, no waiting.</p>
+  </header>
+
+  <div class="panel">
+    <h2>Access &amp; Engine</h2>
+    <div class="grid g2">
+      <div class="field">
+        <label>Admin Token</label>
+        <input id="token" type="password" placeholder="Cloudflare ADMIN_TOKEN" autocomplete="off" />
+      </div>
+      <div>
+        <label>Engine</label>
+        <div class="toggle" id="engineToggle">
+          <button data-engine="national" class="active">National (call list)</button>
+          <button data-engine="local">Local (call + walk-in)</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2>1 · Scan</h2>
+    <div class="grid g3">
+      <div class="field">
+        <label>Market name (label only)</label>
+        <input id="market" placeholder="San Diego" />
+      </div>
+      <div class="field">
+        <label>State</label>
+        <input id="state" placeholder="CA" />
+      </div>
+      <div class="field">
+        <label>Min score to keep</label>
+        <input id="minScore" type="number" value="50" />
+      </div>
+    </div>
+    <div class="field">
+      <label>Cities — one per line (stack a cluster to hit 100+)</label>
+      <textarea id="cities" placeholder="San Diego&#10;Chula Vista&#10;El Cajon&#10;Oceanside"></textarea>
+    </div>
+    <div class="field">
+      <label>Business types — one per line</label>
+      <textarea id="queries">HVAC contractor
+plumber
+roofing contractor
+electrician
+med spa
+auto repair</textarea>
+    </div>
+    <div class="actions">
+      <button class="btn btn-primary" id="scanBtn">Run scan</button>
+      <button class="btn btn-ghost" id="loadBtn">Load saved leads</button>
+      <button class="btn btn-green" id="exportBtn">Download CSV</button>
+    </div>
+    <div class="status" id="status">Ready.</div>
+  </div>
+
+  <div class="panel">
+    <h2>2 · Call Sheet <span class="count" id="count"></span></h2>
+    <div class="grid g2" style="margin-bottom:14px">
+      <div>
+        <label>Pitch filter</label>
+        <select id="pitchFilter">
+          <option value="all">All pitches</option>
+          <option value="NEW WEBSITE">New website</option>
+          <option value="CALL VOLUME">Call volume</option>
+          <option value="REVIEW MGMT">Review mgmt</option>
+        </select>
+      </div>
+      <div>
+        <label>Show top</label>
+        <input id="limit" type="number" value="100" />
+      </div>
+    </div>
+    <div class="tablewrap">
+      <table id="table">
+        <thead></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script>
+let ENGINE = "national";
+
+const $ = (id) => document.getElementById(id);
+const statusEl = $("status");
+function setStatus(msg, kind) {
+  statusEl.innerHTML = kind ? `<span class="${kind}">${msg}</span>` : msg;
+}
+function tokenOrWarn() {
+  const t = $("token").value.trim();
+  if (!t) { setStatus("Enter your admin token first.", "err"); return null; }
+  return t;
+}
+
+$("engineToggle").addEventListener("click", (e) => {
+  const b = e.target.closest("button"); if (!b) return;
+  ENGINE = b.dataset.engine;
+  [...$("engineToggle").children].forEach((c) => c.classList.toggle("active", c === b));
+  // Prefill local defaults
+  if (ENGINE === "local") {
+    if (!$("market").value) $("market").value = "Pine Bluff Area";
+    if (!$("state").value) $("state").value = "AR";
+    if (!$("cities").value.trim()) $("cities").value = "Pine Bluff\nWhite Hall";
+  }
+});
+
+function lines(id) {
+  return $(id).value.split("\n").map((s) => s.trim()).filter(Boolean);
+}
+
+$("scanBtn").addEventListener("click", async () => {
+  const token = tokenOrWarn(); if (!token) return;
+  const body = {
+    engine: ENGINE,
+    market: $("market").value.trim(),
+    state: $("state").value.trim(),
+    cities: lines("cities"),
+    queries: lines("queries"),
+  };
+  $("scanBtn").disabled = true;
+  setStatus("Scanning… (parallel — seconds, not minutes)");
+  try {
+    const res = await fetch("/api/lead-scan", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "x-admin-token": token },
+      body: JSON.stringify(body),
+    });
+    const data = await res.json();
+    if (!res.ok) { setStatus(data.error || "Scan failed.", "err"); return; }
+    const s = data.stats;
+    let msg = `Done. ${s.unique} phone-verified leads saved from ${s.combos} searches `
+      + `(${s.raw} pulled, ${s.droppedNoPhone} dropped — no phone).`;
+    if (s.errors && s.errors.length) msg += `\n${s.errors.length} search error(s): ${s.errors[0]}`;
+    setStatus(msg, "ok");
+    render(data.preview);
+    $("count").textContent = `(${data.saved} total saved)`;
+  } catch (e) {
+    setStatus("Network error: " + e, "err");
+  } finally {
+    $("scanBtn").disabled = false;
+  }
+});
+
+$("loadBtn").addEventListener("click", load);
+$("pitchFilter").addEventListener("change", load);
+
+async function load() {
+  const token = tokenOrWarn(); if (!token) return;
+  const params = new URLSearchParams({
+    engine: ENGINE,
+    minScore: $("minScore").value || "0",
+    pitch: $("pitchFilter").value,
+    limit: $("limit").value || "100",
+  });
+  setStatus("Loading saved leads…");
+  try {
+    const res = await fetch("/api/lead-list?" + params, { headers: { "x-admin-token": token } });
+    const data = await res.json();
+    if (!res.ok) { setStatus(data.error || "Load failed.", "err"); return; }
+    render(data.leads);
+    $("count").textContent = `(${data.count} shown)`;
+    setStatus(`Loaded ${data.count} leads.`, "ok");
+  } catch (e) {
+    setStatus("Network error: " + e, "err");
+  }
+}
+
+$("exportBtn").addEventListener("click", () => {
+  const token = tokenOrWarn(); if (!token) return;
+  const params = new URLSearchParams({
+    engine: ENGINE,
+    minScore: $("minScore").value || "0",
+    pitch: $("pitchFilter").value,
+    token,
+  });
+  window.location.href = "/api/lead-export?" + params;
+});
+
+function render(leads) {
+  const isLocal = ENGINE === "local";
+  const head = ["Score", "Pitch", "Company", "Phone", "City",
+    ...(isLocal ? ["Address"] : []), "Reviews", "Site", "Hook", "Map"];
+  $("table").querySelector("thead").innerHTML =
+    "<tr>" + head.map((h) => `<th>${h}</th>`).join("") + "</tr>";
+  const tb = $("table").querySelector("tbody");
+  if (!leads || !leads.length) { tb.innerHTML = `<tr><td colspan="${head.length}" style="color:#8a8a8a;padding:20px">No leads yet. Run a scan or load saved.</td></tr>`; return; }
+  tb.innerHTML = leads.map((l) => {
+    const pc = (l.pitch || "").replace(/\s/g, "");
+    const reviews = `${l.rating ? Number(l.rating).toFixed(1) : "—"}\u2605 / ${l.review_count}`;
+    const site = l.has_website ? '<span class="yes">Y</span>' : '<span class="no">N</span>';
+    const map = l.maps_url ? `<a class="map" href="${l.maps_url}" target="_blank" rel="noopener">open</a>` : "";
+    return "<tr>"
+      + `<td><span class="score">${l.score}</span></td>`
+      + `<td><span class="pitch ${pc}">${l.pitch}</span></td>`
+      + `<td>${esc(l.company)}</td>`
+      + `<td>${esc(l.phone)}</td>`
+      + `<td>${esc(l.city)}</td>`
+      + (isLocal ? `<td>${esc(l.address)}</td>` : "")
+      + `<td>${reviews}</td>`
+      + `<td>${site}</td>`
+      + `<td class="hook">${esc(l.hook)}</td>`
+      + `<td>${map}</td>`
+      + "</tr>";
+  }).join("");
+}
+function esc(s) { return (s == null ? "" : String(s)).replace(/[<>&]/g, (c) => ({ "<": "&lt;", ">": "&gt;", "&": "&amp;" }[c])); }
+</script>
+</body>
+</html>
