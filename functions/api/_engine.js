@@ -19,8 +19,13 @@ const FIELD_MASK = [
   "places.reviews",
 ].join(",");
 
+// ---- Quality gates --------------------------------------------------------
+// Phone is a hard gate (no number, no row).
+// Reviews are a hard gate too: under MIN_REVIEWS = spam / lead-gen listings /
+// too-new-to-be-a-good-client. Drops the fake "Quality HVAC City Experts" rows.
+export const MIN_REVIEWS = 10;
+
 // ---- Scoring weights (tunable) -------------------------------------------
-// Phone is NOT scored — it's a hard gate. No phone, no row.
 const W_NO_WEBSITE = 35;   // strongest wedge: the premium-site pitch
 const W_REVIEWS    = 30;   // call volume + established, payable business
 const W_RATING     = 20;   // high rating + volume = inbound = missed-call leak
@@ -50,20 +55,15 @@ function scoreLead(p) {
   const rating = p.rating || 0;
   const hasWebsite = !!p.websiteUri;
 
-  // No website
   const sWebsite = hasWebsite ? 0 : W_NO_WEBSITE;
-
-  // Review volume (linear, capped)
   const sReviews = Math.min(count, REVIEW_CAP) / REVIEW_CAP * W_REVIEWS;
 
-  // Rating quality — only meaningful with some volume
   let sRating = 0;
   if (rating >= 3.5) {
     sRating = ((rating - 3.5) / 1.5) * W_RATING;
-    if (count < 5) sRating *= 0.3; // low-review ratings are noise
+    if (count < 5) sRating *= 0.3;
   }
 
-  // Recency from newest returned review
   const rd = newestReviewDays(p.reviews);
   let sRecency = 0;
   if (rd <= 30) sRecency = W_RECENCY;
@@ -72,10 +72,9 @@ function scoreLead(p) {
 
   const total = Math.round(sWebsite + sReviews + sRating + sRecency);
 
-  // Pitch = which offer leads on the call, by strongest signal
   let pitch;
   if (!hasWebsite) {
-    pitch = "NEW WEBSITE";
+    pitch = "NEW WEBSITE";          // no website ⇒ always the website wedge
   } else if (count >= 75 && rating >= 4.5) {
     pitch = "CALL VOLUME";
   } else if (count >= 75) {
@@ -88,16 +87,13 @@ function scoreLead(p) {
 }
 
 function buildHook(p, pitch) {
-  const name = p.displayName?.text || "your business";
   const count = p.userRatingCount || 0;
   const rating = p.rating ? p.rating.toFixed(1) : "—";
   const city = p._city || "your area";
 
   switch (pitch) {
     case "NEW WEBSITE":
-      return count > 0
-        ? `${count} reviews at ${rating}\u2605 and no website — you're the best-kept secret in ${city}. I can fix that this week.`
-        : `No website yet in ${city} — I build sites that drive sales and rank in AI search. Want to see one I made for your category?`;
+      return `${count} reviews at ${rating}\u2605 and no website — you're the best-kept secret in ${city}. I can fix that this week.`;
     case "CALL VOLUME":
       return `${count} reviews means your phone rings a lot — how many of those calls are you catching when you're on a job?`;
     case "REVIEW MGMT":
@@ -106,7 +102,6 @@ function buildHook(p, pitch) {
   }
 }
 
-// ---- Places fetch with timeout -------------------------------------------
 async function searchPlaces(query, apiKey, timeoutMs = 8000) {
   const ctrl = new AbortController();
   const timer = setTimeout(() => ctrl.abort(), timeoutMs);
@@ -134,7 +129,6 @@ async function searchPlaces(query, apiKey, timeoutMs = 8000) {
   }
 }
 
-// Run an array of async tasks with bounded concurrency.
 async function pooled(tasks, limit = 10) {
   const results = [];
   let i = 0;
@@ -148,16 +142,10 @@ async function pooled(tasks, limit = 10) {
   return results;
 }
 
-// ---- Main scan ------------------------------------------------------------
-// cities[] x queries[] grid, parallel, dedup by place_id, phone-gated, scored.
 export async function runScan({ apiKey, engine, market, state, cities, queries }) {
   const combos = [];
-  for (const city of cities) {
-    for (const q of queries) {
-      combos.push({ city, q });
-    }
-  }
-  // Free Cloudflare plan caps subrequests ~50. Stay well under.
+  for (const city of cities) for (const q of queries) combos.push({ city, q });
+
   if (combos.length > 45) {
     return {
       error: `Scan too large: ${combos.length} city\u00d7query combos. Cap is 45 (free plan subrequest limit). Reduce cities or queries.`,
@@ -178,14 +166,18 @@ export async function runScan({ apiKey, engine, market, state, cities, queries }
   const errors = [];
   let rawCount = 0;
   let droppedNoPhone = 0;
+  let droppedLowReviews = 0;
 
   for (const s of settled) {
     if (s.error) { errors.push(`${s.combo}: ${s.error}`); continue; }
     for (const p of s.places) {
       rawCount++;
       const phone = p.nationalPhoneNumber || p.internationalPhoneNumber || "";
-      if (!phone) { droppedNoPhone++; continue; }      // HARD GATE
-      if (byId.has(p.id)) continue;                    // DEDUPE
+      if (!phone) { droppedNoPhone++; continue; }              // GATE 1: phone
+      if ((p.userRatingCount || 0) < MIN_REVIEWS) {            // GATE 2: reviews
+        droppedLowReviews++; continue;
+      }
+      if (byId.has(p.id)) continue;                            // DEDUPE
       const { score, pitch } = scoreLead(p);
       byId.set(p.id, {
         place_id: p.id,
@@ -215,13 +207,13 @@ export async function runScan({ apiKey, engine, market, state, cities, queries }
       combos: combos.length,
       raw: rawCount,
       droppedNoPhone,
+      droppedLowReviews,
       unique: leads.length,
       errors,
     },
   };
 }
 
-// ---- D1 persistence -------------------------------------------------------
 export async function ensureTable(db) {
   await db.exec(
     "CREATE TABLE IF NOT EXISTS leads (" +
@@ -250,7 +242,6 @@ export async function saveLeads(db, leads) {
   return leads.length;
 }
 
-// ---- Auth -----------------------------------------------------------------
 export function checkAuth(request, env, url) {
   const token =
     request.headers.get("x-admin-token") ||

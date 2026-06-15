@@ -1,5 +1,5 @@
-// GET /api/lead-export?engine=&minScore=&pitch=&market=  (token via ?token= so the link works in a browser)
-import { checkAuth } from "./_engine.js";
+// GET /api/lead-export?engine=&minScore=&pitch=&market=&minReviews=  (token via ?token=)
+import { checkAuth, MIN_REVIEWS } from "./_engine.js";
 
 function csvCell(v) {
   const s = v == null ? "" : String(v);
@@ -8,18 +8,17 @@ function csvCell(v) {
 
 export async function onRequestGet({ request, env }) {
   const url = new URL(request.url);
-  if (!checkAuth(request, env, url)) {
-    return new Response("Unauthorized", { status: 401 });
-  }
+  if (!checkAuth(request, env, url)) return new Response("Unauthorized", { status: 401 });
   if (!env.DB) return new Response("D1 binding DB not found", { status: 500 });
 
   const engine = url.searchParams.get("engine");
   const minScore = parseInt(url.searchParams.get("minScore") || "0", 10);
   const pitch = url.searchParams.get("pitch");
   const market = url.searchParams.get("market");
+  const minReviews = parseInt(url.searchParams.get("minReviews") || String(MIN_REVIEWS), 10);
 
-  const where = ["score >= ?"];
-  const args = [isNaN(minScore) ? 0 : minScore];
+  const where = ["score >= ?", "review_count >= ?"];
+  const args = [isNaN(minScore) ? 0 : minScore, isNaN(minReviews) ? MIN_REVIEWS : minReviews];
   if (engine && engine !== "all") { where.push("engine = ?"); args.push(engine); }
   if (pitch && pitch !== "all") { where.push("pitch = ?"); args.push(pitch); }
   if (market) { where.push("market = ?"); args.push(market); }
@@ -52,7 +51,8 @@ export async function onRequestGet({ request, env }) {
   }
 
   const stamp = new Date().toISOString().slice(0, 10);
-  const fname = `leadengine_${engine || "all"}_${stamp}.csv`;
+  const tag = (pitch && pitch !== "all") ? pitch.toLowerCase().replace(/\s/g, "") : (engine || "all");
+  const fname = `leadengine_${tag}_${stamp}.csv`;
   return new Response(lines.join("\n"), {
     headers: {
       "Content-Type": "text/csv; charset=utf-8",
