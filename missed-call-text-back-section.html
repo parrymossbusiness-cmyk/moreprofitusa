@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Missed Call Text Back | More Profit USA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap" rel="stylesheet">
+<style>
+  :root{--canvas:#0A0A0A;--ink:#FFFFFF;--muted:#9A9A9A;--orange:#FF4500;--line:#1E1E1E;--card:#111111;--card-2:#0F0F0F;}
+  *{box-sizing:border-box;margin:0;padding:0}
+  .mp-mctb{background:var(--canvas);color:var(--ink);font-family:'DM Sans',system-ui,sans-serif;padding:96px 24px;-webkit-font-smoothing:antialiased;}
+  .mp-mctb .wrap{max-width:1120px;margin:0 auto}
+  .mp-mctb .eyebrow{font-weight:700;letter-spacing:.22em;text-transform:uppercase;font-size:13px;color:var(--orange);margin-bottom:20px}
+  .mp-mctb h2{font-family:'Bebas Neue',sans-serif;font-weight:400;font-size:clamp(44px,7vw,84px);line-height:.95;letter-spacing:.01em;max-width:18ch}
+  .mp-mctb h2 .hl{color:var(--orange)}
+  .mp-mctb .lede{color:var(--muted);font-size:clamp(17px,2vw,21px);line-height:1.5;max-width:60ch;margin-top:24px}
+
+  /* stat band */
+  .mp-mctb .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:56px;
+    border:1px solid var(--line);border-radius:16px;overflow:hidden;background:linear-gradient(180deg,#131313,#0e0e0e)}
+  .mp-mctb .stats .s{padding:38px 34px;border-right:1px solid var(--line)}
+  .mp-mctb .stats .s:last-child{border-right:none}
+  .mp-mctb .stats .n{font-family:'Bebas Neue',sans-serif;font-size:clamp(56px,8vw,84px);line-height:.85;color:var(--orange);margin-bottom:14px}
+  .mp-mctb .stats .cap{color:var(--muted);font-size:16px;line-height:1.45;max-width:32ch}
+
+  .mp-mctb .section-label{font-weight:700;letter-spacing:.18em;text-transform:uppercase;font-size:12px;color:var(--muted);
+    margin:80px 0 28px;display:flex;align-items:center;gap:14px}
+  .mp-mctb .section-label::after{content:"";height:1px;flex:1;background:var(--line)}
+
+  .mp-mctb .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .mp-mctb .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:34px 30px}
+  .mp-mctb .card .kicker{font-family:'Bebas Neue',sans-serif;font-size:34px;line-height:1;color:var(--orange);margin-bottom:4px}
+  .mp-mctb .card h3{font-family:'Bebas Neue',sans-serif;font-weight:400;font-size:26px;line-height:1;letter-spacing:.01em;margin-bottom:16px}
+  .mp-mctb .card p{color:var(--muted);font-size:15.5px;line-height:1.6}
+  .mp-mctb .card p b{color:var(--ink);font-weight:700}
+
+  .mp-mctb .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+  .mp-mctb .step{display:flex;gap:14px;align-items:flex-start}
+  .mp-mctb .step .dot{flex:0 0 auto;width:38px;height:38px;border-radius:50%;border:1.5px solid var(--orange);color:var(--orange);
+    font-family:'Bebas Neue',sans-serif;font-size:20px;display:flex;align-items:center;justify-content:center;margin-top:2px}
+  .mp-mctb .step h4{font-family:'Bebas Neue',sans-serif;font-weight:400;font-size:21px;margin-bottom:6px;letter-spacing:.01em}
+  .mp-mctb .step p{color:var(--muted);font-size:14.5px;line-height:1.5}
+
+  .mp-mctb .cta{margin-top:84px;background:linear-gradient(135deg,#161616,#0d0d0d);border:1px solid var(--line);border-radius:18px;
+    padding:48px 44px;display:flex;align-items:center;justify-content:space-between;gap:32px;flex-wrap:wrap;position:relative;overflow:hidden}
+  .mp-mctb .cta::before{content:"";position:absolute;inset:0;background:radial-gradient(600px 200px at 100% 0%,rgba(255,69,0,.12),transparent 60%)}
+  .mp-mctb .cta .ctext{position:relative;z-index:1}
+  .mp-mctb .cta h3{font-family:'Bebas Neue',sans-serif;font-weight:400;font-size:clamp(30px,4vw,44px);line-height:.98;letter-spacing:.01em}
+  .mp-mctb .cta p{color:var(--muted);font-size:16px;margin-top:10px;max-width:48ch}
+  .mp-mctb .btn{position:relative;z-index:1;display:inline-block;background:var(--orange);color:#0A0A0A;font-weight:700;font-size:16px;
+    letter-spacing:.02em;text-decoration:none;padding:18px 34px;border-radius:10px;white-space:nowrap;transition:transform .15s ease,box-shadow .15s ease}
+  .mp-mctb .btn:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(255,69,0,.28)}
+
+  @media(max-width:860px){
+    .mp-mctb{padding:64px 20px}
+    .mp-mctb .stats,.mp-mctb .cards,.mp-mctb .steps{grid-template-columns:1fr}
+    .mp-mctb .stats .s{border-right:none;border-bottom:1px solid var(--line)}
+    .mp-mctb .stats .s:last-child{border-bottom:none}
+    .mp-mctb .cta{flex-direction:column;align-items:flex-start}
+  }
+</style>
+</head>
+<body>
+<section class="mp-mctb">
+  <div class="wrap">
+
+    <p class="eyebrow">More Profit USA &middot; Missed Call Text Back</p>
+    <h2>Never lose another lead to a <span class="hl">missed call.</span></h2>
+    <p class="lede">Every business misses calls. The ones that win text back instantly. We do it for you, automatically, the second a call goes unanswered, so the lead stays yours instead of going to the next name on the list.</p>
+
+    <div class="stats">
+      <div class="s"><div class="n">85%</div><div class="cap">of customers appreciate getting a text back after a missed call.</div></div>
+      <div class="s"><div class="n">72%</div><div class="cap">more customers respond to a text than to a voicemail.</div></div>
+      <div class="s"><div class="n">69%</div><div class="cap">of businesses gain more customers with missed-call text-back.</div></div>
+    </div>
+
+    <p class="section-label">What it does for you</p>
+    <div class="cards">
+      <div class="card">
+        <div class="kicker">Stand out</div>
+        <h3>From the competition</h3>
+        <p>Every business misses calls, but few get back fast. The moment you miss one, we send an <b>instant, customized text</b> on your behalf that acknowledges the call and points them to a quote form on your website.</p>
+      </div>
+      <div class="card">
+        <div class="kicker">No more</div>
+        <h3>Lost leads</h3>
+        <p>When someone needs a project done, they want contact <b>now</b>. If the call goes unanswered, they move on to the next contractor. We start the conversation instantly so that lead never slips away.</p>
+      </div>
+      <div class="card">
+        <div class="kicker">Available</div>
+        <h3>24/7</h3>
+        <p>Our system runs around the clock. Miss a call after hours or on a Sunday and <b>every caller still gets a fast response</b>. Every inquiry handled, even when you're off the clock.</p>
+      </div>
+    </div>
+
+    <p class="section-label">How it works</p>
+    <div class="steps">
+      <div class="step"><div class="dot">1</div><div><h4>Call missed</h4><p>A call comes in and goes unanswered.</p></div></div>
+      <div class="step"><div class="dot">2</div><div><h4>Instant text</h4><p>We text back in seconds, in your voice.</p></div></div>
+      <div class="step"><div class="dot">3</div><div><h4>They tap through</h4><p>The text points them to your quote form.</p></div></div>
+      <div class="step"><div class="dot">4</div><div><h4>You get the lead</h4><p>A warm lead lands, not a missed call.</p></div></div>
+    </div>
+
+    <div class="cta">
+      <div class="ctext">
+        <h3>Ready to stop losing leads to missed calls?</h3>
+        <p>Book a quick call and we'll have your text-back live in minutes.</p>
+      </div>
+      <a class="btn" href="#book">Book a Call &#8594;</a>
+    </div>
+
+  </div>
+</section>
+</body>
+</html>
