@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Revenue Commander — Discover How Much HVAC Revenue You May Be Losing</title>
-  <meta name="description" content="Revenue Commander analyzes the factors that influence whether homeowners call your HVAC company or your competitor." />
+  <title>Revenue Commander — Discover How Much Revenue You May Be Losing</title>
+  <meta name="description" content="Revenue Commander analyzes the factors that influence whether customers call your business or your competitor. Built for auto body shops and home service companies." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
@@ -32,7 +32,6 @@
     .fade-up.visible{opacity:1;transform:translateY(0);}
     .btn-primary{display:inline-flex;align-items:center;gap:8px;background:var(--orange);color:var(--white);padding:16px 32px;border-radius:4px;font-weight:700;font-size:15px;letter-spacing:0.04em;text-decoration:none;transition:all 0.2s;border:2px solid var(--orange);}
     .btn-primary:hover{background:transparent;color:var(--orange);}
-    /* HERO */
     #hero{padding:120px 40px 80px;position:relative;overflow:hidden;text-align:center;}
     .hero-grid{position:absolute;inset:0;z-index:0;background-image:linear-gradient(rgba(255,69,0,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,69,0,0.04) 1px,transparent 1px);background-size:60px 60px;}
     .hero-glow{position:absolute;top:-200px;right:-100px;width:600px;height:600px;background:radial-gradient(circle,rgba(255,69,0,0.10) 0%,transparent 70%);pointer-events:none;z-index:0;}
@@ -41,7 +40,6 @@
     .hero-title{font-family:var(--font-display);font-size:clamp(52px,6.5vw,88px);line-height:0.95;letter-spacing:0.02em;margin-bottom:24px;}
     .hero-sub{font-size:19px;color:var(--gray);line-height:1.7;max-width:640px;margin:0 auto 40px;}
     .hero-note{font-family:var(--font-mono);font-size:11px;color:var(--gray-dark);letter-spacing:0.08em;text-transform:uppercase;margin-top:14px;}
-    /* EVALUATES */
     #evaluates{background:var(--bg2);}
     .eval-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-top:48px;}
     .eval-card{background:var(--bg2);padding:26px 20px;transition:background 0.2s;}
@@ -49,7 +47,6 @@
     .eval-icon{font-size:24px;margin-bottom:12px;}
     .eval-name{font-size:14px;font-weight:700;margin-bottom:6px;}
     .eval-desc{font-size:13px;color:var(--gray);line-height:1.5;}
-    /* HOW IT WORKS */
     #how{background:var(--bg);}
     .steps{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin-top:48px;position:relative;}
     .steps::before{content:'';position:absolute;top:34px;left:5%;right:5%;height:1px;background:linear-gradient(90deg,var(--orange),rgba(255,69,0,0.15));z-index:0;}
@@ -58,7 +55,6 @@
     .step-label{font-family:var(--font-mono);font-size:10px;color:var(--orange);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:6px;}
     .step-title{font-size:14px;font-weight:700;margin-bottom:6px;}
     .step-text{font-size:12px;color:var(--gray);line-height:1.5;}
-    /* EXAMPLE RESULTS */
     #results{background:var(--bg2);}
     .results-inner{max-width:760px;margin:0 auto;}
     .results-card{background:var(--bg3);border:1px solid var(--border-orange);border-radius:10px;overflow:hidden;margin-top:48px;}
@@ -80,7 +76,6 @@
     .results-overall{text-align:center;}
     .results-overall-label{font-family:var(--font-mono);font-size:10px;color:var(--gray-dark);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:4px;}
     .results-overall-val{font-family:var(--font-display);font-size:36px;color:#e74c3c;letter-spacing:0.02em;}
-    /* FORM SECTION */
     #assessment{background:var(--bg);padding:80px 40px;}
     .form-outer{max-width:680px;margin:0 auto;}
     .form-wrap{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:40px;}
@@ -89,9 +84,12 @@
     .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;}
     .form-field{display:flex;flex-direction:column;gap:8px;}
     .form-field label{font-size:11px;font-weight:600;color:var(--gray);letter-spacing:0.08em;text-transform:uppercase;}
-    .form-field input{background:var(--bg2);border:1px solid var(--border);border-radius:4px;padding:12px 14px;font-family:var(--font-body);font-size:15px;color:var(--white);outline:none;transition:border-color 0.2s;width:100%;}
-    .form-field input:focus{border-color:var(--orange);}
+    .form-field input,
+    .form-field select{background:var(--bg2);border:1px solid var(--border);border-radius:4px;padding:12px 14px;font-family:var(--font-body);font-size:15px;color:var(--white);outline:none;transition:border-color 0.2s;width:100%;}
+    .form-field input:focus,
+    .form-field select:focus{border-color:var(--orange);}
     .form-field input::placeholder{color:var(--gray-dark);}
+    .form-field select option{background:var(--bg2);color:var(--white);}
     .form-submit{width:100%;background:var(--orange);color:var(--white);border:none;padding:18px;border-radius:4px;font-family:var(--font-body);font-weight:700;font-size:16px;letter-spacing:0.04em;cursor:pointer;transition:opacity 0.2s;margin-top:8px;}
     .form-submit:hover{opacity:0.88;}
     .form-submit:disabled{opacity:0.6;cursor:not-allowed;}
@@ -100,7 +98,6 @@
     .form-success-icon{font-size:48px;margin-bottom:16px;}
     .form-success-title{font-family:var(--font-display);font-size:36px;letter-spacing:0.02em;margin-bottom:12px;}
     .form-success-text{font-size:16px;color:var(--gray);line-height:1.7;margin-bottom:28px;}
-    /* BOTTOM */
     #bottom{background:var(--bg2);padding:80px 40px;}
     .bottom-inner{max-width:860px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;}
     .bottom-title{font-family:var(--font-display);font-size:clamp(36px,4vw,52px);line-height:1;letter-spacing:0.02em;margin-bottom:20px;}
@@ -155,9 +152,9 @@
   <div class="hero-grid"></div>
   <div class="hero-glow"></div>
   <div class="hero-inner">
-    <div class="hero-eyebrow">⚡ Free HVAC Revenue Assessment</div>
-    <h1 class="hero-title">DISCOVER HOW MUCH REVENUE<br>YOUR HVAC COMPANY<br><span class="accent">MAY BE LOSING.</span></h1>
-    <p class="hero-sub">Revenue Commander analyzes the factors that influence whether homeowners call your company or your competitor.</p>
+    <div class="hero-eyebrow">⚡ Free Revenue Assessment</div>
+    <h1 class="hero-title">DISCOVER HOW MUCH REVENUE<br>YOUR BUSINESS<br><span class="accent">MAY BE LOSING.</span></h1>
+    <p class="hero-sub">Revenue Commander analyzes the factors that influence whether customers call your business or your competitor — built for auto body shops and home service companies.</p>
     <a href="#assessment" class="btn-primary">⚡ See My Revenue Gap</a>
     <div class="hero-note">Free · No Credit Card · Takes 2 Minutes</div>
   </div>
@@ -181,22 +178,22 @@
       <div class="eval-card">
         <div class="eval-icon">🤖</div>
         <div class="eval-name">AI Search Visibility</div>
-        <div class="eval-desc">Whether your business appears when homeowners ask ChatGPT, Gemini, or Perplexity who to call.</div>
+        <div class="eval-desc">Whether your business appears when customers ask ChatGPT, Gemini, or Perplexity who to call.</div>
       </div>
       <div class="eval-card">
         <div class="eval-icon">🎙️</div>
         <div class="eval-name">Voice Search Visibility</div>
-        <div class="eval-desc">How your business shows up when homeowners ask Siri or Google Assistant for emergency HVAC help.</div>
+        <div class="eval-desc">How your business shows up when customers ask Siri or Google Assistant for help near them.</div>
       </div>
       <div class="eval-card">
         <div class="eval-icon">📱</div>
         <div class="eval-name">Mobile Conversion Issues</div>
-        <div class="eval-desc">Whether your website makes it easy for a homeowner to call from their phone in 5 seconds.</div>
+        <div class="eval-desc">Whether your website makes it easy for a customer to call from their phone in 5 seconds.</div>
       </div>
       <div class="eval-card">
         <div class="eval-icon">📵</div>
         <div class="eval-name">Missed Call Opportunities</div>
-        <div class="eval-desc">How much revenue may be leaving every time an emergency call goes unanswered.</div>
+        <div class="eval-desc">How much revenue may be leaving every time a call goes unanswered.</div>
       </div>
       <div class="eval-card">
         <div class="eval-icon">💰</div>
@@ -221,7 +218,7 @@
         <div class="step-num">1</div>
         <div class="step-label">Step One</div>
         <div class="step-title">Enter Your Company Info</div>
-        <div class="step-text">Provide your HVAC company name, city, and contact details.</div>
+        <div class="step-text">Provide your business name, city, and contact details.</div>
       </div>
       <div class="step">
         <div class="step-num">2</div>
@@ -233,7 +230,7 @@
         <div class="step-num">3</div>
         <div class="step-label">Step Three</div>
         <div class="step-title">Identify Hidden Revenue Leaks</div>
-        <div class="step-text">See exactly where revenue is leaving your business through weak visibility and low conversion.</div>
+        <div class="step-text">See exactly where revenue is leaving through weak visibility and low conversion.</div>
       </div>
       <div class="step">
         <div class="step-num">4</div>
@@ -258,36 +255,36 @@
       <h2 class="section-title fade-up">WHAT YOUR ASSESSMENT<br><span class="accent">LOOKS LIKE.</span></h2>
       <div class="results-card fade-up">
         <div class="results-header">
-          <div class="results-badge">❄️ Sample Assessment — Phoenix, AZ HVAC</div>
-          <div class="results-title">Desert Air Pro HVAC</div>
+          <div class="results-badge">🔧 Sample Assessment — Pine Bluff, AR Collision Repair</div>
+          <div class="results-title">Central Body &amp; Paint</div>
           <div class="results-sub">Revenue Commander Analysis · June 2026</div>
         </div>
         <div class="results-metrics">
           <div class="results-metric">
             <div class="results-metric-label">Review Score</div>
-            <div class="results-metric-val low">42<span style="font-size:16px;color:var(--gray-dark)">/100</span></div>
+            <div class="results-metric-val low">38<span style="font-size:16px;color:var(--gray-dark)">/100</span></div>
             <div class="results-metric-sub">Needs significant improvement</div>
           </div>
           <div class="results-metric">
             <div class="results-metric-label">AI Search Visibility</div>
-            <div class="results-metric-val low">18<span style="font-size:16px;color:var(--gray-dark)">/100</span></div>
+            <div class="results-metric-val low">14<span style="font-size:16px;color:var(--gray-dark)">/100</span></div>
             <div class="results-metric-sub">Not found in AI results</div>
           </div>
           <div class="results-metric">
             <div class="results-metric-label">Voice Search Visibility</div>
-            <div class="results-metric-val mid">25<span style="font-size:16px;color:var(--gray-dark)">/100</span></div>
+            <div class="results-metric-val mid">22<span style="font-size:16px;color:var(--gray-dark)">/100</span></div>
             <div class="results-metric-sub">Weak — below threshold</div>
           </div>
         </div>
         <div class="results-footer">
           <div>
             <div class="results-metric-label" style="font-family:var(--font-mono);font-size:10px;color:var(--gray-dark);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:4px;">Review Gap</div>
-            <div style="font-size:32px;font-weight:700;color:#e74c3c;">4,612</div>
+            <div style="font-size:32px;font-weight:700;color:#e74c3c;">3,840</div>
             <div style="font-size:12px;color:var(--gray);margin-top:2px;">Reviews behind top competitor</div>
           </div>
           <div class="results-opp">
             <div class="results-opp-label">Estimated Revenue Opportunity</div>
-            <div class="results-opp-val">$87,000+</div>
+            <div class="results-opp-val">$74,000+</div>
           </div>
           <div class="results-overall">
             <div class="results-overall-label">Overall Opportunity</div>
@@ -303,30 +300,42 @@
   <div class="form-outer">
     <div class="section-label" style="justify-content:center;margin-bottom:8px;">Start Your Assessment</div>
     <h2 style="font-family:var(--font-display);font-size:clamp(36px,4.5vw,52px);line-height:1;letter-spacing:0.02em;margin-bottom:10px;text-align:center;" class="fade-up">SEE YOUR REVENUE <span class="accent">GAPS.</span></h2>
-    <p style="font-size:16px;color:var(--gray);line-height:1.7;margin-bottom:32px;text-align:center;max-width:540px;margin-left:auto;margin-right:auto;" class="fade-up">Enter your information and we'll assess your HVAC company's revenue gaps using live market data.</p>
+    <p style="font-size:16px;color:var(--gray);line-height:1.7;margin-bottom:32px;text-align:center;max-width:540px;margin-left:auto;margin-right:auto;" class="fade-up">Enter your information and we'll assess your revenue gaps using live market data.</p>
     <div class="form-wrap fade-up">
       <form id="rc-form">
         <div class="form-grid">
           <div class="form-field">
             <label>Company Name *</label>
-            <input type="text" id="businessName" required placeholder="Desert Air Pro HVAC" />
+            <input type="text" id="businessName" required placeholder="Jeremy's Paint &amp; Body" />
           </div>
           <div class="form-field">
             <label>City, State *</label>
-            <input type="text" id="city" required placeholder="Phoenix, AZ" />
+            <input type="text" id="city" required placeholder="Pine Bluff, AR" />
           </div>
           <div class="form-field">
             <label>Your Name *</label>
-            <input type="text" id="ownerName" required placeholder="Mike Torres" />
+            <input type="text" id="ownerName" required placeholder="Jeremy Alexander" />
           </div>
           <div class="form-field">
             <label>Phone *</label>
-            <input type="tel" id="phone" required placeholder="(602) 555-0194" />
+            <input type="tel" id="phone" required placeholder="(870) 555-0194" />
           </div>
         </div>
-        <div class="form-field" style="margin-bottom:20px;">
+        <div class="form-field" style="margin-bottom:16px;">
           <label>Email *</label>
-          <input type="email" id="email" required placeholder="mike@desertairpro.com" />
+          <input type="email" id="email" required placeholder="jeremy@jeremyspaintandbody.com" />
+        </div>
+        <div class="form-field" style="margin-bottom:20px;">
+          <label>Business Type *</label>
+          <select id="businessType" required>
+            <option value="" disabled selected>Select your industry</option>
+            <option value="Auto Body / Collision Repair">Auto Body / Collision Repair</option>
+            <option value="HVAC">HVAC</option>
+            <option value="Plumbing">Plumbing</option>
+            <option value="Roofing">Roofing</option>
+            <option value="Electrical">Electrical</option>
+            <option value="Other Home Service">Other Home Service</option>
+          </select>
         </div>
         <button type="submit" id="submit-btn" class="form-submit">⚡ See My Revenue Gap</button>
         <div class="form-note">Free · No Credit Card · Your Data Is Never Sold</div>
@@ -346,7 +355,7 @@
     <div class="bottom-inner">
       <div class="fade-up">
         <div class="section-label">The Fastest Path to Growth</div>
-        <h2 class="bottom-title">MOST HVAC COMPANIES FOCUS ON GENERATING <span class="accent">MORE LEADS.</span></h2>
+        <h2 class="bottom-title">MOST LOCAL BUSINESSES FOCUS ON GENERATING <span class="accent">MORE LEADS.</span></h2>
         <p class="bottom-text">The fastest path to growth is often recovering the revenue already being lost through weak trust signals, poor visibility, missed calls, and low conversion rates.</p>
         <p class="bottom-text">Revenue Commander helps uncover those opportunities.</p>
       </div>
@@ -386,7 +395,7 @@
       city:document.getElementById('city').value.trim(),
       phone:document.getElementById('phone').value.trim(),
       email:document.getElementById('email').value.trim(),
-      notes:'Owner: '+document.getElementById('ownerName').value.trim(),
+      notes:'Owner: '+document.getElementById('ownerName').value.trim()+' | Type: '+document.getElementById('businessType').value,
       source:'Revenue Commander V2',
       packageInterest:'Revenue Assessment',
       timestamp:new Date().toISOString()
