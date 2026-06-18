@@ -3,424 +3,944 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>More Profit USA — Stop Losing HVAC Revenue To Competitors This Summer</title>
-  <meta name="description" content="Revenue Commander reveals where HVAC revenue is leaking and how to recover it. Review gaps, missed calls, AI search visibility, voice search, and mobile conversion." />
+  <meta name="description" content="More Profit USA helps auto body shops and home service companies stop losing revenue to competitors. Revenue Commander reveals your exact leaks and how to fix them." />
+  <title>More Profit USA — Stop Losing Revenue To Competitors</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
   <style>
-    :root{--bg:#0A0A0A;--bg2:#111111;--bg3:#161616;--orange:#FF4500;--orange-dim:rgba(255,69,0,0.12);--border:rgba(255,255,255,0.08);--border-orange:rgba(255,69,0,0.3);--white:#FFFFFF;--gray:#A0A0A0;--gray-dark:#444444;--font-display:'Bebas Neue',sans-serif;--font-body:'DM Sans',sans-serif;--font-mono:'DM Mono',monospace;}
-    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-    html{scroll-behavior:smooth;}
-    body{background:var(--bg);color:var(--white);font-family:var(--font-body);font-size:16px;line-height:1.6;overflow-x:hidden;}
-    nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 40px;height:64px;background:rgba(10,10,10,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);}
-    .nav-logo{font-family:var(--font-display);font-size:22px;letter-spacing:0.08em;color:var(--white);text-decoration:none;}
-    .nav-logo span{color:var(--orange);}
-    .nav-links{display:flex;align-items:center;gap:28px;}
-    .nav-links a{color:var(--gray);font-size:13px;font-weight:500;text-decoration:none;letter-spacing:0.04em;transition:color 0.2s;}
-    .nav-links a:hover{color:var(--white);}
-    .nav-cta{background:var(--orange)!important;color:var(--white)!important;padding:8px 18px;border-radius:4px;font-weight:700!important;transition:opacity 0.2s!important;}
-    .nav-cta:hover{opacity:0.88;}
-    .nav-mobile-toggle{display:none;background:none;border:none;cursor:pointer;color:var(--white);font-size:20px;}
-    section{padding:100px 40px;}
-    .section-inner{max-width:1100px;margin:0 auto;}
-    .section-label{font-family:var(--font-mono);font-size:11px;letter-spacing:0.2em;color:var(--orange);text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:10px;}
-    .section-label::before{content:'';display:block;width:24px;height:1px;background:var(--orange);}
-    .section-title{font-family:var(--font-display);font-size:clamp(40px,5vw,68px);line-height:1;letter-spacing:0.02em;margin-bottom:20px;}
-    .section-sub{font-size:17px;color:var(--gray);max-width:640px;line-height:1.7;}
-    .accent{color:var(--orange);}
-    .fade-up{opacity:0;transform:translateY(24px);transition:opacity 0.6s ease,transform 0.6s ease;}
-    .fade-up.visible{opacity:1;transform:translateY(0);}
-    .btn-primary{display:inline-flex;align-items:center;gap:8px;background:var(--orange);color:var(--white);padding:16px 32px;border-radius:4px;font-weight:700;font-size:15px;letter-spacing:0.04em;text-decoration:none;transition:all 0.2s;border:2px solid var(--orange);}
-    .btn-primary:hover{background:transparent;color:var(--orange);}
-    .btn-outline{display:inline-flex;align-items:center;gap:8px;background:transparent;color:var(--white);padding:16px 32px;border-radius:4px;font-weight:600;font-size:15px;letter-spacing:0.04em;text-decoration:none;transition:all 0.2s;border:2px solid var(--border);}
-    .btn-outline:hover{border-color:var(--orange);color:var(--orange);}
-    /* HERO */
-    #hero{min-height:100vh;display:flex;align-items:center;padding:100px 40px 80px;position:relative;overflow:hidden;background:url('images/Hero_Technician.jpg') 70% center / cover no-repeat;}
-    .hero-overlay{position:absolute;inset:0;z-index:0;background:linear-gradient(to right,rgba(10,10,10,0.94) 0%,rgba(10,10,10,0.80) 55%,rgba(10,10,10,0.30) 100%);}
-    .hero-glow{position:absolute;top:-200px;left:-100px;width:700px;height:700px;background:radial-gradient(circle,rgba(255,69,0,0.10) 0%,transparent 70%);pointer-events:none;z-index:0;}
-    .hero-inner{position:relative;z-index:1;max-width:680px;margin:0 auto 0 0;width:100%;}
-    .score-card-wrap{position:relative;}
-    .score-card-label{font-family:var(--font-mono);font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--orange);text-align:center;margin-bottom:10px;}
-    /* ASSESSMENT STRIP — desktop only */
-    #assessment-strip{background:var(--bg2);padding:60px 40px;border-bottom:1px solid var(--border);}
-    .assessment-strip-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:auto 1fr;gap:48px;align-items:center;}
-    .assessment-strip-left{max-width:340px;}
-    .assessment-strip-label{font-family:var(--font-mono);font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--orange);margin-bottom:10px;}
-    .assessment-strip-title{font-family:var(--font-display);font-size:32px;letter-spacing:0.02em;line-height:1.1;margin-bottom:10px;}
-    .assessment-strip-text{font-size:14px;color:var(--gray);line-height:1.6;}
-    .hero-eyebrow{font-family:var(--font-mono);font-size:11px;letter-spacing:0.2em;color:var(--orange);text-transform:uppercase;margin-bottom:20px;display:flex;align-items:center;gap:10px;}
-    .hero-eyebrow::before{content:'';display:block;width:32px;height:1px;background:var(--orange);}
-    .hero-title{font-family:var(--font-display);font-size:clamp(60px,7vw,96px);line-height:0.95;letter-spacing:0.02em;margin-bottom:24px;}
-    .hero-sub{font-size:18px;color:var(--gray);line-height:1.7;margin-bottom:16px;max-width:520px;}
-    .hero-trust{display:flex;gap:12px;align-items:flex-start;background:var(--orange-dim);border:1px solid var(--border-orange);border-radius:6px;padding:14px 18px;margin-bottom:36px;max-width:520px;}
-    .hero-trust-icon{font-size:20px;flex-shrink:0;margin-top:2px;}
-    .hero-trust p{font-size:13px;color:var(--gray);line-height:1.5;}
-    .hero-trust strong{color:var(--white);}
-    .hero-ctas{display:flex;gap:14px;flex-wrap:wrap;}
-    .score-card{background:var(--bg3);border:1px solid var(--border);border-radius:12px;overflow:hidden;box-shadow:0 40px 80px rgba(0,0,0,0.6);}
-    .score-header{background:linear-gradient(135deg,#0f1a2e,#0a0f1e);padding:24px 24px 18px;border-bottom:1px solid var(--border);}
-    .score-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,69,0,0.15);border:1px solid var(--border-orange);border-radius:20px;padding:4px 12px;font-size:11px;font-weight:600;color:var(--orange);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:12px;}
-    .score-company{font-size:18px;font-weight:700;margin-bottom:2px;}
-    .score-location{font-size:12px;color:var(--gray);}
-    .score-metrics{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);}
-    .score-metric{background:var(--bg3);padding:16px 18px;}
-    .score-metric-label{font-family:var(--font-mono);font-size:10px;color:var(--gray-dark);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:6px;}
-    .score-metric-val{font-size:24px;font-weight:700;line-height:1;}
-    .score-metric-val.low{color:#e74c3c;}
-    .score-metric-val.mid{color:#f39c12;}
-    .score-metric-sub{font-size:11px;color:var(--gray);margin-top:4px;}
-    .score-footer{padding:18px 20px;display:flex;align-items:center;justify-content:space-between;}
-    .score-opp-label{font-family:var(--font-mono);font-size:10px;color:var(--gray);text-transform:uppercase;letter-spacing:0.08em;}
-    .score-opp-val{font-size:24px;font-weight:700;color:var(--orange);}
-    .score-cta-sm{background:var(--orange);color:var(--white);padding:10px 18px;border-radius:4px;font-weight:700;font-size:12px;text-decoration:none;letter-spacing:0.04em;white-space:nowrap;}
-    /* TICKER */
-    .ticker{background:var(--orange);padding:10px 0;overflow:hidden;white-space:nowrap;}
-    .ticker-inner{display:inline-flex;animation:ticker 28s linear infinite;}
-    .ticker-item{display:inline-flex;align-items:center;gap:10px;padding:0 28px;font-family:var(--font-mono);font-size:11px;letter-spacing:0.12em;color:var(--white);font-weight:500;}
-    .ticker-dot{width:4px;height:4px;background:rgba(255,255,255,0.5);border-radius:50%;}
-    @keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-    /* NO MORE LEADS */
-    #no-leads{background:var(--bg2);}
-    .no-leads-inner{max-width:800px;margin:0 auto;text-align:center;}
-    .no-leads-title{font-family:var(--font-display);font-size:clamp(44px,5.5vw,72px);line-height:1;letter-spacing:0.02em;margin-bottom:16px;}
-    .no-leads-sub{font-family:var(--font-display);font-size:clamp(28px,3.5vw,46px);line-height:1;letter-spacing:0.02em;color:var(--orange);margin-bottom:28px;}
-    .no-leads-body{font-size:17px;color:var(--gray);line-height:1.7;max-width:620px;margin:0 auto;}
-    /* LEAKS */
-    #leaks{background:var(--bg);}
-    .leaks-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-top:56px;}
-    .leak-card{background:var(--bg);padding:32px 28px;transition:background 0.2s;}
-    .leak-card:hover{background:var(--bg3);}
-    .leak-icon{font-size:28px;margin-bottom:14px;}
-    .leak-title{font-size:16px;font-weight:700;margin-bottom:8px;}
-    .leak-text{font-size:14px;color:var(--gray);line-height:1.6;}
-    /* WHY CHOOSE */
-    #why{background:var(--bg2);}
-    .why-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;margin-top:56px;}
-    .why-list{display:flex;flex-direction:column;gap:12px;}
-    .why-item{display:flex;align-items:center;gap:16px;padding:18px 22px;background:var(--bg3);border:1px solid var(--border);border-radius:6px;font-size:16px;font-weight:600;transition:border-color 0.2s;}
-    .why-item:hover{border-color:var(--border-orange);}
-    .why-check{color:var(--orange);font-size:18px;flex-shrink:0;}
-    .why-box{background:linear-gradient(135deg,#1a0800,#0d0d0d);border:1px solid var(--border-orange);border-radius:8px;padding:40px;}
-    .why-box-title{font-family:var(--font-display);font-size:28px;letter-spacing:0.02em;line-height:1.2;margin-bottom:16px;}
-    .why-box-text{font-size:15px;color:var(--gray);line-height:1.7;margin-bottom:24px;}
-    /* LISTEN */
-    #listen{background:var(--bg);}
-    .listen-inner{max-width:860px;margin:0 auto;}
-    .listen-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:40px;}
-    .listen-item{display:flex;align-items:flex-start;gap:14px;padding:22px;background:var(--bg3);border:1px solid var(--border);border-radius:6px;transition:border-color 0.2s;}
-    .listen-item:hover{border-color:var(--border-orange);}
-    .listen-check{color:var(--orange);font-weight:700;font-size:16px;flex-shrink:0;margin-top:2px;}
-    .listen-text{font-size:14px;line-height:1.5;}
-    /* PRICING PREVIEW */
-    #pricing-preview{background:var(--bg2);}
-    .pricing-preview-inner{max-width:880px;margin:0 auto;}
-    .pricing-cards{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:48px;}
-    .pp-card{background:var(--bg3);border:1px solid var(--border);border-radius:8px;overflow:hidden;display:flex;flex-direction:column;transition:border-color 0.2s,transform 0.2s;}
-    .pp-card:hover{border-color:var(--border-orange);transform:translateY(-4px);}
-    .pp-card.featured{border-color:var(--orange);transform:translateY(-8px);}
-    .pp-card.featured:hover{transform:translateY(-12px);}
-    .pp-badge{background:var(--orange);color:var(--white);font-family:var(--font-mono);font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;text-align:center;padding:7px;}
-    .pp-header{padding:28px 28px 20px;}
-    .pp-tier{font-family:var(--font-mono);font-size:10px;color:var(--orange);letter-spacing:0.14em;text-transform:uppercase;margin-bottom:8px;}
-    .pp-name{font-family:var(--font-display);font-size:24px;letter-spacing:0.02em;margin-bottom:10px;line-height:1.1;}
-    .pp-desc{font-size:13px;color:var(--gray);line-height:1.5;}
-    .pp-price{padding:20px 28px;border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
-    .pp-price-num{font-family:var(--font-display);font-size:60px;line-height:1;letter-spacing:0.02em;}
-    .pp-price-num sup{font-size:28px;vertical-align:super;}
-    .pp-price-note{font-family:var(--font-mono);font-size:10px;color:var(--gray);letter-spacing:0.08em;text-transform:uppercase;margin-top:4px;}
-    .pp-footer{padding:20px 28px 28px;margin-top:auto;}
-    .pp-cta-primary{display:block;text-align:center;background:var(--orange);color:var(--white);padding:14px;border-radius:4px;font-weight:700;font-size:14px;text-decoration:none;letter-spacing:0.04em;transition:all 0.2s;border:2px solid var(--orange);}
-    .pp-cta-primary:hover{background:transparent;color:var(--orange);}
-    .pp-cta-secondary{display:block;text-align:center;background:transparent;color:var(--white);padding:14px;border-radius:4px;font-weight:600;font-size:14px;text-decoration:none;letter-spacing:0.04em;transition:all 0.2s;border:2px solid var(--border);}
-    .pp-cta-secondary:hover{border-color:var(--orange);color:var(--orange);}
-    .pp-delivery{text-align:center;font-family:var(--font-mono);font-size:10px;color:var(--gray-dark);letter-spacing:0.08em;text-transform:uppercase;margin-top:10px;}
-    /* FINAL */
-    #final{background:linear-gradient(180deg,var(--bg2) 0%,#0d0500 50%,var(--bg) 100%);padding:120px 40px;text-align:center;}
-    .final-inner{max-width:680px;margin:0 auto;}
-    .final-title{font-family:var(--font-display);font-size:clamp(52px,6vw,80px);line-height:0.95;letter-spacing:0.02em;margin-bottom:22px;}
-    .final-sub{font-size:18px;color:var(--gray);margin-bottom:36px;line-height:1.6;}
-    footer{background:var(--bg);border-top:1px solid var(--border);padding:40px;text-align:center;}
-    .footer-logo{font-family:var(--font-display);font-size:20px;letter-spacing:0.08em;margin-bottom:14px;}
-    .footer-logo span{color:var(--orange);}
-    .footer-links{display:flex;justify-content:center;gap:24px;flex-wrap:wrap;margin-bottom:16px;}
-    .footer-links a{font-size:13px;color:var(--gray);text-decoration:none;transition:color 0.2s;}
-    .footer-links a:hover{color:var(--orange);}
-    .footer-copy{font-size:12px;color:var(--gray-dark);}
-    @media(max-width:900px){
-      nav{padding:0 20px;}
-      .nav-links{display:none;flex-direction:column;position:absolute;top:64px;left:0;right:0;background:#0A0A0A;padding:20px;border-bottom:1px solid var(--border);gap:16px;}
-      .nav-links.open{display:flex;}
-      .nav-mobile-toggle{display:block;}
-      section{padding:72px 20px;}
-      #hero{padding:100px 20px 60px;min-height:auto;background-position:60% center;}
-      .hero-inner{max-width:100%;}
-      #assessment-strip{display:none;}
-      .leaks-grid{grid-template-columns:1fr 1fr;}
-      .why-grid{grid-template-columns:1fr;gap:40px;}
-      .listen-grid{grid-template-columns:1fr;}
-      .pricing-cards{grid-template-columns:1fr;}
-      .pp-card.featured{transform:none;}
+    :root {
+      --black: #0A0A0A;
+      --orange: #FF4500;
+      --orange-dim: #cc3700;
+      --white: #FFFFFF;
+      --gray-1: #111111;
+      --gray-2: #1A1A1A;
+      --gray-3: #2A2A2A;
+      --gray-4: #555555;
+      --gray-5: #999999;
+      --gray-6: #CCCCCC;
+      --font-display: 'Bebas Neue', sans-serif;
+      --font-body: 'DM Sans', sans-serif;
     }
-    @media(max-width:560px){.leaks-grid{grid-template-columns:1fr;}}
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(10,10,10,0.95);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--gray-3);
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 60px;
+    }
+
+    .nav-logo {
+      font-family: var(--font-display);
+      font-size: 22px;
+      letter-spacing: 0.05em;
+      color: var(--white);
+    }
+
+    .nav-logo span { color: var(--orange); }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--gray-6);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--white); }
+
+    .nav-cta {
+      background: var(--orange);
+      color: var(--white) !important;
+      padding: 8px 18px;
+      border-radius: 3px;
+      font-weight: 600 !important;
+      font-size: 13px !important;
+      transition: background 0.2s !important;
+    }
+
+    .nav-cta:hover { background: var(--orange-dim) !important; }
+
+    .nav-mobile-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--white);
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      padding: 80px 24px 72px;
+      max-width: 960px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--gray-2);
+      border: 1px solid var(--gray-3);
+      border-radius: 100px;
+      padding: 6px 16px;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--gray-5);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 28px;
+    }
+
+    .hero-eyebrow span { color: var(--orange); }
+
+    .hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(52px, 8vw, 96px);
+      line-height: 0.95;
+      letter-spacing: 0.02em;
+      color: var(--white);
+      margin-bottom: 28px;
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      color: var(--orange);
+    }
+
+    .hero-sub {
+      font-size: 18px;
+      color: var(--gray-5);
+      max-width: 600px;
+      margin: 0 auto 48px;
+      line-height: 1.7;
+    }
+
+    /* ── VERTICAL PATHS ── */
+    .vertical-paths {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      max-width: 760px;
+      margin: 0 auto 48px;
+    }
+
+    .vpath {
+      background: var(--gray-2);
+      border: 1px solid var(--gray-3);
+      border-radius: 6px;
+      padding: 28px 24px;
+      text-align: left;
+      transition: border-color 0.2s, background 0.2s;
+      cursor: pointer;
+      display: block;
+    }
+
+    .vpath:hover {
+      border-color: var(--orange);
+      background: var(--gray-1);
+    }
+
+    .vpath-icon {
+      font-size: 28px;
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    .vpath-label {
+      font-family: var(--font-display);
+      font-size: 22px;
+      letter-spacing: 0.04em;
+      color: var(--white);
+      margin-bottom: 6px;
+    }
+
+    .vpath-desc {
+      font-size: 13px;
+      color: var(--gray-5);
+      line-height: 1.5;
+    }
+
+    .vpath-primary {
+      border-color: var(--orange);
+    }
+
+    .vpath-primary .vpath-label { color: var(--orange); }
+
+    .hero-cta-row {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      background: var(--orange);
+      color: var(--white);
+      padding: 14px 28px;
+      border-radius: 3px;
+      font-weight: 600;
+      font-size: 15px;
+      transition: background 0.2s;
+      display: inline-block;
+    }
+
+    .btn-primary:hover { background: var(--orange-dim); }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--white);
+      padding: 14px 28px;
+      border-radius: 3px;
+      font-weight: 500;
+      font-size: 15px;
+      border: 1px solid var(--gray-3);
+      transition: border-color 0.2s;
+      display: inline-block;
+    }
+
+    .btn-secondary:hover { border-color: var(--gray-5); }
+
+    /* ── CREDENTIAL BANNER ── */
+    .credential-banner {
+      background: var(--gray-2);
+      border-top: 1px solid var(--gray-3);
+      border-bottom: 1px solid var(--gray-3);
+      padding: 20px 24px;
+      text-align: center;
+    }
+
+    .credential-banner p {
+      font-size: 14px;
+      color: var(--gray-5);
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    .credential-banner strong {
+      color: var(--white);
+      font-weight: 600;
+    }
+
+    /* ── SECTION BASE ── */
+    .section {
+      padding: 80px 24px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .section-eyebrow {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--orange);
+      margin-bottom: 16px;
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(36px, 5vw, 60px);
+      letter-spacing: 0.02em;
+      line-height: 1.0;
+      color: var(--white);
+      margin-bottom: 16px;
+    }
+
+    .section-sub {
+      font-size: 17px;
+      color: var(--gray-5);
+      max-width: 560px;
+      line-height: 1.7;
+      margin-bottom: 48px;
+    }
+
+    /* ── EXAMPLE REPORT ── */
+    .report-section {
+      background: var(--gray-1);
+      border-top: 1px solid var(--gray-3);
+      border-bottom: 1px solid var(--gray-3);
+      padding: 80px 24px;
+    }
+
+    .report-inner {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .report-card {
+      background: var(--gray-2);
+      border: 1px solid var(--gray-3);
+      border-radius: 8px;
+      overflow: hidden;
+      max-width: 520px;
+      margin: 0 auto;
+    }
+
+    .report-card-header {
+      background: var(--gray-3);
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .report-card-header .shop-name {
+      font-family: var(--font-display);
+      font-size: 18px;
+      letter-spacing: 0.04em;
+    }
+
+    .report-card-header .shop-type {
+      font-size: 11px;
+      color: var(--gray-5);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .report-card-body {
+      padding: 20px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .report-metric {
+      background: var(--gray-1);
+      border: 1px solid var(--gray-3);
+      border-radius: 4px;
+      padding: 14px;
+    }
+
+    .report-metric-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--gray-4);
+      margin-bottom: 6px;
+    }
+
+    .report-metric-score {
+      font-family: var(--font-display);
+      font-size: 30px;
+      letter-spacing: 0.02em;
+      color: var(--orange);
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .report-metric-detail {
+      font-size: 11px;
+      color: var(--gray-5);
+    }
+
+    .report-card-footer {
+      border-top: 1px solid var(--gray-3);
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .report-opportunity-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--gray-5);
+      margin-bottom: 4px;
+    }
+
+    .report-opportunity-value {
+      font-family: var(--font-display);
+      font-size: 40px;
+      color: var(--white);
+      letter-spacing: 0.02em;
+    }
+
+    /* ── LEAKS GRID ── */
+    .leaks-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .leak-card {
+      background: var(--gray-2);
+      border: 1px solid var(--gray-3);
+      border-radius: 6px;
+      padding: 24px;
+    }
+
+    .leak-icon {
+      font-size: 24px;
+      margin-bottom: 14px;
+      display: block;
+    }
+
+    .leak-title {
+      font-family: var(--font-display);
+      font-size: 20px;
+      letter-spacing: 0.04em;
+      margin-bottom: 8px;
+    }
+
+    .leak-desc {
+      font-size: 13px;
+      color: var(--gray-5);
+      line-height: 1.6;
+    }
+
+    /* ── TRUST / PATTERN SECTION ── */
+    .pattern-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: center;
+    }
+
+    .check-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .check-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 16px;
+      color: var(--gray-6);
+    }
+
+    .check-list li::before {
+      content: '✓';
+      color: var(--orange);
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .pattern-callout {
+      background: var(--gray-2);
+      border: 1px solid var(--gray-3);
+      border-left: 3px solid var(--orange);
+      border-radius: 4px;
+      padding: 28px 24px;
+      margin-top: 32px;
+    }
+
+    .pattern-callout p {
+      font-size: 15px;
+      color: var(--gray-5);
+      line-height: 1.7;
+      font-style: italic;
+    }
+
+    /* ── CREDENTIALS ── */
+    .creds-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .cred-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 16px;
+      background: var(--gray-2);
+      border: 1px solid var(--gray-3);
+      border-radius: 4px;
+      font-size: 14px;
+      color: var(--gray-6);
+    }
+
+    .cred-item::before {
+      content: '✓';
+      color: var(--orange);
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    /* ── TICKER ── */
+    .ticker-wrap {
+      overflow: hidden;
+      border-top: 1px solid var(--gray-3);
+      border-bottom: 1px solid var(--gray-3);
+      background: var(--gray-1);
+      padding: 12px 0;
+    }
+
+    .ticker-track {
+      display: flex;
+      gap: 48px;
+      animation: ticker 30s linear infinite;
+      width: max-content;
+    }
+
+    .ticker-item {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gray-4);
+      white-space: nowrap;
+    }
+
+    .ticker-item span { color: var(--orange); margin-right: 8px; }
+
+    @keyframes ticker {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    /* ── PACKAGES ── */
+    .packages-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      max-width: 760px;
+    }
+
+    .pkg-card {
+      background: var(--gray-2);
+      border: 1px solid var(--gray-3);
+      border-radius: 6px;
+      padding: 32px 28px;
+      position: relative;
+    }
+
+    .pkg-card.featured {
+      border-color: var(--orange);
+    }
+
+    .pkg-badge {
+      position: absolute;
+      top: -12px;
+      left: 24px;
+      background: var(--orange);
+      color: var(--white);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 100px;
+    }
+
+    .pkg-name {
+      font-family: var(--font-display);
+      font-size: 26px;
+      letter-spacing: 0.04em;
+      margin-bottom: 8px;
+    }
+
+    .pkg-desc {
+      font-size: 13px;
+      color: var(--gray-5);
+      margin-bottom: 24px;
+      line-height: 1.6;
+    }
+
+    .pkg-price {
+      font-family: var(--font-display);
+      font-size: 48px;
+      letter-spacing: 0.02em;
+      color: var(--white);
+      margin-bottom: 4px;
+    }
+
+    .pkg-terms {
+      font-size: 12px;
+      color: var(--gray-4);
+      margin-bottom: 24px;
+    }
+
+    .pkg-delivery {
+      font-size: 12px;
+      color: var(--orange);
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+
+    /* ── FINAL CTA ── */
+    .cta-section {
+      background: var(--gray-1);
+      border-top: 1px solid var(--gray-3);
+      padding: 80px 24px;
+      text-align: center;
+    }
+
+    .cta-inner {
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--black);
+      border-top: 1px solid var(--gray-3);
+      padding: 40px 24px;
+    }
+
+    .footer-inner {
+      max-width: 1000px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 24px;
+      list-style: none;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      font-size: 13px;
+      color: var(--gray-5);
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--white); }
+
+    .footer-copy {
+      font-size: 12px;
+      color: var(--gray-4);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .nav-mobile-btn { display: block; }
+      .vertical-paths { grid-template-columns: 1fr; }
+      .leaks-grid { grid-template-columns: 1fr; }
+      .pattern-grid { grid-template-columns: 1fr; }
+      .creds-grid { grid-template-columns: 1fr; }
+      .packages-grid { grid-template-columns: 1fr; }
+      .report-card-body { grid-template-columns: 1fr 1fr; }
+      .footer-inner { flex-direction: column; align-items: flex-start; }
+    }
+
+    @media (max-width: 480px) {
+      .hero { padding: 48px 16px 56px; }
+      .report-card-body { grid-template-columns: 1fr; }
+      .hero-cta-row { flex-direction: column; align-items: stretch; }
+      .btn-primary, .btn-secondary { text-align: center; }
+    }
   </style>
 </head>
 <body>
-<nav>
-  <a href="/index.html" class="nav-logo">MORE <span>PROFIT</span> USA</a>
-  <div class="nav-links" id="nav-links">
-    <a href="/index.html">Home</a>
-    <a href="/revenue-commander-v2.html">Revenue Commander</a>
-    <a href="/pricing.html">Pricing</a>
-    <a href="/about.html">About</a>
-    <a href="/contact.html">Contact</a>
-    <a href="/revenue-commander-v2.html" class="nav-cta">See My Revenue Gap</a>
-  </div>
-  <button class="nav-mobile-toggle" onclick="document.getElementById('nav-links').classList.toggle('open')" aria-label="Menu">☰</button>
-</nav>
 
-<section id="hero">
-  <div class="hero-overlay"></div>
-  <div class="hero-glow"></div>
-  <div class="hero-inner">
-    <div>
-      <div class="hero-eyebrow">HVAC Revenue Recovery</div>
-      <h1 class="hero-title">STOP LOSING<br>HVAC REVENUE<br>TO COMPETITORS<br><span class="accent">THIS SUMMER.</span></h1>
-      <p class="hero-sub">Every missed call, weak review profile, and invisible AI search result sends homeowners to your competitors. Revenue Commander reveals where revenue is leaking and how to recover it.</p>
-      <div class="hero-trust">
-        <div class="hero-trust-icon">🏠</div>
-        <p>Built by someone who has personally referred <strong>more than 1,000 homeowners to contractors</strong> and understands exactly how homeowners choose who to call during an HVAC emergency.</p>
-      </div>
-      <div class="hero-ctas">
-        <a href="/revenue-commander-v2.html" class="btn-primary">⚡ See My Revenue Gap</a>
-        <a href="/pricing.html" class="btn-outline">View Full Pricing</a>
-      </div>
+  <!-- NAV -->
+  <nav>
+    <a href="/index.html" class="nav-logo">MORE PROFIT <span>USA</span></a>
+    <ul class="nav-links">
+      <li><a href="/index.html">Home</a></li>
+      <li><a href="/revenue-commander-v2.html">Revenue Commander</a></li>
+      <li><a href="/pricing.html">Pricing</a></li>
+      <li><a href="/about.html">About</a></li>
+      <li><a href="/contact.html">Contact</a></li>
+      <li><a href="/revenue-commander-v2.html" class="nav-cta">See My Revenue Gap</a></li>
+    </ul>
+    <button class="nav-mobile-btn" aria-label="Menu">☰</button>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-eyebrow">
+      <span>⚡</span> Revenue Recovery for Local Service Businesses
+    </div>
+    <h1>STOP LOSING<br>CUSTOMERS<br>TO <em>COMPETITORS</em><br>WITH BETTER<br>DIGITAL SIGNALS.</h1>
+    <p class="hero-sub">
+      Every missed call, weak review profile, and invisible AI search result sends customers to the shop down the street. We find exactly where revenue is leaking — and fix it.
+    </p>
+
+    <div class="vertical-paths">
+      <a href="/revenue-commander-v2.html" class="vpath vpath-primary">
+        <span class="vpath-icon">🔧</span>
+        <div class="vpath-label">Auto Body &amp; Collision</div>
+        <p class="vpath-desc">Websites, reviews, AI search visibility, and missed call recovery built specifically for collision repair shops.</p>
+      </a>
+      <a href="/revenue-commander-v2.html" class="vpath">
+        <span class="vpath-icon">🏠</span>
+        <div class="vpath-label">Home Services</div>
+        <p class="vpath-desc">HVAC, plumbing, roofing, and more. Same revenue recovery systems built for local service companies.</p>
+      </a>
+    </div>
+
+    <div class="hero-cta-row">
+      <a href="/revenue-commander-v2.html" class="btn-primary">⚡ See My Revenue Gap</a>
+      <a href="/pricing.html" class="btn-secondary">View Pricing</a>
+    </div>
+  </section>
+
+  <!-- CREDENTIAL BANNER -->
+  <div class="credential-banner">
+    <p>
+      Built by someone who personally referred <strong>5,000+ drivers to auto body shops</strong> and <strong>5,000+ homeowners to service contractors</strong> — both through insurance claims work. We know exactly how customers choose who to call.
+    </p>
+  </div>
+
+  <!-- TICKER -->
+  <div class="ticker-wrap">
+    <div class="ticker-track">
+      <div class="ticker-item"><span>●</span> Review Growth</div>
+      <div class="ticker-item"><span>●</span> AI Search Visibility</div>
+      <div class="ticker-item"><span>●</span> Missed Call Recovery</div>
+      <div class="ticker-item"><span>●</span> Mobile-First Websites</div>
+      <div class="ticker-item"><span>●</span> Voice Search Optimization</div>
+      <div class="ticker-item"><span>●</span> Collision Shop Revenue Systems</div>
+      <div class="ticker-item"><span>●</span> Home Service Revenue Systems</div>
+      <!-- duplicate for seamless loop -->
+      <div class="ticker-item"><span>●</span> Review Growth</div>
+      <div class="ticker-item"><span>●</span> AI Search Visibility</div>
+      <div class="ticker-item"><span>●</span> Missed Call Recovery</div>
+      <div class="ticker-item"><span>●</span> Mobile-First Websites</div>
+      <div class="ticker-item"><span>●</span> Voice Search Optimization</div>
+      <div class="ticker-item"><span>●</span> Collision Shop Revenue Systems</div>
+      <div class="ticker-item"><span>●</span> Home Service Revenue Systems</div>
     </div>
   </div>
-</section>
 
-<!-- ASSESSMENT STRIP — desktop only, hidden on mobile -->
-<section id="assessment-strip">
-  <div class="assessment-strip-inner">
-    <div class="assessment-strip-left">
-      <div class="assessment-strip-label">⚡ Example Revenue Assessment Report</div>
-      <h2 class="assessment-strip-title">THIS IS WHAT YOUR REPORT <span class="accent">LOOKS LIKE.</span></h2>
-      <p class="assessment-strip-text">Revenue Commander analyzes your review gap, AI search visibility, voice search presence, and missed call exposure — then calculates your estimated revenue opportunity.</p>
-    </div>
-    <div class="score-card">
-      <div class="score-header">
-        <div class="score-badge">❄️ Phoenix, AZ — HVAC</div>
-        <div class="score-company">Desert Air Pro HVAC</div>
-        <div class="score-location">Revenue Commander Assessment</div>
+  <!-- EXAMPLE REPORT -->
+  <section class="report-section">
+    <div class="report-inner">
+      <div class="section-eyebrow">⚡ Example Revenue Assessment</div>
+      <h2 class="section-title" style="text-align:center; margin-bottom:8px;">THIS IS WHAT YOUR REPORT LOOKS LIKE.</h2>
+      <p class="section-sub" style="text-align:center; margin: 0 auto 40px;">Revenue Commander analyzes your review gap, AI search visibility, and missed call exposure — then calculates your estimated revenue opportunity.</p>
+
+      <div class="report-card">
+        <div class="report-card-header">
+          <div>
+            <div class="shop-name">Central Body &amp; Paint</div>
+            <div class="shop-type">Pine Bluff, AR — Collision Repair</div>
+          </div>
+          <div style="font-size:11px; color: var(--gray-5);">Revenue Commander Assessment</div>
+        </div>
+        <div class="report-card-body">
+          <div class="report-metric">
+            <div class="report-metric-label">Review Score</div>
+            <div class="report-metric-score">38<span style="font-size:16px">/100</span></div>
+            <div class="report-metric-detail">28 reviews · 4.1★</div>
+          </div>
+          <div class="report-metric">
+            <div class="report-metric-label">AI Search Visibility</div>
+            <div class="report-metric-score">14<span style="font-size:16px">/100</span></div>
+            <div class="report-metric-detail">Not found in AI results</div>
+          </div>
+          <div class="report-metric">
+            <div class="report-metric-label">Voice Search</div>
+            <div class="report-metric-score">22<span style="font-size:16px">/100</span></div>
+            <div class="report-metric-detail">Weak visibility</div>
+          </div>
+          <div class="report-metric">
+            <div class="report-metric-label">Review Gap</div>
+            <div class="report-metric-score">3,840</div>
+            <div class="report-metric-detail">Behind top competitor</div>
+          </div>
+        </div>
+        <div class="report-card-footer">
+          <div>
+            <div class="report-opportunity-label">Estimated Revenue Opportunity</div>
+            <div class="report-opportunity-value">$74,000+</div>
+          </div>
+          <a href="/revenue-commander-v2.html" class="btn-primary" style="font-size:13px; padding:10px 18px;">Get Yours →</a>
+        </div>
       </div>
-      <div class="score-metrics">
-        <div class="score-metric">
-          <div class="score-metric-label">Review Score</div>
-          <div class="score-metric-val low">42<span style="font-size:16px;color:var(--gray-dark)">/100</span></div>
-          <div class="score-metric-sub">41 reviews · 4.3★</div>
-        </div>
-        <div class="score-metric">
-          <div class="score-metric-label">AI Search Visibility</div>
-          <div class="score-metric-val low">18<span style="font-size:16px;color:var(--gray-dark)">/100</span></div>
-          <div class="score-metric-sub">Not found in AI results</div>
-        </div>
-        <div class="score-metric">
-          <div class="score-metric-label">Voice Search</div>
-          <div class="score-metric-val mid">25<span style="font-size:16px;color:var(--gray-dark)">/100</span></div>
-          <div class="score-metric-sub">Weak visibility</div>
-        </div>
-        <div class="score-metric">
-          <div class="score-metric-label">Review Gap</div>
-          <div class="score-metric-val low">4,612</div>
-          <div class="score-metric-sub">Behind top competitor</div>
-        </div>
-      </div>
-      <div class="score-footer">
-        <div>
-          <div class="score-opp-label">Estimated Revenue Opportunity</div>
-          <div class="score-opp-val">$87,000+</div>
-        </div>
-        <a href="/revenue-commander-v2.html" class="score-cta-sm">Get Yours →</a>
-      </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<div class="ticker">
-  <div class="ticker-inner">
-    <span class="ticker-item">REVIEW GROWTH <span class="ticker-dot"></span></span>
-    <span class="ticker-item">AI SEARCH VISIBILITY <span class="ticker-dot"></span></span>
-    <span class="ticker-item">VOICE SEARCH OPTIMIZATION <span class="ticker-dot"></span></span>
-    <span class="ticker-item">MISSED-CALL RECOVERY <span class="ticker-dot"></span></span>
-    <span class="ticker-item">HVAC REVENUE RECOVERY <span class="ticker-dot"></span></span>
-    <span class="ticker-item">CONVERSION-FOCUSED WEBSITES <span class="ticker-dot"></span></span>
-    <span class="ticker-item">REVIEW GROWTH <span class="ticker-dot"></span></span>
-    <span class="ticker-item">AI SEARCH VISIBILITY <span class="ticker-dot"></span></span>
-    <span class="ticker-item">VOICE SEARCH OPTIMIZATION <span class="ticker-dot"></span></span>
-    <span class="ticker-item">MISSED-CALL RECOVERY <span class="ticker-dot"></span></span>
-    <span class="ticker-item">HVAC REVENUE RECOVERY <span class="ticker-dot"></span></span>
-    <span class="ticker-item">CONVERSION-FOCUSED WEBSITES <span class="ticker-dot"></span></span>
-  </div>
-</div>
+  <!-- THE REAL PROBLEM -->
+  <section class="section">
+    <div class="section-eyebrow">The Real Problem</div>
+    <h2 class="section-title">MOST LOCAL BUSINESSES<br>DON'T NEED MORE LEADS.</h2>
+    <p class="section-sub">They need to stop losing the ones they're already getting.</p>
 
-<section id="no-leads">
-  <div class="section-inner">
-    <div class="no-leads-inner fade-up">
-      <div class="section-label" style="justify-content:center;">The Real Problem</div>
-      <h2 class="no-leads-title">MOST HVAC COMPANIES DON'T NEED MORE LEADS.</h2>
-      <h3 class="no-leads-sub">They Need To Stop Losing The Ones They're Already Getting.</h3>
-      <p class="no-leads-body">Every day, homeowners search for HVAC companies, find your competitors, and never see your business. Not because you don't do great work — because the signals homeowners rely on in an emergency are pointing them somewhere else.</p>
-    </div>
-  </div>
-</section>
-
-<section id="leaks">
-  <div class="section-inner">
-    <div class="section-label">Where The Revenue Goes</div>
-    <h2 class="section-title fade-up">THE REVENUE LEAKS COSTING<br>HVAC COMPANIES <span class="accent">MONEY.</span></h2>
-    <div class="leaks-grid fade-up">
+    <div class="leaks-grid">
       <div class="leak-card">
-        <div class="leak-icon">⭐</div>
+        <span class="leak-icon">⭐</span>
         <div class="leak-title">Review Gap</div>
-        <div class="leak-text">When competitors have thousands more reviews than you, homeowners often choose them before visiting your website.</div>
+        <p class="leak-desc">When competitors have hundreds more reviews than you, customers often choose them before they ever visit your site or call your number.</p>
       </div>
       <div class="leak-card">
-        <div class="leak-icon">📵</div>
+        <span class="leak-icon">📵</span>
         <div class="leak-title">Missed Calls</div>
-        <div class="leak-text">Every missed emergency call is a homeowner calling the next HVAC company on the list.</div>
+        <p class="leak-desc">Every missed call is a customer dialing the next shop on the list. Without a follow-up system, that job is gone permanently.</p>
       </div>
       <div class="leak-card">
-        <div class="leak-icon">🤖</div>
+        <span class="leak-icon">🤖</span>
         <div class="leak-title">AI Search Visibility</div>
-        <div class="leak-text">Homeowners are increasingly asking ChatGPT, Gemini, and AI assistants who they should call for AC repair.</div>
+        <p class="leak-desc">Customers are increasingly asking ChatGPT, Gemini, and AI assistants which shop to call. If you're not showing up there, competitors are.</p>
       </div>
       <div class="leak-card">
-        <div class="leak-icon">🎙️</div>
+        <span class="leak-icon">🎙️</span>
         <div class="leak-title">Voice Search</div>
-        <div class="leak-text">Customers are asking Siri and Google Assistant for emergency HVAC services near them.</div>
+        <p class="leak-desc">Siri and Google Assistant surface results based on different signals than traditional search. Most local businesses aren't optimized for either.</p>
       </div>
       <div class="leak-card">
-        <div class="leak-icon">📱</div>
-        <div class="leak-title">Mobile Conversion Problems</div>
-        <div class="leak-text">If your website is difficult to use on a phone, potential customers leave before calling.</div>
+        <span class="leak-icon">📱</span>
+        <div class="leak-title">Mobile Conversion</div>
+        <p class="leak-desc">A site that's slow or hard to use on a phone sends customers away before they call. Most local service sites fail this test.</p>
       </div>
-      <div class="leak-card" style="background:rgba(255,69,0,0.06);border-left:3px solid var(--orange);">
-        <div class="leak-icon">⚡</div>
-        <div class="leak-title" style="color:var(--orange);">See Your Specific Leaks</div>
-        <div class="leak-text">Revenue Commander identifies exactly which gaps are costing your business the most — using live data for your market.</div>
+      <div class="leak-card" style="background: var(--gray-1); border-color: var(--orange); display: flex; flex-direction: column; justify-content: center; align-items: flex-start; gap: 16px;">
+        <span class="leak-icon">⚡</span>
+        <div class="leak-title">See Your Specific Leaks</div>
+        <p class="leak-desc">Revenue Commander identifies exactly which gaps are costing your business the most — using live data for your market.</p>
+        <a href="/revenue-commander-v2.html" class="btn-primary" style="font-size:13px; padding:10px 18px; margin-top:4px;">Run My Assessment →</a>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<section id="why">
-  <div class="section-inner">
-    <div class="section-label">The Pattern We've Seen</div>
-    <h2 class="section-title fade-up">WHY HOMEOWNERS CHOOSE ONE<br>HVAC COMPANY <span class="accent">OVER ANOTHER.</span></h2>
-    <p class="section-sub fade-up">After helping connect more than 1,000 homeowners with contractors, we've seen the same pattern repeatedly.</p>
-    <div class="why-grid">
-      <div class="fade-up">
-        <p style="font-size:16px;color:var(--gray);margin-bottom:20px;">Homeowners choose companies that:</p>
-        <div class="why-list">
-          <div class="why-item"><span class="why-check">✓</span>Appear trustworthy</div>
-          <div class="why-item"><span class="why-check">✓</span>Have strong reviews</div>
-          <div class="why-item"><span class="why-check">✓</span>Respond quickly</div>
-          <div class="why-item"><span class="why-check">✓</span>Look professional online</div>
-          <div class="why-item"><span class="why-check">✓</span>Are easy to contact</div>
+  <!-- WHY CUSTOMERS CHOOSE -->
+  <section class="section" style="background: var(--gray-1); max-width: 100%; padding: 80px 24px;">
+    <div style="max-width: 1000px; margin: 0 auto;">
+      <div class="section-eyebrow">The Pattern We've Seen</div>
+      <h2 class="section-title">WHY CUSTOMERS CHOOSE<br>ONE SHOP OVER ANOTHER.</h2>
+
+      <div class="pattern-grid">
+        <div>
+          <p style="font-size:16px; color: var(--gray-5); margin-bottom: 28px; line-height: 1.7;">
+            After personally sending <strong style="color:var(--white)">5,000+ drivers to auto body shops</strong> and <strong style="color:var(--white)">5,000+ homeowners to service companies</strong> — both through insurance claims work — the pattern is identical whether someone just had a fender bender or a burst pipe.
+          </p>
+          <ul class="check-list">
+            <li>They appear trustworthy and professional online</li>
+            <li>They have strong, recent reviews that validate that trust</li>
+            <li>They respond quickly — or have systems that do</li>
+            <li>They're easy to find on mobile and recommended by AI</li>
+            <li>They're easy to contact when someone's ready to call</li>
+          </ul>
+          <p style="font-size:16px; font-family: var(--font-display); letter-spacing: 0.04em; color: var(--white); margin-top: 28px;">OUR SYSTEMS ARE DESIGNED TO HELP YOUR BUSINESS BECOME THAT COMPANY.</p>
         </div>
-      </div>
-      <div class="why-box fade-up">
-        <div class="why-box-title">OUR SYSTEMS ARE DESIGNED TO HELP YOUR BUSINESS BECOME <span class="accent">THAT COMPANY.</span></div>
-        <p class="why-box-text">We didn't learn this from a textbook. We learned it from being in the room when homeowners with a dead AC unit in July heat decided who to call. Speed and trust. Every single time.</p>
-        <a href="/revenue-commander-v2.html" class="btn-primary" style="display:block;text-align:center;">⚡ See My Revenue Gap</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="listen">
-  <div class="section-inner">
-    <div class="listen-inner">
-      <div class="section-label">Our Qualifications</div>
-      <h2 class="section-title fade-up">WHY LISTEN <span class="accent">TO US?</span></h2>
-      <div class="listen-grid fade-up">
-        <div class="listen-item"><span class="listen-check">✓</span><span class="listen-text">20+ years of sales and business development experience</span></div>
-        <div class="listen-item"><span class="listen-check">✓</span><span class="listen-text">1,000+ homeowner referrals to contractors</span></div>
-        <div class="listen-item"><span class="listen-check">✓</span><span class="listen-text">Specialized in HVAC growth and revenue recovery</span></div>
-        <div class="listen-item"><span class="listen-check">✓</span><span class="listen-text">AI Search and Voice Search optimization expertise</span></div>
-        <div class="listen-item" style="grid-column:1/-1;"><span class="listen-check">✓</span><span class="listen-text">Focused exclusively on helping HVAC companies capture more revenue</span></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="pricing-preview">
-  <div class="section-inner">
-    <div class="pricing-preview-inner">
-      <div class="section-label">Packages</div>
-      <h2 class="section-title fade-up">CHOOSE YOUR HVAC<br>REVENUE RECOVERY <span class="accent">PLAN.</span></h2>
-      <div class="pricing-cards fade-up">
-        <div class="pp-card">
-          <div class="pp-header">
-            <div class="pp-tier">Package One</div>
-            <div class="pp-name">Revenue Recovery Starter</div>
-            <div class="pp-desc">Fix the most costly revenue leaks in your HVAC business.</div>
+        <div>
+          <div class="pattern-callout">
+            <p>"We didn't learn this from a marketing textbook. We learned it from being in the room — on the phone — when someone with a damaged car or a flooded kitchen decided who to call. Speed and trust. Every single time."</p>
+            <div style="margin-top: 16px; font-size: 13px; font-weight: 600; color: var(--orange);">— Parry Moss, More Profit USA</div>
           </div>
-          <div class="pp-price">
-            <div class="pp-price-num"><sup>$</sup>1,500</div>
-            <div class="pp-price-note">One-time · No monthly fee</div>
-          </div>
-          <div class="pp-footer">
-            <a href="/revenue-commander-v2.html" class="pp-cta-secondary">Get Started →</a>
-            <div class="pp-delivery">⚡ 72-Hour Delivery</div>
-          </div>
-        </div>
-        <div class="pp-card featured">
-          <div class="pp-badge">★ Most Popular</div>
-          <div class="pp-header">
-            <div class="pp-tier">Package Two</div>
-            <div class="pp-name">HVAC Revenue Recovery System</div>
-            <div class="pp-desc">A complete system to capture more calls, appointments, and installs.</div>
-          </div>
-          <div class="pp-price">
-            <div class="pp-price-num"><sup>$</sup>2,500</div>
-            <div class="pp-price-note">One-time · No monthly fee</div>
-          </div>
-          <div class="pp-footer">
-            <a href="/revenue-commander-v2.html" class="pp-cta-primary">Build My System →</a>
-            <div class="pp-delivery">⚡ 5-Day Delivery</div>
+          <div style="margin-top: 16px; background: var(--gray-2); border: 1px solid var(--gray-3); border-radius: 4px; padding: 20px; text-align: center;">
+            <div style="font-family: var(--font-display); font-size: 52px; color: var(--orange); line-height: 1;">10,000+</div>
+            <div style="font-size: 13px; color: var(--gray-5); margin-top: 4px;">Customers personally referred to local service businesses</div>
           </div>
         </div>
       </div>
-      <div style="text-align:center;margin-top:28px;" class="fade-up">
-        <a href="/pricing.html" style="font-size:14px;color:var(--gray);text-decoration:none;border-bottom:1px solid var(--border);padding-bottom:2px;transition:color 0.2s;" onmouseover="this.style.color='var(--orange)';this.style.borderColor='var(--orange)'" onmouseout="this.style.color='var(--gray)';this.style.borderColor='var(--border)'">View Full Pricing →</a>
+
+      <div style="margin-top: 40px; text-align: center;">
+        <a href="/revenue-commander-v2.html" class="btn-primary">⚡ See My Revenue Gap</a>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<section id="final">
-  <div class="final-inner fade-up">
-    <h2 class="final-title">STOP LOSING HVAC<br>REVENUE THIS <span class="accent">SUMMER.</span></h2>
-    <p class="final-sub">Revenue Commander identifies exactly where revenue is leaking from your business — in 2 minutes, using live data for your market.</p>
-    <a href="/revenue-commander-v2.html" class="btn-primary" style="font-size:16px;padding:18px 40px;">⚡ See My Revenue Gap</a>
-  </div>
-</section>
+  <!-- CREDENTIALS -->
+  <section class="section">
+    <div class="section-eyebrow">Our Qualifications</div>
+    <h2 class="section-title">WHY LISTEN TO US?</h2>
+    <div class="creds-grid">
+      <div class="cred-item">20+ years of sales and business development experience</div>
+      <div class="cred-item">5,000+ drivers personally referred to auto body and collision shops</div>
+      <div class="cred-item">5,000+ homeowners personally referred to home service contractors</div>
+      <div class="cred-item">Specialized in collision repair and home service revenue recovery</div>
+      <div class="cred-item">AI Search and Voice Search optimization expertise</div>
+      <div class="cred-item">Focused exclusively on helping local service businesses capture more revenue</div>
+    </div>
+  </section>
 
-<footer>
-  <div class="footer-logo">MORE <span>PROFIT</span> USA</div>
-  <div class="footer-links">
-    <a href="/index.html">Home</a>
-    <a href="/revenue-commander-v2.html">Revenue Commander</a>
-    <a href="/pricing.html">Pricing</a>
-    <a href="/about.html">About</a>
-    <a href="/contact.html">Contact</a>
-  </div>
-  <div class="footer-copy">© 2026 More Profit USA. All rights reserved.</div>
-</footer>
-<script>
-  const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');}),{threshold:0.1});
-  document.querySelectorAll('.fade-up').forEach(el=>obs.observe(el));
-</script>
+  <!-- PACKAGES -->
+  <section class="section" style="background: var(--gray-1); max-width: 100%; padding: 80px 24px;">
+    <div style="max-width: 1000px; margin: 0 auto;">
+      <div class="section-eyebrow">Packages</div>
+      <h2 class="section-title">CHOOSE YOUR<br>REVENUE RECOVERY PLAN.</h2>
+      <p class="section-sub">One-time investment. No monthly platform fees. Delivered fast.</p>
+
+      <div class="packages-grid">
+        <div class="pkg-card">
+          <div class="pkg-name">Revenue Recovery Starter</div>
+          <p class="pkg-desc">Fix the most costly revenue leaks in your business. Website, reviews, and AI visibility covered.</p>
+          <div class="pkg-price">$1,500</div>
+          <div class="pkg-terms">One-time · No monthly fee</div>
+          <div class="pkg-delivery">⚡ 72-Hour Delivery</div>
+          <a href="/revenue-commander-v2.html" class="btn-secondary" style="display:block; text-align:center; width:100%; font-size:14px;">Get Started →</a>
+        </div>
+        <div class="pkg-card featured">
+          <div class="pkg-badge">★ Most Popular</div>
+          <div class="pkg-name">Revenue Recovery System</div>
+          <p class="pkg-desc">A complete system to capture more calls, jobs, and customers. Full stack: site, reviews, AI search, and missed call recovery.</p>
+          <div class="pkg-price">$2,500</div>
+          <div class="pkg-terms">One-time · No monthly fee</div>
+          <div class="pkg-delivery">⚡ 5-Day Delivery</div>
+          <a href="/revenue-commander-v2.html" class="btn-primary" style="display:block; text-align:center; width:100%; font-size:14px;">Build My System →</a>
+        </div>
+      </div>
+
+      <div style="margin-top: 24px;">
+        <a href="/pricing.html" class="btn-secondary" style="font-size:14px;">View Full Pricing →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section class="cta-section">
+    <div class="cta-inner">
+      <div class="section-eyebrow" style="text-align:center;">Stop the Leak</div>
+      <h2 class="section-title" style="text-align:center;">STOP LOSING REVENUE<br>TO COMPETITORS.</h2>
+      <p style="font-size:17px; color: var(--gray-5); max-width:520px; margin: 16px auto 36px; line-height:1.7;">Revenue Commander identifies exactly where revenue is leaking from your business — in 2 minutes, using live data for your market.</p>
+      <a href="/revenue-commander-v2.html" class="btn-primary" style="font-size:16px; padding:16px 36px;">⚡ See My Revenue Gap</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <a href="/index.html" class="nav-logo" style="font-size:18px;">MORE PROFIT <span style="color:var(--orange)">USA</span></a>
+      <ul class="footer-links">
+        <li><a href="/index.html">Home</a></li>
+        <li><a href="/revenue-commander-v2.html">Revenue Commander</a></li>
+        <li><a href="/pricing.html">Pricing</a></li>
+        <li><a href="/about.html">About</a></li>
+        <li><a href="/contact.html">Contact</a></li>
+      </ul>
+      <p class="footer-copy">© 2026 More Profit USA. All rights reserved.</p>
+    </div>
+  </footer>
+
 </body>
 </html>
