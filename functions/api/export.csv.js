@@ -1,40 +1,64 @@
-import { requireAdmin, csvEscape } from "../_utils.js";
+import { csvEscape, clampInt, primaryHook, requireAdmin, responseSecurityHeaders, scoreCompany, tier } from "../_utils.js";
+import {
+  REVENUE_EXPORT_COLUMNS,
+  REVENUE_EXPORT_SCHEMA_VERSION
+} from "../_revenue_export_schema.js";
 
 export async function onRequestOptions() {
-  return new Response("ok", { headers: { "access-control-allow-origin": "*", "access-control-allow-headers": "content-type, authorization, x-admin-token", "access-control-allow-methods": "GET, OPTIONS" } });
+  return new Response(null, {
+    status: 204,
+    headers: responseSecurityHeaders({ "allow": "GET, OPTIONS" })
+  });
 }
 
 export async function onRequestGet(context) {
   const auth = requireAdmin(context.request, context.env);
   if (!auth.ok) return auth.response;
-  if (!context.env.DB) return new Response("D1 binding DB is missing.", { status: 500 });
+  if (!context.env.DB) return new Response("D1 binding DB is missing.", {
+    status: 500,
+    headers: responseSecurityHeaders()
+  });
 
   const url = new URL(context.request.url);
-  const market = url.searchParams.get("market");
-  const minScore = Number(url.searchParams.get("minScore") || 65);
-  const limit = Math.min(Number(url.searchParams.get("limit") || 500), 2000);
+  const market = (url.searchParams.get("market") || "").trim();
+  const minScore = clampInt(url.searchParams.get("minScore"), 0, 100, 50);
+  const limit = clampInt(url.searchParams.get("limit"), 1, 2000, 1000);
 
-  let query = `SELECT * FROM companies WHERE revenue_leak_score >= ?`;
-  const binds = [minScore];
-  if (market) { query += ` AND market = ?`; binds.push(market); }
-  query += ` ORDER BY revenue_leak_score DESC, review_gap DESC LIMIT ?`;
-  binds.push(limit);
+  let query = "SELECT * FROM companies WHERE business_phone IS NOT NULL AND TRIM(business_phone) != ''";
+  const binds = [];
+  if (market) { query += " AND market = ?"; binds.push(market); }
+  query += " ORDER BY review_count DESC LIMIT 2000";
 
   const rows = await context.env.DB.prepare(query).bind(...binds).all();
-  const fields = [
-    "market", "city", "state", "company_name", "website", "business_phone", "rating", "review_count",
-    "top_competitor_name", "top_competitor_reviews", "review_gap", "review_gap_pct", "mobile_score",
-    "website_live", "click_to_call_visible", "online_booking_visible", "after_hours_visible", "text_back_visible",
-    "revenue_leak_score", "priority_tier", "primary_hook", "google_maps_url", "apollo_contact_name", "apollo_title", "apollo_email", "apollo_phone", "status"
-  ];
-  const lines = [fields.join(",")];
-  for (const row of rows.results || []) lines.push(fields.map(f => csvEscape(row[f])).join(","));
+  const header = REVENUE_EXPORT_COLUMNS.map(column => csvEscape(column.key)).join(",");
+  const lines = [header];
 
-  return new Response(lines.join("\n"), {
-    headers: {
+  const rankedRows = (rows.results || [])
+    .map(row => {
+      const currentScore = scoreCompany(row);
+      return {
+        ...row,
+        revenue_leak_score: currentScore,
+        priority_tier: tier(currentScore),
+        primary_hook: primaryHook(row)
+      };
+    })
+    .filter(row => row.revenue_leak_score >= minScore)
+    .sort((a, b) => b.revenue_leak_score - a.revenue_leak_score || b.review_count - a.review_count || b.review_gap - a.review_gap)
+    .slice(0, limit);
+
+  for (const row of rankedRows) {
+    lines.push(REVENUE_EXPORT_COLUMNS.map(column => csvEscape(column.value(row))).join(","));
+  }
+
+  const stamp = new Date().toISOString().slice(0, 10);
+  const csv = `\uFEFF${lines.join("\r\n")}`;
+  return new Response(csv, {
+    headers: responseSecurityHeaders({
       "content-type": "text/csv; charset=utf-8",
-      "content-disposition": `attachment; filename="revenue-commander-export.csv"`,
-      "access-control-allow-origin": "*"
-    }
+      "content-disposition": `attachment; filename="revenue-commander-call-sheet-${stamp}.csv"`,
+      "x-export-schema": REVENUE_EXPORT_SCHEMA_VERSION,
+      "expires": "0"
+    })
   });
 }

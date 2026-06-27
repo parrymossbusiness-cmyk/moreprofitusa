@@ -1,6 +1,6 @@
 // _engine.js — shared logic for the MoreProfitUSA Lead Engine
 // Phone-first lead discovery via Google Places API (New).
-// No Apollo. No website/mobile audit. No competitor benchmark.
+// No contact enrichment, website/mobile audit, or competitor benchmark.
 
 const PLACES_URL = "https://places.googleapis.com/v1/places:searchText";
 
@@ -242,17 +242,18 @@ export async function saveLeads(db, leads) {
   return leads.length;
 }
 
-export function checkAuth(request, env, url) {
-  const token =
-    request.headers.get("x-admin-token") ||
-    (url && url.searchParams.get("token")) ||
-    "";
+export function checkAuth(request, env) {
+  const token = request.headers.get("x-admin-token") || "";
   return env.ADMIN_TOKEN && token === env.ADMIN_TOKEN;
 }
 
 export function json(obj, status = 200) {
   return new Response(JSON.stringify(obj), {
     status,
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+      "Cache-Control": "no-store, private",
+      "X-Content-Type-Options": "nosniff"
+    },
   });
 }

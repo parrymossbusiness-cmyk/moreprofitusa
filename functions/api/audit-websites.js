@@ -1,12 +1,24 @@
-import { json, readJson, requireAdmin, detectWebsiteSignals, scoreCompany, tier, primaryHook } from "../_utils.js";
+import { json, optionsResponse, readJson, requireAdmin, detectWebsiteSignals, scoreCompany, tier, primaryHook } from "../_utils.js";
 
 async function checkWebsite(url) {
   if (!url) return { website_live: 0, https_ok: 0, html: "", status: null, final_url: "" };
   const normalized = url.startsWith("http") ? url : `https://${url}`;
+  let parsed;
+  try { parsed = new URL(normalized); } catch { return { website_live: 0, https_ok: 0, html: "", status: null, final_url: "", error: "Invalid website URL" }; }
+  if (!["http:", "https:"].includes(parsed.protocol)) {
+    return { website_live: 0, https_ok: 0, html: "", status: null, final_url: "", error: "Unsupported website protocol" };
+  }
+  const hostname = parsed.hostname.toLowerCase();
+  if (hostname === "localhost" || hostname === "127.0.0.1" || hostname === "::1" || hostname.endsWith(".local")) {
+    return { website_live: 0, https_ok: 0, html: "", status: null, final_url: "", error: "Local website addresses are not audited" };
+  }
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 10000);
   try {
     const resp = await fetch(normalized, {
       method: "GET",
       redirect: "follow",
+      signal: controller.signal,
       headers: { "user-agent": "MoreProfitUSA-RevenueCommander/1.0" }
     });
     const contentType = resp.headers.get("content-type") || "";
@@ -19,7 +31,9 @@ async function checkWebsite(url) {
       final_url: resp.url
     };
   } catch (e) {
-    return { website_live: 0, https_ok: 0, html: "", status: null, final_url: "", error: e.message };
+    return { website_live: 0, https_ok: 0, html: "", status: null, final_url: "", error: e.name === "AbortError" ? "Website check timed out" : e.message };
+  } finally {
+    clearTimeout(timeout);
   }
 }
 
@@ -49,7 +63,7 @@ async function runPageSpeed(env, url) {
   }
 }
 
-export async function onRequestOptions() { return json({ ok: true }); }
+export async function onRequestOptions() { return optionsResponse("POST, OPTIONS"); }
 
 export async function onRequestPost(context) {
   const auth = requireAdmin(context.request, context.env);

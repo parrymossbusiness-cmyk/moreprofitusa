@@ -3,180 +3,164 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Revenue Commander Admin | More Profit USA</title>
-  <style>
-    :root { --bg:#0f172a; --panel:#111827; --card:#1f2937; --text:#f8fafc; --muted:#94a3b8; --line:#334155; --accent:#38bdf8; --good:#22c55e; --warn:#f59e0b; --bad:#ef4444; }
-    body { margin:0; font-family: Arial, sans-serif; background:var(--bg); color:var(--text); }
-    header { padding:28px 24px; border-bottom:1px solid var(--line); }
-    h1 { margin:0 0 8px; font-size:30px; }
-    p { color:var(--muted); line-height:1.5; }
-    main { padding:24px; display:grid; gap:20px; }
-    section { background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:18px; }
-    h2 { margin-top:0; }
-    label { display:block; font-size:13px; color:var(--muted); margin-bottom:6px; }
-    input, textarea, select { width:100%; box-sizing:border-box; border:1px solid var(--line); background:#020617; color:var(--text); border-radius:10px; padding:11px; margin-bottom:12px; }
-    textarea { min-height:86px; }
-    button { border:0; border-radius:10px; background:var(--accent); color:#00111a; font-weight:700; padding:12px 14px; cursor:pointer; margin-right:8px; margin-bottom:8px; }
-    button.secondary { background:#334155; color:var(--text); }
-    button.warn { background:var(--warn); color:#1b1300; }
-    button.good { background:var(--good); color:#001b08; }
-    .grid { display:grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap:16px; }
-    .grid3 { display:grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap:16px; }
-    .status { white-space:pre-wrap; background:#020617; border:1px solid var(--line); padding:12px; border-radius:10px; min-height:60px; color:#dbeafe; }
-    table { width:100%; border-collapse:collapse; font-size:13px; }
-    th, td { border-bottom:1px solid var(--line); padding:9px 8px; text-align:left; vertical-align:top; }
-    th { color:#cbd5e1; position:sticky; top:0; background:#0f172a; }
-    .scroll { max-height:520px; overflow:auto; border:1px solid var(--line); border-radius:12px; }
-    .tier1 { color:var(--good); font-weight:700; }
-    .tier2 { color:var(--accent); font-weight:700; }
-    .skip { color:var(--bad); }
-    @media (max-width:900px){ .grid,.grid3{grid-template-columns:1fr;} table{font-size:12px;} }
-  </style>
+  <meta name="robots" content="noindex, nofollow, noarchive" />
+  <title>Revenue Commander | More Profit USA</title>
+  <link rel="stylesheet" href="/revenue-commander-admin.css" />
+  <script src="/revenue-commander-admin.js" defer></script>
 </head>
 <body>
-  <header>
-    <h1>Revenue Commander Admin</h1>
-    <p>Internal market scanner for ranking HVAC companies by review gaps, website/mobile leaks, missed-call exposure, and Apollo-ready outreach priority.</p>
+  <header class="site-header">
+    <div>
+      <p class="eyebrow">More Profit USA · Internal Sales Tool</p>
+      <h1>Revenue Commander</h1>
+      <p class="lede">Build a phone-ready list of local businesses, identify defensible sales openings, and focus today's five-hour selling window.</p>
+    </div>
+    <div class="goal-card" aria-label="Daily sales targets">
+      <span><strong>40</strong> calls</span>
+      <span><strong>10</strong> conversations</span>
+      <span><strong>$5K</strong> 30-day cash goal</span>
+    </div>
   </header>
 
   <main>
-    <section>
-      <h2>Admin Access</h2>
-      <div class="grid">
+    <section class="panel access-panel">
+      <div class="section-heading">
         <div>
-          <label>Admin Token</label>
-          <input id="token" type="password" placeholder="Cloudflare ADMIN_TOKEN" />
+          <p class="step">Secure access</p>
+          <h2>Start your session</h2>
+        </div>
+        <p class="helper">Your token stays in this browser tab and is never placed in an export URL.</p>
+      </div>
+      <div class="grid two">
+        <div>
+          <label for="token">Admin token</label>
+          <input id="token" type="password" placeholder="Cloudflare ADMIN_TOKEN" autocomplete="off" />
         </div>
         <div>
-          <label>Market Filter</label>
-          <input id="marketFilter" placeholder="Phoenix Metro" />
+          <label for="marketFilter">Saved-list market filter</label>
+          <input id="marketFilter" value="Pine Bluff + White Hall Home Services" />
         </div>
       </div>
     </section>
 
-    <section>
-      <h2>1. Scan Markets</h2>
-      <div class="grid3">
+    <section class="panel">
+      <div class="section-heading">
         <div>
-          <label>Market Name</label>
-          <input id="market" value="Phoenix Metro" />
+          <p class="step">Step 1</p>
+          <h2>Choose a market and find businesses</h2>
+        </div>
+        <p class="helper">Only businesses with a phone number and your minimum review count enter the queue.</p>
+      </div>
+
+      <div class="grid four">
+        <div>
+          <label for="marketPreset">Quick preset</label>
+          <select id="marketPreset">
+            <option value="local_home">Pine Bluff + White Hall · Home Services</option>
+            <option value="local_personal">Pine Bluff + White Hall · Local Services</option>
+            <option value="little_rock_home">Little Rock · Home Services</option>
+            <option value="custom">Custom market</option>
+          </select>
         </div>
         <div>
-          <label>Limit Per Query (max 20)</label>
-          <input id="limitPerQuery" type="number" value="20" />
+          <label for="market">Market name</label>
+          <input id="market" value="Pine Bluff + White Hall Home Services" />
         </div>
         <div>
-          <label>State</label>
-          <input id="state" value="AZ" />
+          <label for="state">State</label>
+          <input id="state" value="AR" maxlength="2" />
+        </div>
+        <div>
+          <label for="minReviews">Minimum reviews</label>
+          <input id="minReviews" type="number" min="0" max="10000" value="10" />
         </div>
       </div>
-      <label>Cities, one per line</label>
-      <textarea id="cities">Phoenix
-Mesa
-Chandler
-Gilbert
-Scottsdale
-Tempe</textarea>
-      <label>Search Queries, one per line</label>
-      <textarea id="queries">HVAC contractor
-AC repair
-air conditioning repair
-emergency AC repair
-heating and cooling</textarea>
-      <button onclick="scanMarket()">Run Market Scan</button>
-      <button class="secondary" onclick="benchmark()">Benchmark Competitors</button>
-      <button class="warn" onclick="auditWebsites()">Audit Websites + Mobile</button>
-      <button class="good" onclick="apolloEnrich()">Apollo Enrich Top Leads</button>
-      <button class="secondary" onclick="loadCompanies()">Load Companies</button>
-      <button class="secondary" onclick="exportCsv()">Export CSV</button>
-      <div id="status" class="status">Ready.</div>
+
+      <div class="grid two">
+        <div>
+          <label for="cities">Cities, one per line</label>
+          <textarea id="cities">Pine Bluff
+White Hall</textarea>
+        </div>
+        <div>
+          <label for="queries">Business types, one per line</label>
+          <textarea id="queries">plumber
+electrician
+HVAC contractor
+roofing contractor
+landscaper</textarea>
+        </div>
+      </div>
+
+      <div class="grid two compact-grid">
+        <div>
+          <label for="limitPerQuery">Businesses per search</label>
+          <input id="limitPerQuery" type="number" min="1" max="20" value="20" />
+        </div>
+        <div class="workflow-note">
+          <strong>Cost guardrail:</strong> keep cities × business types at 30 or fewer. Start with one category cluster, then expand.
+        </div>
+      </div>
+
+      <div class="actions" aria-label="Revenue Commander workflow">
+        <button id="scanBtn" class="primary">1 · Find Businesses</button>
+        <button id="benchmarkBtn">2 · Compare Reviews</button>
+        <button id="auditBtn" class="warning">3 · Audit Top Websites</button>
+        <button id="loadBtn">4 · Load Today's Queue</button>
+        <button id="exportBtn" class="success">Export Google Sheets Call List</button>
+      </div>
+      <div id="status" class="status" role="status" aria-live="polite">Ready. Enter the admin token, then follow steps 1–4.</div>
     </section>
 
-    <section>
-      <h2>Ranked Conversation Queue</h2>
-      <div class="grid3">
-        <div><label>Minimum Score</label><input id="minScore" type="number" value="65" /></div>
-        <div><label>Limit</label><input id="companyLimit" type="number" value="100" /></div>
-        <div><label>Tier Filter</label><select id="tierFilter"><option value="">All</option><option value="Tier 1">Tier 1</option><option value="Tier 2">Tier 2</option><option value="Tier 3">Tier 3</option></select></div>
+    <section class="panel">
+      <div class="section-heading queue-heading">
+        <div>
+          <p class="step">Daily execution</p>
+          <h2>Ranked Conversation Queue</h2>
+        </div>
+        <div id="queueSummary" class="queue-summary">0 of 40 calls loaded</div>
       </div>
-      <div class="scroll">
+
+      <div class="grid three filters">
+        <div>
+          <label for="minScore">Minimum opportunity score</label>
+          <input id="minScore" type="number" min="0" max="100" value="50" />
+        </div>
+        <div>
+          <label for="companyLimit">Show top</label>
+          <input id="companyLimit" type="number" min="1" max="500" value="40" />
+        </div>
+        <div>
+          <label for="tierFilter">Priority</label>
+          <select id="tierFilter">
+            <option value="">All call-worthy leads</option>
+            <option value="Tier 1">Tier 1 · Call Today</option>
+            <option value="Tier 2">Tier 2 · Call This Week</option>
+            <option value="Tier 3">Tier 3 · Nurture</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="scroll" tabindex="0" aria-label="Ranked company call list">
         <table>
           <thead>
             <tr>
-              <th>Score</th><th>Tier</th><th>Company</th><th>Market</th><th>Reviews</th><th>Competitor</th><th>Gap</th><th>Mobile</th><th>Hook</th><th>Apollo</th><th>Links</th>
+              <th>Score</th>
+              <th>Priority</th>
+              <th>Company &amp; Call</th>
+              <th>Market</th>
+              <th>Why Now</th>
+              <th>Recommended Offer</th>
+              <th>Opening Line</th>
+              <th>Proof</th>
             </tr>
           </thead>
-          <tbody id="companyRows"></tbody>
+          <tbody id="companyRows">
+            <tr><td colspan="8" class="empty-state">Load a saved queue or run a new market scan.</td></tr>
+          </tbody>
         </table>
       </div>
     </section>
   </main>
-
-<script>
-const $ = id => document.getElementById(id);
-function tokenHeaders(){ return { "content-type":"application/json", "x-admin-token": $("token").value }; }
-function setStatus(obj){ $("status").textContent = typeof obj === "string" ? obj : JSON.stringify(obj, null, 2); }
-function lines(id){ return $(id).value.split("\n").map(s => s.trim()).filter(Boolean); }
-
-async function post(path, body){
-  setStatus(`Running ${path}...`);
-  const resp = await fetch(path, { method:"POST", headers: tokenHeaders(), body: JSON.stringify(body) });
-  const data = await resp.json();
-  if(!resp.ok) throw new Error(data.error || JSON.stringify(data));
-  setStatus(data);
-  return data;
-}
-
-async function scanMarket(){
-  const state = $("state").value.trim();
-  await post("/api/scan-market", {
-    market: $("market").value.trim(),
-    state,
-    limitPerQuery: Number($("limitPerQuery").value || 20),
-    cities: lines("cities").map(city => ({ city, state })),
-    queries: lines("queries")
-  });
-}
-async function benchmark(){ await post("/api/benchmark", { market: $("marketFilter").value.trim() || $("market").value.trim() }); await loadCompanies(); }
-async function auditWebsites(){ await post("/api/audit-websites", { market: $("marketFilter").value.trim() || $("market").value.trim(), limit: 50 }); await loadCompanies(); }
-async function apolloEnrich(){ await post("/api/apollo-enrich", { market: $("marketFilter").value.trim() || $("market").value.trim(), limit: 25, minScore: Number($("minScore").value || 65) }); await loadCompanies(); }
-async function loadCompanies(){
-  const params = new URLSearchParams();
-  if ($("marketFilter").value.trim()) params.set("market", $("marketFilter").value.trim());
-  if ($("tierFilter").value) params.set("tier", $("tierFilter").value);
-  params.set("minScore", $("minScore").value || "65");
-  params.set("limit", $("companyLimit").value || "100");
-  const resp = await fetch(`/api/companies?${params}`, { headers: { "x-admin-token": $("token").value }});
-  const data = await resp.json();
-  if(!resp.ok) { setStatus(data); return; }
-  renderCompanies(data.companies || []);
-  setStatus(`Loaded ${data.count} companies.`);
-}
-function exportCsv(){
-  const params = new URLSearchParams();
-  if ($("marketFilter").value.trim()) params.set("market", $("marketFilter").value.trim());
-  params.set("minScore", $("minScore").value || "65");
-  params.set("limit", "1000");
-  params.set("token", $("token").value);
-  window.open(`/api/export.csv?${params}`, "_blank");
-}
-function cls(tier){ if((tier||"").startsWith("Tier 1")) return "tier1"; if((tier||"").startsWith("Tier 2")) return "tier2"; if((tier||"").includes("Skip")) return "skip"; return ""; }
-function renderCompanies(rows){
-  $("companyRows").innerHTML = rows.map(r => `
-    <tr>
-      <td><strong>${r.revenue_leak_score ?? ""}</strong></td>
-      <td class="${cls(r.priority_tier)}">${r.priority_tier || ""}</td>
-      <td>${r.company_name || ""}<br><small>${r.business_phone || ""}</small></td>
-      <td>${r.market || ""}<br><small>${r.city || ""}, ${r.state || ""}</small></td>
-      <td>${r.rating || ""} ★<br>${r.review_count || 0} reviews</td>
-      <td>${r.top_competitor_name || ""}<br><small>${r.top_competitor_reviews || 0} reviews</small></td>
-      <td>${r.review_gap || 0}<br><small>${r.review_gap_pct || 0}%</small></td>
-      <td>${r.mobile_score ?? "n/a"}<br><small>live: ${r.website_live ? "yes" : "no"}</small></td>
-      <td>${r.primary_hook || ""}</td>
-      <td>${r.apollo_status || ""}<br><small>${r.apollo_contact_name || ""} ${r.apollo_title ? "- " + r.apollo_title : ""}</small><br><small>${r.apollo_email || ""} ${r.apollo_phone || ""}</small></td>
-      <td>${r.google_maps_url ? `<a href="${r.google_maps_url}" target="_blank">Maps</a>` : ""} ${r.website ? `<a href="${r.website}" target="_blank">Site</a>` : ""}</td>
-    </tr>`).join("");
-}
-</script>
 </body>
 </html>

@@ -1,6 +1,6 @@
-import { json, requireAdmin, scoreCompany, tier, primaryHook } from "../_utils.js";
+import { json, optionsResponse, requireAdmin, scoreCompany, tier, primaryHook } from "../_utils.js";
 
-export async function onRequestOptions() { return json({ ok: true }); }
+export async function onRequestOptions() { return optionsResponse("POST, OPTIONS"); }
 
 export async function onRequestPost(context) {
   const auth = requireAdmin(context.request, context.env);

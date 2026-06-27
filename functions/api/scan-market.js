@@ -1,4 +1,13 @@
-import { json, readJson, requireAdmin, scoreCompany, tier, primaryHook } from "../_utils.js";
+import {
+  clampInt,
+  json,
+  optionsResponse,
+  primaryHook,
+  readJson,
+  requireAdmin,
+  scoreCompany,
+  tier
+} from "../_utils.js";
 
 const GOOGLE_PLACES_URL = "https://places.googleapis.com/v1/places:searchText";
 
@@ -106,23 +115,43 @@ async function upsertCompany(env, c) {
   ).run();
 }
 
-export async function onRequestOptions() { return json({ ok: true }); }
+export async function onRequestOptions() { return optionsResponse("POST, OPTIONS"); }
 
 export async function onRequestPost(context) {
   const auth = requireAdmin(context.request, context.env);
   if (!auth.ok) return auth.response;
 
   const body = await readJson(context.request);
-  const cities = body.cities || [{ city: body.city, state: body.state }];
-  const queries = body.queries || ["HVAC contractor", "AC repair", "air conditioning repair", "emergency AC repair", "heating and cooling"];
-  const limitPerQuery = body.limitPerQuery || 20;
-  const marketName = body.market || `${cities[0]?.city || "Market"}, ${cities[0]?.state || ""}`.trim();
+  const cities = (Array.isArray(body.cities) ? body.cities : [{ city: body.city, state: body.state }])
+    .map(item => ({
+      city: String(item?.city || "").trim(),
+      state: String(item?.state || body.state || "").trim().toUpperCase()
+    }))
+    .filter(item => item.city && item.state)
+    .slice(0, 10);
+  const queries = (Array.isArray(body.queries) ? body.queries : [])
+    .map(query => String(query || "").trim())
+    .filter(Boolean)
+    .slice(0, 10);
+  const limitPerQuery = clampInt(body.limitPerQuery, 1, 20, 20);
+  const minReviews = clampInt(body.minReviews, 0, 10000, 10);
+  const marketName = String(body.market || `${cities[0]?.city || "Market"}, ${cities[0]?.state || ""}`).trim();
+
+  if (!marketName) return json({ error: "Market name is required." }, 400);
+  if (!cities.length) return json({ error: "Add at least one city and state." }, 400);
+  if (!queries.length) return json({ error: "Add at least one business type." }, 400);
+  if (cities.length * queries.length > 30) {
+    return json({ error: "This scan is too large. Keep cities × business types at 30 or fewer to control time and API usage." }, 400);
+  }
 
   if (!context.env.DB) return json({ error: "D1 binding DB is missing." }, 500);
 
   let totalFound = 0;
   let totalSaved = 0;
+  let skippedNoPhone = 0;
+  let skippedLowReviews = 0;
   const errors = [];
+  const seenPlaceIds = new Set();
 
   for (const c of cities) {
     for (const q of queries) {
@@ -132,6 +161,10 @@ export async function onRequestPost(context) {
         for (const place of places) {
           const company = placeToCompany(place, { market: marketName, city: c.city, state: c.state, query: q });
           if (!company.place_id || !company.company_name) continue;
+          if (!company.business_phone) { skippedNoPhone += 1; continue; }
+          if (company.review_count < minReviews) { skippedLowReviews += 1; continue; }
+          if (seenPlaceIds.has(company.place_id)) continue;
+          seenPlaceIds.add(company.place_id);
           await upsertCompany(context.env, company);
           totalSaved += 1;
         }
@@ -145,5 +178,13 @@ export async function onRequestPost(context) {
     }
   }
 
-  return json({ ok: true, market: marketName, totalFound, totalSaved, errors });
+  return json({
+    ok: true,
+    market: marketName,
+    totalFound,
+    totalSaved,
+    skippedNoPhone,
+    skippedLowReviews,
+    errors
+  });
 }

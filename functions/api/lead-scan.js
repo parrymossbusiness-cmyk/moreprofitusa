@@ -4,7 +4,7 @@ import { runScan, ensureTable, saveLeads, checkAuth, json } from "./_engine.js";
 
 export async function onRequestPost({ request, env }) {
   const url = new URL(request.url);
-  if (!checkAuth(request, env, url)) return json({ error: "Unauthorized" }, 401);
+  if (!checkAuth(request, env)) return json({ error: "Unauthorized" }, 401);
   if (!env.GOOGLE_MAPS_API_KEY) return json({ error: "GOOGLE_MAPS_API_KEY not set" }, 500);
   if (!env.DB) return json({ error: "D1 binding DB not found" }, 500);
 

@@ -13,7 +13,7 @@ runs the searches **in parallel**, **drops anything without a phone number**,
 **dedupes**, **scores** each lead 0–100, tags the **pitch to lead with**, writes a ready
 **hook** sentence, saves to D1, and exports a CSV call sheet.
 
-No Apollo. No website/mobile audit. No competitor benchmark. Runs in seconds.
+No contact enrichment, website/mobile audit, or competitor benchmark. Runs in seconds.
 
 **Two engines** (toggle in the UI):
 - **National** → call list. Columns: Score, Pitch, Company, Phone, City, Reviews, Website, Hook, Maps

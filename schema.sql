@@ -36,11 +36,6 @@ CREATE TABLE IF NOT EXISTS companies (
   revenue_leak_score INTEGER DEFAULT 0,
   priority_tier TEXT DEFAULT 'Unscored',
   primary_hook TEXT,
-  apollo_status TEXT DEFAULT 'Not Enriched',
-  apollo_contact_name TEXT,
-  apollo_title TEXT,
-  apollo_email TEXT,
-  apollo_phone TEXT,
   status TEXT DEFAULT 'New',
   created_at TEXT DEFAULT CURRENT_TIMESTAMP,
   updated_at TEXT DEFAULT CURRENT_TIMESTAMP

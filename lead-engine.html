@@ -74,8 +74,8 @@
   .status { margin-top: 14px; background: var(--panel-2); border: 1px solid var(--line);
     border-radius: 8px; padding: 12px 14px; font-size: 13px; color: var(--muted);
     white-space: pre-wrap; min-height: 20px; }
-  .status .ok { color: var(--green); }
-  .status .err { color: var(--orange); }
+  .status.ok { color: var(--green); }
+  .status.err { color: var(--orange); }
 
   table { width: 100%; border-collapse: collapse; margin-top: 6px; font-size: 13px; }
   th, td { text-align: left; padding: 9px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
@@ -186,7 +186,8 @@ let ENGINE = "national";
 const $ = (id) => document.getElementById(id);
 const statusEl = $("status");
 function setStatus(msg, kind) {
-  statusEl.innerHTML = kind ? `<span class="${kind}">${msg}</span>` : msg;
+  statusEl.textContent = msg;
+  statusEl.className = `status${kind ? ` ${kind}` : ""}`;
 }
 function tokenOrWarn() {
   const t = $("token").value.trim();
@@ -267,15 +268,38 @@ async function load() {
   }
 }
 
-$("exportBtn").addEventListener("click", () => {
+$("exportBtn").addEventListener("click", async () => {
   const token = tokenOrWarn(); if (!token) return;
   const params = new URLSearchParams({
     engine: ENGINE,
     minScore: $("minScore").value || "0",
     pitch: $("pitchFilter").value,
-    token,
   });
-  window.location.href = "/api/lead-export?" + params;
+  $("exportBtn").disabled = true;
+  setStatus("Preparing secure CSV export…");
+  try {
+    const response = await fetch("/api/lead-export?" + params, {
+      headers: { "x-admin-token": token },
+      cache: "no-store",
+    });
+    if (!response.ok) throw new Error(await response.text() || "Export failed.");
+    const blob = await response.blob();
+    const objectUrl = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    const disposition = response.headers.get("content-disposition") || "";
+    const match = disposition.match(/filename="([^"]+)"/i);
+    link.href = objectUrl;
+    link.download = match?.[1] || "lead-engine.csv";
+    document.body.append(link);
+    link.click();
+    link.remove();
+    window.setTimeout(() => URL.revokeObjectURL(objectUrl), 1000);
+    setStatus("CSV downloaded securely. The admin token was not placed in the URL.", "ok");
+  } catch (error) {
+    setStatus(error.message || String(error), "err");
+  } finally {
+    $("exportBtn").disabled = false;
+  }
 });
 
 function render(leads) {
@@ -290,7 +314,8 @@ function render(leads) {
     const pc = (l.pitch || "").replace(/\s/g, "");
     const reviews = `${l.rating ? Number(l.rating).toFixed(1) : "—"}\u2605 / ${l.review_count}`;
     const site = l.has_website ? '<span class="yes">Y</span>' : '<span class="no">N</span>';
-    const map = l.maps_url ? `<a class="map" href="${l.maps_url}" target="_blank" rel="noopener">open</a>` : "";
+    const mapUrl = safeExternalUrl(l.maps_url);
+    const map = mapUrl ? `<a class="map" href="${escAttr(mapUrl)}" target="_blank" rel="noopener noreferrer">open</a>` : "";
     return "<tr>"
       + `<td><span class="score">${l.score}</span></td>`
       + `<td><span class="pitch ${pc}">${l.pitch}</span></td>`
@@ -306,6 +331,13 @@ function render(leads) {
   }).join("");
 }
 function esc(s) { return (s == null ? "" : String(s)).replace(/[<>&]/g, (c) => ({ "<": "&lt;", ">": "&gt;", "&": "&amp;" }[c])); }
+function escAttr(s) { return esc(s).replace(/"/g, "&quot;").replace(/'/g, "&#39;"); }
+function safeExternalUrl(value) {
+  try {
+    const url = new URL(value);
+    return ["http:", "https:"].includes(url.protocol) ? url.href : "";
+  } catch { return ""; }
+}
 </script>
 </body>
 </html>

@@ -13,5 +13,4 @@ database_id = "8e88dad9-8ec5-4897-8c54-dbb8ceed2452"
 # Set real values in Cloudflare dashboard, not here for production.
 # GOOGLE_MAPS_API_KEY = ""
 # PAGESPEED_API_KEY = ""
-# APOLLO_API_KEY = ""
 # ADMIN_TOKEN = "choose-a-long-random-password"

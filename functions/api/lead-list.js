@@ -1,9 +1,9 @@
-// GET /api/lead-list?engine=&minScore=&pitch=&market=&minReviews=&limit=  (token via header or ?token=)
+// GET /api/lead-list?engine=&minScore=&pitch=&market=&minReviews=&limit=  (token via header)
 import { checkAuth, json, MIN_REVIEWS } from "./_engine.js";
 
 export async function onRequestGet({ request, env }) {
   const url = new URL(request.url);
-  if (!checkAuth(request, env, url)) return json({ error: "Unauthorized" }, 401);
+  if (!checkAuth(request, env)) return json({ error: "Unauthorized" }, 401);
   if (!env.DB) return json({ error: "D1 binding DB not found" }, 500);
 
   const engine = url.searchParams.get("engine");
