@@ -1,4 +1,4 @@
-import { csvEscape, clampInt, primaryHook, requireAdmin, responseSecurityHeaders, scoreCompany, tier } from "../_utils.js";
+import { csvEscape, clampInt, marketDistanceMiles, matchesCampaign, primaryHook, requireAdmin, responseSecurityHeaders, safeNum, scoreCompany, tier } from "../_utils.js";
 import {
   REVENUE_EXPORT_COLUMNS,
   REVENUE_EXPORT_SCHEMA_VERSION
@@ -23,6 +23,9 @@ export async function onRequestGet(context) {
   const market = (url.searchParams.get("market") || "").trim();
   const minScore = clampInt(url.searchParams.get("minScore"), 0, 100, 50);
   const limit = clampInt(url.searchParams.get("limit"), 1, 2000, 1000);
+  const campaign = (url.searchParams.get("campaign") || "all").trim();
+  const minRating = Math.min(5, Math.max(0, safeNum(url.searchParams.get("minRating"), 4.4)));
+  const maxDistance = Math.min(100, Math.max(1, safeNum(url.searchParams.get("maxDistance"), 30)));
 
   let query = "SELECT * FROM companies WHERE business_phone IS NOT NULL AND TRIM(business_phone) != ''";
   const binds = [];
@@ -43,6 +46,12 @@ export async function onRequestGet(context) {
         primary_hook: primaryHook(row)
       };
     })
+    .filter(row => safeNum(row.rating) >= minRating)
+    .filter(row => {
+      const distance = marketDistanceMiles(row);
+      return distance === null || distance <= maxDistance;
+    })
+    .filter(row => matchesCampaign(row, campaign))
     .filter(row => row.revenue_leak_score >= minScore)
     .sort((a, b) => b.revenue_leak_score - a.revenue_leak_score || b.review_count - a.review_count || b.review_gap - a.review_gap)
     .slice(0, limit);

@@ -1,4 +1,9 @@
-import { json, optionsResponse, readJson, requireAdmin, scoreCompany, tier, primaryHook } from "../_utils.js";
+import { json, marketDistanceMiles, optionsResponse, readJson, requireAdmin, scoreCompany, tier, primaryHook } from "../_utils.js";
+
+export function benchmarkGroupKey(company) {
+  const category = String(company.search_query || company.primary_type || "uncategorized").trim().toLowerCase();
+  return `${company.market || ""}|${company.city || ""}|${category}`;
+}
 
 export async function onRequestOptions() { return optionsResponse("POST, OPTIONS"); }
 
@@ -14,17 +19,20 @@ export async function onRequestPost(context) {
   if (market) { where = "WHERE market = ?"; binds.push(market); }
 
   const rows = await context.env.DB.prepare(`SELECT * FROM companies ${where}`).bind(...binds).all();
-  const companies = rows.results || [];
+  const companies = (rows.results || []).filter(company => {
+    const distance = marketDistanceMiles(company);
+    return distance === null || distance <= 30;
+  });
 
-  const byCity = new Map();
+  const byCityAndCategory = new Map();
   for (const c of companies) {
-    const key = `${c.market || ""}|${c.city || ""}`;
-    if (!byCity.has(key)) byCity.set(key, []);
-    byCity.get(key).push(c);
+    const key = benchmarkGroupKey(c);
+    if (!byCityAndCategory.has(key)) byCityAndCategory.set(key, []);
+    byCityAndCategory.get(key).push(c);
   }
 
   let updated = 0;
-  for (const group of byCity.values()) {
+  for (const group of byCityAndCategory.values()) {
     const ranked = [...group].sort((a, b) => (b.review_count || 0) - (a.review_count || 0));
     const top3 = ranked.slice(0, 3);
     const avgTop3 = Math.round(top3.reduce((sum, c) => sum + (c.review_count || 0), 0) / Math.max(top3.length, 1));

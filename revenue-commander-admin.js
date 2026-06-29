@@ -19,6 +19,17 @@ const PRESETS = {
   }
 };
 
+const CITY_CENTERS = {
+  "pine bluff|AR": { latitude: 34.2284, longitude: -92.0032 },
+  "white hall|AR": { latitude: 34.2737, longitude: -92.0909 },
+  "little rock|AR": { latitude: 34.7465, longitude: -92.2896 },
+  "north little rock|AR": { latitude: 34.7695, longitude: -92.2671 }
+};
+
+function cityWithCenter(city, state) {
+  return { city, state, ...(CITY_CENTERS[`${city.toLowerCase()}|${state}`] || {}) };
+}
+
 const $ = id => document.getElementById(id);
 
 function lines(id) {
@@ -89,8 +100,10 @@ async function scanMarket() {
       market: $("market").value.trim(),
       state,
       minReviews: Number($("minReviews").value || 10),
+      minRating: Number($("minRating").value || 4.4),
+      radiusMiles: Number($("radiusMiles").value || 30),
       limitPerQuery: Number($("limitPerQuery").value || 20),
-      cities: cities.map(city => ({ city, state })),
+      cities: cities.map(city => cityWithCenter(city, state)),
       queries
     })
   });
@@ -98,6 +111,7 @@ async function scanMarket() {
   setStatus(
     `Found ${data.totalFound} listings and saved ${data.totalSaved} unique, call-ready businesses. ` +
     `${data.skippedNoPhone} had no phone and ${data.skippedLowReviews} were below your review minimum. ` +
+    `${data.skippedLowRating} were below ${data.minRating} stars and ${data.skippedOutsideRadius} were outside ${data.radiusMiles} miles. ` +
     "Next: Compare Reviews.",
     "success"
   );
@@ -128,7 +142,10 @@ async function loadCompanies() {
   const params = new URLSearchParams({
     minScore: $("minScore").value || "50",
     limit: $("companyLimit").value || "40",
-    phoneOnly: "1"
+    phoneOnly: "1",
+    minRating: $("queueMinRating").value || "4.4",
+    maxDistance: $("radiusMiles").value || "30",
+    campaign: $("campaignFilter").value || "website"
   });
   const market = $("marketFilter").value.trim();
   if (market) params.set("market", market);
@@ -144,7 +161,10 @@ async function exportCsv() {
   const token = tokenOrThrow();
   const params = new URLSearchParams({
     minScore: $("minScore").value || "50",
-    limit: "1000"
+    limit: "1000",
+    minRating: $("queueMinRating").value || "4.4",
+    maxDistance: $("radiusMiles").value || "30",
+    campaign: $("campaignFilter").value || "website"
   });
   const market = $("marketFilter").value.trim();
   if (market) params.set("market", market);
@@ -218,7 +238,7 @@ function tierClass(value) {
 function renderCompanies(companies) {
   const body = $("companyRows");
   body.replaceChildren();
-  $("queueSummary").textContent = `${companies.length} of 40 calls loaded`;
+  $("queueSummary").textContent = `${companies.length} calls loaded`;
 
   if (!companies.length) {
     const row = document.createElement("tr");
@@ -288,5 +308,8 @@ $("auditBtn").addEventListener("click", event => withButton(event.currentTarget,
 $("loadBtn").addEventListener("click", event => withButton(event.currentTarget, "Loading…", loadCompanies));
 $("exportBtn").addEventListener("click", event => withButton(event.currentTarget, "Exporting…", exportCsv));
 $("tierFilter").addEventListener("change", () => {
+  if ($("token").value.trim()) loadCompanies().catch(error => setStatus(error.message, "error"));
+});
+$("campaignFilter").addEventListener("change", () => {
   if ($("token").value.trim()) loadCompanies().catch(error => setStatus(error.message, "error"));
 });

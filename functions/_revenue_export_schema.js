@@ -1,12 +1,13 @@
 import {
   isWalkInCandidate,
   leadId,
+  marketDistanceMiles,
   primaryHook,
   recommendedOffer,
   scoreReason
 } from "./_utils.js";
 
-export const REVENUE_EXPORT_SCHEMA_VERSION = "revenue_commander_v1";
+export const REVENUE_EXPORT_SCHEMA_VERSION = "revenue_commander_v2";
 
 // Keep this order stable. Additive changes require a new schema version.
 export const REVENUE_EXPORT_COLUMNS = [
@@ -19,8 +20,13 @@ export const REVENUE_EXPORT_COLUMNS = [
   { key: "city", value: row => row.city || "" },
   { key: "company", value: row => row.company_name || "" },
   { key: "category", value: row => row.primary_type || row.search_query || "" },
+  { key: "search_type", value: row => row.search_query || "" },
   { key: "phone", value: row => row.business_phone || "" },
   { key: "address", value: row => row.formatted_address || "" },
+  { key: "distance_miles", value: row => {
+    const distance = marketDistanceMiles(row);
+    return distance === null ? "" : Math.round(distance * 10) / 10;
+  } },
   { key: "rating", value: row => row.rating ?? "" },
   { key: "review_count", value: row => row.review_count ?? 0 },
   { key: "has_website", value: row => row.website ? "Yes" : "No" },

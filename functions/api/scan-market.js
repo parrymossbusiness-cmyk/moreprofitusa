@@ -5,8 +5,10 @@ import {
   primaryHook,
   readJson,
   requireAdmin,
+  safeNum,
   scoreCompany,
-  tier
+  tier,
+  distanceMilesBetween
 } from "../_utils.js";
 
 const GOOGLE_PLACES_URL = "https://places.googleapis.com/v1/places:searchText";
@@ -31,16 +33,27 @@ function placeToCompany(place, meta) {
   };
 }
 
-async function searchPlaces(env, query, city, state, limit) {
+async function searchPlaces(env, query, city, state, limit, radiusMiles) {
   const apiKey = env.GOOGLE_MAPS_API_KEY;
   if (!apiKey) throw new Error("GOOGLE_MAPS_API_KEY is not configured.");
 
   const body = {
-    textQuery: `${query} ${city} ${state}`,
-    maxResultCount: Math.min(Math.max(Number(limit || 20), 1), 20),
+    textQuery: query,
+    pageSize: Math.min(Math.max(Number(limit || 20), 1), 20),
     languageCode: "en",
-    regionCode: "US"
+    regionCode: "US",
+    includePureServiceAreaBusinesses: true
   };
+  if (Number.isFinite(city.latitude) && Number.isFinite(city.longitude)) {
+    body.locationBias = {
+      circle: {
+        center: { latitude: city.latitude, longitude: city.longitude },
+        radius: Math.min(50000, Math.max(8047, radiusMiles * 1609.344))
+      }
+    };
+  } else {
+    body.textQuery = `${query} in ${city.city}, ${state}`;
+  }
 
   const fieldMask = [
     "places.id",
@@ -125,7 +138,9 @@ export async function onRequestPost(context) {
   const cities = (Array.isArray(body.cities) ? body.cities : [{ city: body.city, state: body.state }])
     .map(item => ({
       city: String(item?.city || "").trim(),
-      state: String(item?.state || body.state || "").trim().toUpperCase()
+      state: String(item?.state || body.state || "").trim().toUpperCase(),
+      latitude: Number(item?.latitude),
+      longitude: Number(item?.longitude)
     }))
     .filter(item => item.city && item.state)
     .slice(0, 10);
@@ -135,6 +150,8 @@ export async function onRequestPost(context) {
     .slice(0, 10);
   const limitPerQuery = clampInt(body.limitPerQuery, 1, 20, 20);
   const minReviews = clampInt(body.minReviews, 0, 10000, 10);
+  const minRating = Math.min(5, Math.max(0, safeNum(body.minRating, 4.4)));
+  const radiusMiles = Math.min(31, Math.max(5, safeNum(body.radiusMiles, 30)));
   const marketName = String(body.market || `${cities[0]?.city || "Market"}, ${cities[0]?.state || ""}`).trim();
 
   if (!marketName) return json({ error: "Market name is required." }, 400);
@@ -150,19 +167,26 @@ export async function onRequestPost(context) {
   let totalSaved = 0;
   let skippedNoPhone = 0;
   let skippedLowReviews = 0;
+  let skippedLowRating = 0;
+  let skippedOutsideRadius = 0;
   const errors = [];
   const seenPlaceIds = new Set();
 
   for (const c of cities) {
     for (const q of queries) {
       try {
-        const places = await searchPlaces(context.env, q, c.city, c.state, limitPerQuery);
+        const places = await searchPlaces(context.env, q, c, c.state, limitPerQuery, radiusMiles);
         totalFound += places.length;
         for (const place of places) {
           const company = placeToCompany(place, { market: marketName, city: c.city, state: c.state, query: q });
           if (!company.place_id || !company.company_name) continue;
           if (!company.business_phone) { skippedNoPhone += 1; continue; }
           if (company.review_count < minReviews) { skippedLowReviews += 1; continue; }
+          if (safeNum(company.rating) < minRating) { skippedLowRating += 1; continue; }
+          if (Number.isFinite(c.latitude) && Number.isFinite(c.longitude) && company.latitude !== null && company.longitude !== null) {
+            const distance = distanceMilesBetween(c.latitude, c.longitude, company.latitude, company.longitude);
+            if (distance !== null && distance > radiusMiles) { skippedOutsideRadius += 1; continue; }
+          }
           if (seenPlaceIds.has(company.place_id)) continue;
           seenPlaceIds.add(company.place_id);
           await upsertCompany(context.env, company);
@@ -185,6 +209,10 @@ export async function onRequestPost(context) {
     totalSaved,
     skippedNoPhone,
     skippedLowReviews,
+    skippedLowRating,
+    skippedOutsideRadius,
+    minRating,
+    radiusMiles,
     errors
   });
 }

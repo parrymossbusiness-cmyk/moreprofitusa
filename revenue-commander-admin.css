@@ -32,6 +32,7 @@ main { min-width:0; padding:26px clamp(18px,4vw,54px) 72px; display:grid; gap:20
 .grid.two { grid-template-columns:repeat(2,minmax(0,1fr)); }
 .grid.three { grid-template-columns:repeat(3,minmax(0,1fr)); }
 .grid.four { grid-template-columns:1.3fr 1.5fr .55fr .7fr; }
+.grid.five { grid-template-columns:1.45fr .65fr .8fr .65fr 1fr; }
 .compact-grid { align-items:end; }
 label { display:block; color:var(--muted); font-size:12px; font-weight:700; letter-spacing:.03em; margin:0 0 7px; }
 input,textarea,select { width:100%; border:1px solid var(--line); background:var(--panel-2); color:var(--text); border-radius:10px; padding:11px 12px; margin-bottom:15px; }
@@ -72,11 +73,11 @@ td { color:#dbe6f4; line-height:1.4; }
 
 @media (max-width:1050px) {
   .site-header { align-items:flex-start; flex-direction:column; }
-  .grid.four { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .grid.four,.grid.five { grid-template-columns:repeat(2,minmax(0,1fr)); }
 }
 @media (max-width:760px) {
   .goal-card { width:100%; overflow:auto; }
   .section-heading { flex-direction:column; }
-  .grid.two,.grid.three,.grid.four { grid-template-columns:1fr; }
+  .grid.two,.grid.three,.grid.four,.grid.five { grid-template-columns:1fr; }
   .panel { padding:17px; }
 }

@@ -49,7 +49,7 @@
           <p class="step">Step 1</p>
           <h2>Choose a market and find businesses</h2>
         </div>
-        <p class="helper">Only businesses with a phone number and your minimum review count enter the queue.</p>
+        <p class="helper">Only businesses with a phone number, enough reviews, a strong rating, and a location inside your chosen radius enter the queue.</p>
       </div>
 
       <div class="grid four">
@@ -92,14 +92,23 @@ landscaper</textarea>
         </div>
       </div>
 
-      <div class="grid two compact-grid">
+      <div class="grid three compact-grid">
+        <div>
+          <label for="minRating">Minimum rating</label>
+          <input id="minRating" type="number" min="0" max="5" step="0.1" value="4.4" />
+        </div>
+        <div>
+          <label for="radiusMiles">Search radius (miles)</label>
+          <input id="radiusMiles" type="number" min="5" max="31" value="30" />
+        </div>
         <div>
           <label for="limitPerQuery">Businesses per search</label>
           <input id="limitPerQuery" type="number" min="1" max="20" value="20" />
         </div>
-        <div class="workflow-note">
-          <strong>Cost guardrail:</strong> keep cities × business types at 30 or fewer. Start with one category cluster, then expand.
-        </div>
+      </div>
+
+      <div class="workflow-note">
+        <strong>Cost guardrail:</strong> keep cities × business types at 30 or fewer. Results outside the radius are rejected before they enter your database.
       </div>
 
       <div class="actions" aria-label="Revenue Commander workflow">
@@ -121,7 +130,20 @@ landscaper</textarea>
         <div id="queueSummary" class="queue-summary">0 of 40 calls loaded</div>
       </div>
 
-      <div class="grid three filters">
+      <div class="grid five filters">
+        <div>
+          <label for="campaignFilter">Sales campaign</label>
+          <select id="campaignFilter">
+            <option value="website">Website prospects · no website</option>
+            <option value="all">All call-worthy leads</option>
+            <option value="conversion">Website conversion upgrades</option>
+            <option value="reviews">Review-growth prospects</option>
+          </select>
+        </div>
+        <div>
+          <label for="queueMinRating">Minimum rating</label>
+          <input id="queueMinRating" type="number" min="0" max="5" step="0.1" value="4.4" />
+        </div>
         <div>
           <label for="minScore">Minimum opportunity score</label>
           <input id="minScore" type="number" min="0" max="100" value="50" />

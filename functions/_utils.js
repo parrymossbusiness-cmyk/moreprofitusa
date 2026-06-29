@@ -57,6 +57,7 @@ export function safeInt(value, fallback = 0) {
 }
 
 export function safeNum(value, fallback = 0) {
+  if (value === null || value === undefined || String(value).trim() === "") return fallback;
   const number = Number(value);
   return Number.isFinite(number) ? number : fallback;
 }
@@ -75,6 +76,54 @@ export function tier(score) {
 
 function hasWebsite(company) {
   return Boolean(String(company.website || "").trim());
+}
+
+const LOCAL_CITY_CENTERS = {
+  "pine bluff|AR": { latitude: 34.2284, longitude: -92.0032 },
+  "white hall|AR": { latitude: 34.2737, longitude: -92.0909 },
+  "little rock|AR": { latitude: 34.7465, longitude: -92.2896 },
+  "north little rock|AR": { latitude: 34.7695, longitude: -92.2671 }
+};
+
+export function distanceMilesBetween(latitude1, longitude1, latitude2, longitude2) {
+  if ([latitude1, longitude1, latitude2, longitude2].some(value => value === null || value === undefined || value === "")) {
+    return null;
+  }
+  const values = [latitude1, longitude1, latitude2, longitude2].map(Number);
+  if (!values.every(Number.isFinite)) return null;
+  const [lat1, lng1, lat2, lng2] = values;
+  const toRadians = degrees => degrees * Math.PI / 180;
+  const latDelta = toRadians(lat2 - lat1);
+  const lngDelta = toRadians(lng2 - lng1);
+  const a = Math.sin(latDelta / 2) ** 2 +
+    Math.cos(toRadians(lat1)) * Math.cos(toRadians(lat2)) * Math.sin(lngDelta / 2) ** 2;
+  return 3958.8 * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+}
+
+export function marketDistanceMiles(company) {
+  const city = String(company.city || "").trim().toLowerCase();
+  const state = String(company.state || "").trim().toUpperCase();
+  const center = LOCAL_CITY_CENTERS[`${city}|${state}`];
+  if (!center) return null;
+  return distanceMilesBetween(center.latitude, center.longitude, company.latitude, company.longitude);
+}
+
+export function matchesCampaign(company, campaign = "all") {
+  const selected = String(campaign || "all").trim().toLowerCase();
+  if (!selected || selected === "all") return true;
+  if (selected === "website") return !hasWebsite(company);
+  if (selected === "conversion") {
+    const mobileScore = company.mobile_score === null || company.mobile_score === undefined
+      ? null
+      : safeInt(company.mobile_score);
+    return hasWebsite(company) && (
+      company.website_live === 0 ||
+      mobileScore !== null && mobileScore < 75 ||
+      company.click_to_call_visible === 0
+    );
+  }
+  if (selected === "reviews") return safeInt(company.review_gap) >= 20;
+  return true;
 }
 
 function hasCompletedWebsiteEvidence(company) {
@@ -114,6 +163,13 @@ export function scoreCompanyDetails(company) {
   else if (rating >= 4.4) score += 8;
   else if (rating >= 4.0) score += 5;
   if (rating >= 4) reasons.push(`${rating.toFixed(1)} star rating`);
+  if (rating > 0 && rating < 4.0) {
+    score -= 20;
+    reasons.push(`${rating.toFixed(1)} rating is below outreach standard`);
+  } else if (rating > 0 && rating < 4.4) {
+    score -= 10;
+    reasons.push(`${rating.toFixed(1)} rating is below preferred standard`);
+  }
 
   if (!websitePresent) {
     score += 35;
@@ -201,9 +257,8 @@ export function leadId(company) {
 }
 
 export function isWalkInCandidate(company) {
-  const city = String(company.city || "").trim().toLowerCase();
-  const state = String(company.state || "").trim().toUpperCase();
-  return state === "AR" && ["white hall", "pine bluff", "little rock"].includes(city) && Boolean(company.formatted_address);
+  const distance = marketDistanceMiles(company);
+  return Boolean(company.formatted_address) && distance !== null && distance <= 25;
 }
 
 export function detectWebsiteSignals(html = "") {

@@ -3,18 +3,21 @@ import {
   isWalkInCandidate,
   json,
   leadId,
+  marketDistanceMiles,
+  matchesCampaign,
   optionsResponse,
   primaryHook,
   recommendedOffer,
   requireAdmin,
   scoreCompany,
   scoreReason,
+  safeNum,
   tier
 } from "../_utils.js";
 
 const COMPANY_FIELDS = [
   "id", "place_id", "market", "city", "state", "search_query", "company_name",
-  "formatted_address", "google_maps_url", "website", "business_phone", "primary_type",
+  "formatted_address", "latitude", "longitude", "google_maps_url", "website", "business_phone", "primary_type",
   "rating", "review_count", "top_competitor_name", "top_competitor_reviews",
   "avg_top3_reviews", "review_gap", "review_gap_pct", "website_live", "https_ok",
   "mobile_score", "seo_score", "accessibility_score", "click_to_call_visible",
@@ -37,6 +40,9 @@ export async function onRequestGet(context) {
   const minScore = clampInt(url.searchParams.get("minScore"), 0, 100, 0);
   const limit = clampInt(url.searchParams.get("limit"), 1, 500, 40);
   const phoneOnly = url.searchParams.get("phoneOnly") !== "0";
+  const campaign = (url.searchParams.get("campaign") || "all").trim();
+  const minRating = Math.min(5, Math.max(0, safeNum(url.searchParams.get("minRating"), 4.4)));
+  const maxDistance = Math.min(100, Math.max(1, safeNum(url.searchParams.get("maxDistance"), 30)));
 
   let query = `SELECT ${COMPANY_FIELDS} FROM companies WHERE 1 = 1`;
   const binds = [];
@@ -60,6 +66,12 @@ export async function onRequestGet(context) {
         walk_in_candidate: isWalkInCandidate(row)
       };
     })
+    .filter(row => safeNum(row.rating) >= minRating)
+    .filter(row => {
+      const distance = marketDistanceMiles(row);
+      return distance === null || distance <= maxDistance;
+    })
+    .filter(row => matchesCampaign(row, campaign))
     .filter(row => row.revenue_leak_score >= minScore)
     .filter(row => !tierParam || row.priority_tier.startsWith(tierParam))
     .sort((a, b) => b.revenue_leak_score - a.revenue_leak_score || b.review_count - a.review_count || b.review_gap - a.review_gap)
