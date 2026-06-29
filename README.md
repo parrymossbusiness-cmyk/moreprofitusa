@@ -49,3 +49,4 @@ The older Lead Engine remains available at `/lead-engine.html`. Its data stays i
 ## Deployment
 
 Push the repository to the connected GitHub branch. Cloudflare Pages deploys it automatically. See `REVENUE_COMMANDER_DEPLOY.md` for the plain-English handoff and verification checklist.
+Deployment refresh - June 29
