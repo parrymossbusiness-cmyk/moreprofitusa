@@ -11,6 +11,14 @@ export async function onRequestOptions() {
   });
 }
 
+function searchTypeTerms(value) {
+  return String(value || "")
+    .split(/[\n,|]+/)
+    .map(term => term.trim().toLowerCase())
+    .filter(Boolean)
+    .slice(0, 20);
+}
+
 export async function onRequestGet(context) {
   const auth = requireAdmin(context.request, context.env);
   if (!auth.ok) return auth.response;
@@ -24,12 +32,17 @@ export async function onRequestGet(context) {
   const minScore = clampInt(url.searchParams.get("minScore"), 0, 100, 50);
   const limit = clampInt(url.searchParams.get("limit"), 1, 2000, 1000);
   const campaign = (url.searchParams.get("campaign") || "all").trim();
+  const searchTypes = searchTypeTerms(url.searchParams.get("searchType"));
   const minRating = Math.min(5, Math.max(0, safeNum(url.searchParams.get("minRating"), 4.4)));
   const maxDistance = Math.min(100, Math.max(1, safeNum(url.searchParams.get("maxDistance"), 30)));
 
   let query = "SELECT * FROM companies WHERE business_phone IS NOT NULL AND TRIM(business_phone) != ''";
   const binds = [];
   if (market) { query += " AND market = ?"; binds.push(market); }
+  if (searchTypes.length) {
+    query += ` AND LOWER(COALESCE(search_query, primary_type, '')) IN (${searchTypes.map(() => "?").join(",")})`;
+    binds.push(...searchTypes);
+  }
   query += " ORDER BY review_count DESC LIMIT 2000";
 
   const rows = await context.env.DB.prepare(query).bind(...binds).all();

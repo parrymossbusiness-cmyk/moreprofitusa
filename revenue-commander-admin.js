@@ -84,6 +84,12 @@ function applyPreset(key) {
   $("state").value = preset.state;
   $("cities").value = preset.cities.join("\n");
   $("queries").value = preset.queries.join("\n");
+  $("categoryFilter").value = "";
+}
+
+function syncCategoryFilterFromQueries() {
+  const queries = lines("queries");
+  if (queries.length === 1) $("categoryFilter").value = queries[0];
 }
 
 async function scanMarket() {
@@ -108,6 +114,7 @@ async function scanMarket() {
     })
   });
   $("marketFilter").value = data.market;
+  syncCategoryFilterFromQueries();
   setStatus(
     `Found ${data.totalFound} listings and saved ${data.totalSaved} unique, call-ready businesses. ` +
     `${data.skippedNoPhone} had no phone and ${data.skippedLowReviews} were below your review minimum. ` +
@@ -148,7 +155,9 @@ async function loadCompanies() {
     campaign: $("campaignFilter").value || "website"
   });
   const market = $("marketFilter").value.trim();
+  const searchType = $("categoryFilter").value.trim();
   if (market) params.set("market", market);
+  if (searchType) params.set("searchType", searchType);
   if ($("tierFilter").value) params.set("tier", $("tierFilter").value);
 
   setStatus("Loading the highest-priority call list…");
@@ -167,7 +176,9 @@ async function exportCsv() {
     campaign: $("campaignFilter").value || "website"
   });
   const market = $("marketFilter").value.trim();
+  const searchType = $("categoryFilter").value.trim();
   if (market) params.set("market", market);
+  if (searchType) params.set("searchType", searchType);
 
   setStatus("Preparing the locked Google Sheets call-list export…");
   const response = await fetch(`/api/export.csv?${params}`, {

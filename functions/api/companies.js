@@ -25,6 +25,14 @@ const COMPANY_FIELDS = [
   "revenue_leak_score", "priority_tier", "primary_hook", "status", "created_at", "updated_at"
 ].join(", ");
 
+function searchTypeTerms(value) {
+  return String(value || "")
+    .split(/[\n,|]+/)
+    .map(term => term.trim().toLowerCase())
+    .filter(Boolean)
+    .slice(0, 20);
+}
+
 export async function onRequestOptions() {
   return optionsResponse("GET, OPTIONS");
 }
@@ -41,12 +49,17 @@ export async function onRequestGet(context) {
   const limit = clampInt(url.searchParams.get("limit"), 1, 500, 40);
   const phoneOnly = url.searchParams.get("phoneOnly") !== "0";
   const campaign = (url.searchParams.get("campaign") || "all").trim();
+  const searchTypes = searchTypeTerms(url.searchParams.get("searchType"));
   const minRating = Math.min(5, Math.max(0, safeNum(url.searchParams.get("minRating"), 4.4)));
   const maxDistance = Math.min(100, Math.max(1, safeNum(url.searchParams.get("maxDistance"), 30)));
 
   let query = `SELECT ${COMPANY_FIELDS} FROM companies WHERE 1 = 1`;
   const binds = [];
   if (market) { query += " AND market = ?"; binds.push(market); }
+  if (searchTypes.length) {
+    query += ` AND LOWER(COALESCE(search_query, primary_type, '')) IN (${searchTypes.map(() => "?").join(",")})`;
+    binds.push(...searchTypes);
+  }
   if (phoneOnly) query += " AND business_phone IS NOT NULL AND TRIM(business_phone) != ''";
   query += " ORDER BY review_count DESC LIMIT 1000";
 
