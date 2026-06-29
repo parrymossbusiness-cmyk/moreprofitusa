@@ -89,7 +89,11 @@ function applyPreset(key) {
 
 function syncCategoryFilterFromQueries() {
   const queries = lines("queries");
-  if (queries.length === 1) $("categoryFilter").value = queries[0];
+  $("categoryFilter").value = queries.join(", ");
+}
+
+function effectiveSearchTypeFilter() {
+  return $("categoryFilter").value.trim() || lines("queries").join(", ");
 }
 
 async function scanMarket() {
@@ -146,6 +150,7 @@ async function auditWebsites() {
 }
 
 async function loadCompanies() {
+  const searchType = effectiveSearchTypeFilter();
   const params = new URLSearchParams({
     minScore: $("minScore").value || "50",
     limit: $("companyLimit").value || "40",
@@ -155,12 +160,11 @@ async function loadCompanies() {
     campaign: $("campaignFilter").value || "website"
   });
   const market = $("marketFilter").value.trim();
-  const searchType = $("categoryFilter").value.trim();
   if (market) params.set("market", market);
   if (searchType) params.set("searchType", searchType);
   if ($("tierFilter").value) params.set("tier", $("tierFilter").value);
 
-  setStatus("Loading the highest-priority call list…");
+  setStatus(`Loading the highest-priority call list${searchType ? ` for: ${searchType}` : ""}…`);
   const data = await requestJson(`/api/companies?${params}`);
   renderCompanies(data.companies || []);
   setStatus(`Loaded ${data.count} phone-backed businesses, ranked by verified opportunity.`, "success");
@@ -168,6 +172,7 @@ async function loadCompanies() {
 
 async function exportCsv() {
   const token = tokenOrThrow();
+  const searchType = effectiveSearchTypeFilter();
   const params = new URLSearchParams({
     minScore: $("minScore").value || "50",
     limit: "1000",
@@ -176,11 +181,10 @@ async function exportCsv() {
     campaign: $("campaignFilter").value || "website"
   });
   const market = $("marketFilter").value.trim();
-  const searchType = $("categoryFilter").value.trim();
   if (market) params.set("market", market);
   if (searchType) params.set("searchType", searchType);
 
-  setStatus("Preparing the locked Google Sheets call-list export…");
+  setStatus(`Preparing the locked Google Sheets call-list export${searchType ? ` for: ${searchType}` : ""}…`);
   const response = await fetch(`/api/export.csv?${params}`, {
     headers: { "x-admin-token": token },
     cache: "no-store"
