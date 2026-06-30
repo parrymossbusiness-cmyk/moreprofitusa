@@ -38,7 +38,7 @@ async function searchPlaces(env, query, city, state, limit, radiusMiles) {
   if (!apiKey) throw new Error("GOOGLE_MAPS_API_KEY is not configured.");
 
   const body = {
-    textQuery: query,
+    textQuery: `${query} in ${city.city}, ${state}`,
     pageSize: Math.min(Math.max(Number(limit || 20), 1), 20),
     languageCode: "en",
     regionCode: "US",
@@ -51,8 +51,6 @@ async function searchPlaces(env, query, city, state, limit, radiusMiles) {
         radius: Math.min(50000, Math.max(8047, radiusMiles * 1609.344))
       }
     };
-  } else {
-    body.textQuery = `${query} in ${city.city}, ${state}`;
   }
 
   const fieldMask = [

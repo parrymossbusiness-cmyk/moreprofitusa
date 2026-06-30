@@ -176,10 +176,9 @@ async function loadCompanies() {
   const market = currentMarketName();
   if (market) params.set("market", market);
   if (searchType) params.set("searchType", searchType);
-  if (cityFilter) params.set("cities", cityFilter);
   if ($("tierFilter").value) params.set("tier", $("tierFilter").value);
 
-  setStatus(`Loading the highest-priority call list${searchType ? ` for: ${searchType}` : ""}${cityFilter ? ` in: ${cityFilter}` : ""}…`);
+  setStatus(`Loading the highest-priority call list from market: ${market || "all markets"}${searchType ? ` for: ${searchType}` : ""}${cityFilter ? ` | cities entered: ${cityFilter}` : ""}…`);
   const data = await requestJson(`/api/companies?${params}`);
   renderCompanies(data.companies || []);
   setStatus(`Loaded ${data.count} phone-backed businesses, ranked by verified opportunity.`, "success");
@@ -199,9 +198,8 @@ async function exportCsv() {
   const market = currentMarketName();
   if (market) params.set("market", market);
   if (searchType) params.set("searchType", searchType);
-  if (cityFilter) params.set("cities", cityFilter);
 
-  setStatus(`Preparing the locked Google Sheets call-list export${searchType ? ` for: ${searchType}` : ""}${cityFilter ? ` in: ${cityFilter}` : ""}…`);
+  setStatus(`Preparing the locked Google Sheets call-list export from market: ${market || "all markets"}${searchType ? ` for: ${searchType}` : ""}${cityFilter ? ` | cities entered: ${cityFilter}` : ""}…`);
   const response = await fetch(`/api/export.csv?${params}`, {
     headers: { "x-admin-token": token },
     cache: "no-store"
