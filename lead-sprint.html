@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex, nofollow, noarchive" />
+  <title>Lead Sprint | Simple Local Lead Finder</title>
+  <link rel="stylesheet" href="/lead-sprint.css" />
+  <script src="/lead-sprint.js" defer></script>
+</head>
+<body>
+  <main class="shell">
+    <header class="hero">
+      <p class="eyebrow">Simple stateless lead finder</p>
+      <h1>Lead Sprint</h1>
+      <p>No saved database. No old market buckets. Search current inputs, show current results, export exactly what is on the screen.</p>
+    </header>
+
+    <section class="panel">
+      <div class="grid two">
+        <div>
+          <label for="token">Admin token</label>
+          <input id="token" type="password" placeholder="Cloudflare ADMIN_TOKEN" autocomplete="off" />
+        </div>
+        <div>
+          <label for="market">Market label</label>
+          <input id="market" value="Little Rock + North Little Rock Landscaping" />
+        </div>
+      </div>
+
+      <div class="grid three">
+        <div>
+          <label for="state">State</label>
+          <input id="state" value="AR" maxlength="2" />
+        </div>
+        <div>
+          <label for="minRating">Minimum rating</label>
+          <input id="minRating" type="number" min="0" max="5" step="0.1" value="4.2" />
+        </div>
+        <div>
+          <label for="minReviews">Minimum reviews</label>
+          <input id="minReviews" type="number" min="0" max="10000" value="5" />
+        </div>
+      </div>
+
+      <div class="grid two">
+        <div>
+          <label for="cities">Cities, one per line</label>
+          <textarea id="cities">Little Rock
+North Little Rock</textarea>
+        </div>
+        <div>
+          <label for="categories">Business categories, one per line</label>
+          <textarea id="categories">landscaping service
+lawn care service
+tree service
+pressure washing service
+fence contractor
+irrigation equipment supplier</textarea>
+        </div>
+      </div>
+
+      <div class="grid three">
+        <div>
+          <label for="websiteMode">Website filter</label>
+          <select id="websiteMode">
+            <option value="no_website">No website only</option>
+            <option value="all">All phone-backed businesses</option>
+          </select>
+        </div>
+        <div>
+          <label for="maxResults">Max CSV rows</label>
+          <input id="maxResults" type="number" min="1" max="200" value="40" />
+        </div>
+        <div>
+          <label for="perSearch">Results per city/category</label>
+          <input id="perSearch" type="number" min="1" max="40" value="20" />
+        </div>
+      </div>
+
+      <div class="actions">
+        <button id="searchBtn" class="primary">Search Leads</button>
+        <button id="exportBtn" disabled>Export CSV</button>
+        <button id="clearBtn">Clear Results</button>
+      </div>
+      <div id="status" class="status">Ready. Enter your admin token, confirm the market, then search.</div>
+      <div id="receipt" class="receipt" hidden></div>
+    </section>
+
+    <section class="panel">
+      <div class="results-head">
+        <div>
+          <p class="eyebrow">Current run only</p>
+          <h2>Results</h2>
+        </div>
+        <div id="count" class="count">0 leads</div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Company</th>
+              <th>Phone</th>
+              <th>City</th>
+              <th>Category</th>
+              <th>Rating</th>
+              <th>Reviews</th>
+              <th>Website</th>
+              <th>Opening line</th>
+              <th>Map</th>
+            </tr>
+          </thead>
+          <tbody id="rows">
+            <tr><td colspan="9" class="empty">No results yet.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
