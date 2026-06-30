@@ -96,6 +96,19 @@ function effectiveSearchTypeFilter() {
   return $("categoryFilter").value.trim() || lines("queries").join(", ");
 }
 
+function currentMarketName() {
+  const market = $("market").value.trim();
+  if (market) {
+    $("marketFilter").value = market;
+    return market;
+  }
+  return $("marketFilter").value.trim();
+}
+
+function currentCityFilter() {
+  return lines("cities").join(", ");
+}
+
 async function scanMarket() {
   const state = $("state").value.trim().toUpperCase();
   const cities = lines("cities");
@@ -132,7 +145,7 @@ async function benchmark() {
   setStatus("Comparing each company with nearby review leaders…");
   const data = await requestJson("/api/benchmark", {
     method: "POST",
-    body: JSON.stringify({ market: $("marketFilter").value.trim() || $("market").value.trim() })
+    body: JSON.stringify({ market: currentMarketName() })
   });
   setStatus(`Updated competitor evidence for ${data.updated} businesses. Next: audit top websites or load the queue.`, "success");
 }
@@ -142,7 +155,7 @@ async function auditWebsites() {
   const data = await requestJson("/api/audit-websites", {
     method: "POST",
     body: JSON.stringify({
-      market: $("marketFilter").value.trim() || $("market").value.trim(),
+      market: currentMarketName(),
       limit: 20
     })
   });
@@ -151,6 +164,7 @@ async function auditWebsites() {
 
 async function loadCompanies() {
   const searchType = effectiveSearchTypeFilter();
+  const cityFilter = currentCityFilter();
   const params = new URLSearchParams({
     minScore: $("minScore").value || "50",
     limit: $("companyLimit").value || "40",
@@ -159,12 +173,13 @@ async function loadCompanies() {
     maxDistance: $("radiusMiles").value || "30",
     campaign: $("campaignFilter").value || "website"
   });
-  const market = $("marketFilter").value.trim();
+  const market = currentMarketName();
   if (market) params.set("market", market);
   if (searchType) params.set("searchType", searchType);
+  if (cityFilter) params.set("cities", cityFilter);
   if ($("tierFilter").value) params.set("tier", $("tierFilter").value);
 
-  setStatus(`Loading the highest-priority call list${searchType ? ` for: ${searchType}` : ""}…`);
+  setStatus(`Loading the highest-priority call list${searchType ? ` for: ${searchType}` : ""}${cityFilter ? ` in: ${cityFilter}` : ""}…`);
   const data = await requestJson(`/api/companies?${params}`);
   renderCompanies(data.companies || []);
   setStatus(`Loaded ${data.count} phone-backed businesses, ranked by verified opportunity.`, "success");
@@ -173,6 +188,7 @@ async function loadCompanies() {
 async function exportCsv() {
   const token = tokenOrThrow();
   const searchType = effectiveSearchTypeFilter();
+  const cityFilter = currentCityFilter();
   const params = new URLSearchParams({
     minScore: $("minScore").value || "50",
     limit: "1000",
@@ -180,11 +196,12 @@ async function exportCsv() {
     maxDistance: $("radiusMiles").value || "30",
     campaign: $("campaignFilter").value || "website"
   });
-  const market = $("marketFilter").value.trim();
+  const market = currentMarketName();
   if (market) params.set("market", market);
   if (searchType) params.set("searchType", searchType);
+  if (cityFilter) params.set("cities", cityFilter);
 
-  setStatus(`Preparing the locked Google Sheets call-list export${searchType ? ` for: ${searchType}` : ""}…`);
+  setStatus(`Preparing the locked Google Sheets call-list export${searchType ? ` for: ${searchType}` : ""}${cityFilter ? ` in: ${cityFilter}` : ""}…`);
   const response = await fetch(`/api/export.csv?${params}`, {
     headers: { "x-admin-token": token },
     cache: "no-store"
@@ -317,6 +334,7 @@ function renderCompanies(companies) {
 }
 
 $("marketPreset").addEventListener("change", event => applyPreset(event.target.value));
+$("market").addEventListener("input", () => { $("marketFilter").value = $("market").value.trim(); });
 $("scanBtn").addEventListener("click", event => withButton(event.currentTarget, "Finding…", scanMarket));
 $("benchmarkBtn").addEventListener("click", event => withButton(event.currentTarget, "Comparing…", benchmark));
 $("auditBtn").addEventListener("click", event => withButton(event.currentTarget, "Auditing…", auditWebsites));
