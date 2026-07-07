@@ -72,6 +72,16 @@ td { color:#dbe6f4; line-height:1.4; }
 .pill { display:inline-block; margin-top:6px; padding:3px 7px; border-radius:999px; background:rgba(85,212,134,.13); color:var(--good); font-size:10px; font-weight:800; text-transform:uppercase; }
 .proof-links { display:flex; flex-direction:column; gap:5px; }
 .empty-state { text-align:center; color:var(--muted); padding:32px; }
+.batch-grid textarea { min-height:230px; }
+.batch-scroll { margin-top:16px; max-height:360px; }
+.batch-table { min-width:900px; }
+.batch-table td:nth-child(2),
+.batch-table td:nth-child(3),
+.batch-table td:nth-child(4),
+.batch-table td:nth-child(5),
+.batch-table td:nth-child(6) { font-weight:800; }
+.batch-table .qualified { color:var(--good); }
+.batch-table .rejected { color:var(--warn); }
 
 @media (max-width:1050px) {
   .site-header { align-items:flex-start; flex-direction:column; }

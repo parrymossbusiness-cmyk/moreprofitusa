@@ -93,6 +93,20 @@ async function withButton(button, workingText, action) {
   }
 }
 
+async function withBatchButton(button, workingText, action) {
+  const original = button.textContent;
+  button.disabled = true;
+  button.textContent = workingText;
+  try {
+    await action();
+  } catch (error) {
+    setBatchStatus(error.message || String(error), "error");
+  } finally {
+    button.disabled = false;
+    button.textContent = original;
+  }
+}
+
 function applyPreset(key) {
   const preset = PRESETS[key];
   if (!preset) return;
@@ -226,6 +240,14 @@ async function exportCsv() {
   if (searchType) params.set("searchType", searchType);
   if (cityFilter) params.set("cities", cityFilter);
 
+  if (market) {
+    setStatus(`Calculating competitor gaps for ${market} before export...`);
+    await requestJson("/api/benchmark", {
+      method: "POST",
+      body: JSON.stringify({ market })
+    });
+  }
+
   setStatus(`Preparing the locked Google Sheets call-list export from market: ${market || "all markets"}${searchType ? ` for: ${searchType}` : ""}${cityFilter ? ` | cities entered: ${cityFilter}` : ""}…`);
   const response = await fetch(`/api/export.csv?${params}`, {
     headers: { "x-admin-token": token },
@@ -248,6 +270,262 @@ async function exportCsv() {
   link.remove();
   window.setTimeout(() => URL.revokeObjectURL(objectUrl), 1000);
   setStatus("Call list exported. The admin token was sent securely in a request header and was not placed in the URL.", "success");
+}
+
+let batchQualifiedLeads = [];
+let batchSummaries = [];
+
+const BATCH_EXPORT_COLUMNS = [
+  ["market", row => row.batch_market || row.market],
+  ["city", row => row.city],
+  ["company", row => row.company_name],
+  ["phone", row => row.business_phone],
+  ["address", row => row.formatted_address],
+  ["service_type", row => row.search_query],
+  ["google_category", row => row.primary_type],
+  ["rating", row => row.rating ?? ""],
+  ["review_count", row => row.review_count ?? 0],
+  ["website_status", () => "No website listed on Google"],
+  ["top_competitor", row => row.top_competitor_name || ""],
+  ["competitor_reviews", row => row.top_competitor_reviews ?? 0],
+  ["review_gap", row => row.review_gap ?? 0],
+  ["review_gap_pct", row => row.review_gap_pct ?? 0],
+  ["score", row => row.revenue_leak_score ?? 0],
+  ["priority", row => row.priority_tier || ""],
+  ["score_reason", row => row.score_reason || row.batch_notes || ""],
+  ["opening_line", row => row.opening_line || row.primary_hook || ""],
+  ["google_maps_url", row => row.google_maps_url || ""],
+  ["contact_status", () => "New"],
+  ["notes", row => row.batch_notes || ""]
+];
+
+function setBatchStatus(message, kind = "") {
+  const status = $("batchStatus");
+  status.textContent = message;
+  status.className = `status${kind ? ` ${kind}` : ""}`;
+}
+
+function batchLines(id) {
+  return $(id).value.split("\n").map(value => value.trim()).filter(Boolean);
+}
+
+function parseBatchMarkets() {
+  return batchLines("batchMarkets").map((line, index) => {
+    const parts = line.split("|").map(part => part.trim()).filter(Boolean);
+    if (parts.length !== 3) {
+      throw new Error(`Batch market line ${index + 1} must use: Market | State | City, City, City`);
+    }
+    const [market, stateRaw, citiesRaw] = parts;
+    const state = stateRaw.toUpperCase();
+    const cities = citiesRaw.split(",").map(city => city.trim()).filter(Boolean);
+    if (!market || state.length !== 2 || !cities.length) {
+      throw new Error(`Batch market line ${index + 1} is missing a market, 2-letter state, or city list.`);
+    }
+    return { market, state, cities };
+  });
+}
+
+function csvEscapeClient(value) {
+  let string = value === null || value === undefined ? "" : String(value);
+  if (/^[=+\-@]/.test(string)) string = `'${string}`;
+  if (/[",\r\n]/.test(string)) return `"${string.replace(/"/g, '""')}"`;
+  return string;
+}
+
+function hasStateMismatch(company, state) {
+  const address = String(company.formatted_address || "").trim();
+  if (!address) return false;
+  return !new RegExp(`,\\s*${state}\\b`, "i").test(address);
+}
+
+function qualifiesBatchLead(company, market, queries, settings) {
+  const notes = [];
+  const reviews = Number(company.review_count || 0);
+  const rating = Number(company.rating || 0);
+  const score = Number(company.revenue_leak_score || 0);
+  const searchQuery = String(company.search_query || "").trim().toLowerCase();
+  const allowedQueries = new Set(queries.map(query => query.toLowerCase()));
+
+  if (!String(company.business_phone || "").trim()) return { ok: false, reason: "missing phone" };
+  if (company.website) return { ok: false, reason: "website listed" };
+  if (reviews < settings.minReviews) return { ok: false, reason: `under ${settings.minReviews} reviews` };
+  if (rating < settings.minRating) return { ok: false, reason: `under ${settings.minRating} rating` };
+  if (score < settings.minScore) return { ok: false, reason: `under ${settings.minScore} score` };
+  if (hasStateMismatch(company, market.state)) return { ok: false, reason: `address outside ${market.state}` };
+  if (allowedQueries.size && !allowedQueries.has(searchQuery)) return { ok: false, reason: "outside selected service types" };
+
+  notes.push(`${reviews} reviews`);
+  if (rating) notes.push(`${rating.toFixed(1)} rating`);
+  notes.push("no website listed on Google");
+  if (!String(company.formatted_address || "").trim()) notes.push("address not shown");
+  return { ok: true, notes: notes.join("; ") };
+}
+
+function renderBatchSummaries() {
+  const body = $("batchRows");
+  body.replaceChildren();
+  $("batchExportBtn").disabled = batchQualifiedLeads.length === 0;
+
+  if (!batchSummaries.length) {
+    const row = document.createElement("tr");
+    const cell = textCell(row, "Run a batch to see market yield.", "empty-state");
+    cell.colSpan = 7;
+    body.append(row);
+    return;
+  }
+
+  for (const summary of batchSummaries) {
+    const row = document.createElement("tr");
+    textCell(row, summary.market);
+    textCell(row, summary.found ?? "");
+    textCell(row, summary.saved ?? "");
+    textCell(row, summary.noWebsite ?? "");
+    textCell(row, summary.qualified ?? "", "qualified");
+    textCell(row, summary.rejected ?? "", "rejected");
+    textCell(row, summary.status || "");
+    body.append(row);
+  }
+}
+
+async function runBatchMarkets() {
+  const markets = parseBatchMarkets();
+  const queries = batchLines("batchQueries");
+  if (!markets.length) throw new Error("Add at least one batch market.");
+  if (!queries.length) throw new Error("Add at least one batch business type.");
+  const settings = {
+    minReviews: Number($("batchMinReviews").value || 10),
+    minRating: Number($("batchMinRating").value || 4),
+    minScore: Number($("batchMinScore").value || 50),
+    radiusMiles: Number($("batchRadiusMiles").value || 25),
+    limitPerQuery: Number($("batchLimitPerQuery").value || 20)
+  };
+
+  batchQualifiedLeads = [];
+  batchSummaries = [];
+  renderBatchSummaries();
+
+  for (let index = 0; index < markets.length; index += 1) {
+    const market = markets[index];
+    if (market.cities.length * queries.length > 30) {
+      batchSummaries.push({
+        market: market.market,
+        found: 0,
+        saved: 0,
+        noWebsite: 0,
+        qualified: 0,
+        rejected: 0,
+        status: "Skipped: over 30 searches"
+      });
+      renderBatchSummaries();
+      continue;
+    }
+
+    setBatchStatus(`Running ${index + 1} of ${markets.length}: ${market.market}...`);
+    const summary = {
+      market: market.market,
+      found: 0,
+      saved: 0,
+      noWebsite: 0,
+      qualified: 0,
+      rejected: 0,
+      status: "Running"
+    };
+    batchSummaries.push(summary);
+    renderBatchSummaries();
+
+    try {
+      const scanData = await requestJson("/api/scan-market", {
+        method: "POST",
+        body: JSON.stringify({
+          market: market.market,
+          state: market.state,
+          minReviews: settings.minReviews,
+          minRating: settings.minRating,
+          radiusMiles: settings.radiusMiles,
+          limitPerQuery: settings.limitPerQuery,
+          cities: market.cities.map(city => cityWithCenter(city, market.state)),
+          queries
+        })
+      });
+      summary.found = scanData.totalFound || 0;
+      summary.saved = scanData.totalSaved || 0;
+      summary.status = "Calculating competitor gaps";
+      renderBatchSummaries();
+
+      await requestJson("/api/benchmark", {
+        method: "POST",
+        body: JSON.stringify({ market: market.market })
+      });
+
+      const params = new URLSearchParams({
+        market: market.market,
+        searchType: queries.join(", "),
+        cities: market.cities.join(", "),
+        minScore: "0",
+        limit: "500",
+        phoneOnly: "1",
+        minRating: String(settings.minRating),
+        maxDistance: String(settings.radiusMiles),
+        campaign: "website"
+      });
+      const companiesData = await requestJson(`/api/companies?${params}`);
+      const noWebsiteRows = companiesData.companies || [];
+      const qualified = [];
+      for (const company of noWebsiteRows) {
+        const result = qualifiesBatchLead(company, market, queries, settings);
+        if (result.ok) {
+          qualified.push({
+            ...company,
+            batch_market: market.market,
+            batch_notes: result.notes
+          });
+        }
+      }
+
+      summary.noWebsite = noWebsiteRows.length;
+      summary.qualified = qualified.length;
+      summary.rejected = noWebsiteRows.length - qualified.length;
+      summary.status = qualified.length ? "Ready" : "No qualified leads";
+      batchQualifiedLeads.push(...qualified);
+      renderBatchSummaries();
+    } catch (error) {
+      summary.status = error.message || String(error);
+      renderBatchSummaries();
+    }
+  }
+
+  const unique = new Map();
+  for (const lead of batchQualifiedLeads) {
+    const key = lead.place_id || `${lead.company_name}|${lead.business_phone}`;
+    if (!unique.has(key)) unique.set(key, lead);
+  }
+  batchQualifiedLeads = [...unique.values()]
+    .sort((a, b) => Number(b.revenue_leak_score || 0) - Number(a.revenue_leak_score || 0) || Number(b.review_count || 0) - Number(a.review_count || 0));
+  renderBatchSummaries();
+  setBatchStatus(`Batch complete. ${batchQualifiedLeads.length} qualified no-website-listed leads are ready to export.`, batchQualifiedLeads.length ? "success" : "warning");
+}
+
+function exportBatchCsv() {
+  if (!batchQualifiedLeads.length) {
+    setBatchStatus("Run a batch with qualified leads before exporting.", "warning");
+    return;
+  }
+  const header = BATCH_EXPORT_COLUMNS.map(([key]) => csvEscapeClient(key)).join(",");
+  const lines = [header];
+  for (const row of batchQualifiedLeads) {
+    lines.push(BATCH_EXPORT_COLUMNS.map(([, value]) => csvEscapeClient(value(row))).join(","));
+  }
+  const csv = `\uFEFF${lines.join("\r\n")}`;
+  const blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
+  const objectUrl = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = objectUrl;
+  link.download = `revenue-commander-batch-qualified-${new Date().toISOString().slice(0, 10)}.csv`;
+  document.body.append(link);
+  link.click();
+  link.remove();
+  window.setTimeout(() => URL.revokeObjectURL(objectUrl), 1000);
+  setBatchStatus(`Exported ${batchQualifiedLeads.length} batch-qualified leads.`, "success");
 }
 
 function safeExternalUrl(value) {
@@ -365,6 +643,8 @@ $("benchmarkBtn").addEventListener("click", event => withButton(event.currentTar
 $("auditBtn").addEventListener("click", event => withButton(event.currentTarget, "Auditing…", auditWebsites));
 $("loadBtn").addEventListener("click", event => withButton(event.currentTarget, "Loading…", loadCompanies));
 $("exportBtn").addEventListener("click", event => withButton(event.currentTarget, "Exporting…", exportCsv));
+$("batchRunBtn").addEventListener("click", event => withBatchButton(event.currentTarget, "Running…", runBatchMarkets));
+$("batchExportBtn").addEventListener("click", exportBatchCsv);
 $("tierFilter").addEventListener("change", () => {
   if ($("token").value.trim()) loadCompanies().catch(error => setStatus(error.message, "error"));
 });

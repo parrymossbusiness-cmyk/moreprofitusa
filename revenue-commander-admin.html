@@ -122,6 +122,90 @@ landscaper</textarea>
     </section>
 
     <section class="panel">
+      <div class="section-heading">
+        <div>
+          <p class="step">Batch runner</p>
+          <h2>Run market clusters</h2>
+        </div>
+        <p class="helper">Sequentially scan saved markets, qualify no-website-listed leads, and export one daily call sheet.</p>
+      </div>
+
+      <div class="grid two batch-grid">
+        <div>
+          <label for="batchMarkets">Market clusters, one per line: Market | State | City, City, City</label>
+          <textarea id="batchMarkets" class="batch-markets">East Bay Landscapers | CA | Walnut Creek, Concord, Pleasant Hill, Lafayette, Alamo
+Orange County North Landscapers | CA | Anaheim Hills, Yorba Linda, Fullerton, Brea, Placentia
+Orange County South Landscapers | CA | Mission Viejo, Laguna Niguel, San Clemente, Dana Point, San Juan Capistrano
+Los Angeles Foothills Landscapers | CA | Pasadena, Altadena, La Canada Flintridge, Glendale, Burbank
+San Diego North County Landscapers | CA | Carlsbad, Encinitas, Vista, San Marcos, Escondido
+Seattle Eastside Landscapers | WA | Bellevue, Kirkland, Redmond, Sammamish, Issaquah
+Portland Westside Landscapers | OR | Beaverton, Tigard, Lake Oswego, Tualatin, West Linn
+Dallas North Suburbs Landscapers | TX | Plano, Frisco, Allen, McKinney, Richardson
+Atlanta North Suburbs Landscapers | GA | Roswell, Alpharetta, Milton, Johns Creek, Marietta
+Arizona Phoenix Scottsdale Landscapers | AZ | Scottsdale, Mesa, Chandler, Gilbert, Tempe
+Arkansas Central Landscapers | AR | Little Rock, North Little Rock, Benton, Bryant, Conway
+New Jersey Wealth Suburbs Landscapers | NJ | Morristown, Summit, Westfield, Montclair, Short Hills</textarea>
+        </div>
+        <div>
+          <label for="batchQueries">Business types, one per line</label>
+          <textarea id="batchQueries" class="batch-queries">landscaper
+landscape contractor
+lawn care service
+irrigation contractor
+tree service</textarea>
+        </div>
+      </div>
+
+      <div class="grid five compact-grid">
+        <div>
+          <label for="batchMinReviews">Minimum reviews</label>
+          <input id="batchMinReviews" type="number" min="0" max="10000" value="10" />
+        </div>
+        <div>
+          <label for="batchMinRating">Minimum rating</label>
+          <input id="batchMinRating" type="number" min="0" max="5" step="0.1" value="4.0" />
+        </div>
+        <div>
+          <label for="batchMinScore">Minimum score</label>
+          <input id="batchMinScore" type="number" min="0" max="100" value="50" />
+        </div>
+        <div>
+          <label for="batchRadiusMiles">Radius</label>
+          <input id="batchRadiusMiles" type="number" min="5" max="31" value="25" />
+        </div>
+        <div>
+          <label for="batchLimitPerQuery">Per search</label>
+          <input id="batchLimitPerQuery" type="number" min="1" max="20" value="20" />
+        </div>
+      </div>
+
+      <div class="actions" aria-label="Batch market workflow">
+        <button id="batchRunBtn" class="primary">Run Batch Markets</button>
+        <button id="batchExportBtn" class="success" disabled>Export Batch CSV</button>
+      </div>
+      <div id="batchStatus" class="status" role="status" aria-live="polite">Ready to run batch markets.</div>
+
+      <div class="scroll batch-scroll" tabindex="0" aria-label="Batch market results">
+        <table class="batch-table">
+          <thead>
+            <tr>
+              <th>Market</th>
+              <th>Found</th>
+              <th>Saved</th>
+              <th>No Website</th>
+              <th>Qualified</th>
+              <th>Rejected</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="batchRows">
+            <tr><td colspan="7" class="empty-state">Run a batch to see market yield.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="panel">
       <div class="section-heading queue-heading">
         <div>
           <p class="step">Daily execution</p>
