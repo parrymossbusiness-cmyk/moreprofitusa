@@ -77,7 +77,7 @@ export async function onRequestGet(context) {
   query += " ORDER BY review_count DESC LIMIT 1000";
 
   const rows = await context.env.DB.prepare(query).bind(...binds).all();
-  const companies = (rows.results || [])
+  const scoredCompanies = (rows.results || [])
     .map(row => {
       const currentScore = scoreCompany(row);
       const currentTier = tier(currentScore);
@@ -91,17 +91,30 @@ export async function onRequestGet(context) {
         opening_line: primaryHook(row),
         walk_in_candidate: isWalkInCandidate(row)
       };
-    })
-    .filter(row => safeNum(row.rating) >= minRating)
-    .filter(row => {
-      const distance = marketDistanceMiles(row);
-      return distance === null || distance <= maxDistance;
-    })
-    .filter(row => matchesCampaign(row, campaign))
-    .filter(row => row.revenue_leak_score >= minScore)
-    .filter(row => !tierParam || row.priority_tier.startsWith(tierParam))
+    });
+  const ratingMatches = scoredCompanies.filter(row => safeNum(row.rating) >= minRating);
+  const distanceMatches = ratingMatches.filter(row => {
+    const distance = marketDistanceMiles(row);
+    return distance === null || distance <= maxDistance;
+  });
+  const campaignMatches = distanceMatches.filter(row => matchesCampaign(row, campaign));
+  const scoreMatches = campaignMatches.filter(row => row.revenue_leak_score >= minScore);
+  const tierMatches = scoreMatches.filter(row => !tierParam || row.priority_tier.startsWith(tierParam));
+  const companies = tierMatches
     .sort((a, b) => b.revenue_leak_score - a.revenue_leak_score || b.review_count - a.review_count || b.review_gap - a.review_gap)
     .slice(0, limit);
 
-  return json({ ok: true, count: companies.length, companies });
+  return json({
+    ok: true,
+    count: companies.length,
+    companies,
+    diagnostics: {
+      databaseMatches: scoredCompanies.length,
+      afterRating: ratingMatches.length,
+      afterDistance: distanceMatches.length,
+      afterCampaign: campaignMatches.length,
+      afterScore: scoreMatches.length,
+      afterTier: tierMatches.length
+    }
+  });
 }

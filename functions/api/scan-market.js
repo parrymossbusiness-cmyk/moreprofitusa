@@ -200,6 +200,15 @@ export async function onRequestPost(context) {
     }
   }
 
+  if (errors.length === cities.length * queries.length && totalFound === 0 && totalSaved === 0) {
+    return json({
+      error: `All scan requests failed. First error: ${errors[0]?.error || "Unknown scan error"}`,
+      errors,
+      totalFound,
+      totalSaved
+    }, 502);
+  }
+
   return json({
     ok: true,
     market: marketName,

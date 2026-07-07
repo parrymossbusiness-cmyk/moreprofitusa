@@ -48,6 +48,23 @@ function setStatus(message, kind = "") {
   status.className = `status${kind ? ` ${kind}` : ""}`;
 }
 
+function summarizeScanErrors(errors = []) {
+  if (!errors.length) return "";
+  const first = errors[0];
+  const where = [first.city, first.query].filter(Boolean).join(" / ");
+  return `${errors.length} scan request${errors.length === 1 ? "" : "s"} returned an error${where ? ` (${where})` : ""}: ${first.error}`;
+}
+
+function describeQueueDiagnostics(diagnostics = {}) {
+  if (!diagnostics || typeof diagnostics !== "object") return "";
+  const parts = [];
+  if (Number.isFinite(diagnostics.databaseMatches)) parts.push(`${diagnostics.databaseMatches} saved database matches`);
+  if (Number.isFinite(diagnostics.afterCampaign)) parts.push(`${diagnostics.afterCampaign} after campaign filter`);
+  if (Number.isFinite(diagnostics.afterScore)) parts.push(`${diagnostics.afterScore} after score filter`);
+  if (Number.isFinite(diagnostics.afterTier)) parts.push(`${diagnostics.afterTier} after priority filter`);
+  return parts.length ? ` Filter path: ${parts.join(" -> ")}.` : "";
+}
+
 async function requestJson(path, options = {}) {
   const token = tokenOrThrow();
   const headers = new Headers(options.headers || {});
@@ -132,12 +149,14 @@ async function scanMarket() {
   });
   $("marketFilter").value = data.market;
   syncCategoryFilterFromQueries();
+  const scanErrorSummary = summarizeScanErrors(data.errors);
   setStatus(
     `Found ${data.totalFound} listings and saved ${data.totalSaved} unique, call-ready businesses. ` +
     `${data.skippedNoPhone} had no phone and ${data.skippedLowReviews} were below your review minimum. ` +
     `${data.skippedLowRating} were below ${data.minRating} stars and ${data.skippedOutsideRadius} were outside ${data.radiusMiles} miles. ` +
-    "Next: Compare Reviews.",
-    "success"
+    `${scanErrorSummary ? `${scanErrorSummary} ` : ""}` +
+    "Next: Load Today's Queue, then narrow the campaign if needed.",
+    scanErrorSummary ? "warning" : "success"
   );
 }
 
@@ -171,17 +190,24 @@ async function loadCompanies() {
     phoneOnly: "1",
     minRating: $("queueMinRating").value || "4.4",
     maxDistance: $("radiusMiles").value || "30",
-    campaign: $("campaignFilter").value || "website"
+    campaign: $("campaignFilter").value || "all"
   });
   const market = currentMarketName();
   if (market) params.set("market", market);
   if (searchType) params.set("searchType", searchType);
+  if (cityFilter) params.set("cities", cityFilter);
   if ($("tierFilter").value) params.set("tier", $("tierFilter").value);
 
   setStatus(`Loading the highest-priority call list from market: ${market || "all markets"}${searchType ? ` for: ${searchType}` : ""}${cityFilter ? ` | cities entered: ${cityFilter}` : ""}…`);
   const data = await requestJson(`/api/companies?${params}`);
   renderCompanies(data.companies || []);
-  setStatus(`Loaded ${data.count} phone-backed businesses, ranked by verified opportunity.`, "success");
+  const diagnostics = describeQueueDiagnostics(data.diagnostics);
+  setStatus(
+    data.count
+      ? `Loaded ${data.count} phone-backed businesses, ranked by verified opportunity.${diagnostics}`
+      : `Loaded 0 businesses.${diagnostics} Try All call-worthy leads, lower the score/rating floor, or run a broader category.`,
+    data.count ? "success" : "warning"
+  );
 }
 
 async function exportCsv() {
@@ -193,11 +219,12 @@ async function exportCsv() {
     limit: "1000",
     minRating: $("queueMinRating").value || "4.4",
     maxDistance: $("radiusMiles").value || "30",
-    campaign: $("campaignFilter").value || "website"
+    campaign: $("campaignFilter").value || "all"
   });
   const market = currentMarketName();
   if (market) params.set("market", market);
   if (searchType) params.set("searchType", searchType);
+  if (cityFilter) params.set("cities", cityFilter);
 
   setStatus(`Preparing the locked Google Sheets call-list export from market: ${market || "all markets"}${searchType ? ` for: ${searchType}` : ""}${cityFilter ? ` | cities entered: ${cityFilter}` : ""}…`);
   const response = await fetch(`/api/export.csv?${params}`, {

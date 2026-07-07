@@ -51,6 +51,7 @@ button.success { background:var(--good); border-color:var(--good); color:#052013
 .status { margin-top:14px; min-height:48px; padding:13px 15px; border:1px solid var(--line); background:var(--panel-2); border-radius:10px; color:#dce9fb; white-space:pre-wrap; line-height:1.45; }
 .status.error { border-color:rgba(255,107,107,.6); color:#ffb1b1; }
 .status.success { border-color:rgba(85,212,134,.5); color:#a8f0c2; }
+.status.warning { border-color:rgba(255,183,77,.6); color:#ffd18a; }
 .queue-heading { align-items:center; }
 .queue-summary { padding:9px 12px; border-radius:999px; background:rgba(66,200,255,.12); color:var(--accent); font-weight:800; font-size:13px; }
 .filters { margin-bottom:4px; }
