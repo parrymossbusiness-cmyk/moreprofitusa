@@ -98,13 +98,20 @@
     border: 0;
   }
 
+  .ctas {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px;
+    margin-top: clamp(16px, 2.5vh, 36px);
+  }
+
   .btn-primary {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     height: clamp(44px, 6vh, 52px);
     padding: 0 clamp(28px, 4vw, 44px);
-    margin-top: clamp(16px, 2.5vh, 36px);
     font-family: var(--font-body);
     font-size: clamp(14px, 1.8vh, 16px);
     font-weight: 600;
@@ -115,11 +122,13 @@
     border-radius: 4px;
     transition: opacity 0.15s ease;
     flex-shrink: 0;
+    white-space: nowrap;
   }
 
   .btn-primary:hover { opacity: 0.88; }
 
   @media (max-width: 600px) {
+    .ctas { flex-direction: column; width: 100%; }
     .btn-primary { width: 100%; }
   }
 </style>
@@ -141,7 +150,10 @@
     </iframe>
   </div>
 
-  <a class="btn-primary" href="tel:3103453033">Book a Free Call</a>
+  <div class="ctas">
+    <a class="btn-primary" href="tel:3103453033">Book a Free Call</a>
+    <a class="btn-primary" href="https://alltreecontrol.pages.dev/" target="_blank" rel="noopener noreferrer">Tree Website Demo</a>
+  </div>
 </div>
 
 </body>
