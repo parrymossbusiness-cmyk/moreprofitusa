@@ -4,74 +4,70 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Home Services Local Search & Inbound Engine | MoreProfitUSA</title>
-  <meta name="description" content="Dominate the Google Map Pack and AI search engines. Complete AEO, GEO, review syndication, and automated customer response systems for electrical, HVAC, plumbing, and trade contractors.">
+  <meta name="description" content="Dominate the Google Map Pack and local search. Complete review syndication, technical schema, and automated customer response systems for electrical, HVAC, plumbing, and trade contractors.">
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
       theme: {
         extend: {
           fontFamily: {
-            sans: ['Plus Jakarta Sans', 'sans-serif'],
-            display: ['Space Grotesk', 'sans-serif'],
+            sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
           },
           colors: {
-            navy: { 950: '#020617', 900: '#0b132b', 800: '#1c2541' },
-            cyanAccent: '#38bdf8',
-            blueAccent: '#2563eb'
+            black: '#000000',
+            surface: '#08090a',
+            subtle: '#121417',
+            muted: '#8a8f98',
+            borderSubtle: '#1f2328'
           }
         }
       }
     }
   </script>
 </head>
-<body class="bg-[#020617] text-slate-100 font-sans antialiased selection:bg-cyan-500 selection:text-black">
+<body class="bg-black text-slate-100 font-sans antialiased selection:bg-white selection:text-black">
 
-  <div class="fixed top-0 right-1/4 w-96 h-96 bg-cyan-600/10 rounded-full blur-3xl pointer-events-none -z-10"></div>
-
-  <!-- Navigation -->
-  <nav class="border-b border-slate-800/80 bg-[#020617]/85 backdrop-blur-md sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-      <a href="/" class="flex items-center space-x-2">
-        <span class="font-display text-2xl font-bold tracking-tight text-white">MoreProfit<span class="text-cyan-400">USA</span></span>
+  <!-- Header / Navigation -->
+  <header class="border-b border-[#1f2328] bg-black/90 backdrop-blur sticky top-0 z-50">
+    <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+      <a href="/" class="text-base font-bold tracking-tight text-white flex items-center gap-2">
+        <span>MoreProfit<span class="text-slate-400">USA</span></span>
       </a>
-      <div class="hidden md:flex items-center space-x-8 text-sm font-semibold text-slate-300">
+      <nav class="hidden md:flex items-center space-x-7 text-xs font-medium text-[#8a8f98]">
         <a href="/real-estate" class="hover:text-white transition">Real Estate</a>
-        <a href="/home-services" class="text-cyan-400">Home Services</a>
+        <a href="/home-services" class="text-white">Home Services</a>
         <a href="/about" class="hover:text-white transition">About</a>
         <a href="#services" class="hover:text-white transition">System</a>
-      </div>
+      </nav>
       <div>
-        <a href="#quote" class="px-5 py-2.5 rounded-lg bg-gradient-to-r from-blue-600 to-cyan-500 hover:opacity-90 text-white font-semibold text-sm transition shadow-lg shadow-cyan-500/10">
+        <a href="#quote" class="px-4 py-2 rounded border border-[#2e343b] bg-white text-black hover:bg-slate-200 font-semibold text-xs tracking-tight transition">
           Get Local Audit
         </a>
       </div>
     </div>
-  </nav>
+  </header>
 
   <!-- Hero Section -->
-  <section class="pt-20 pb-16 md:pt-28 md:pb-24 border-b border-slate-800/80">
-    <div class="max-w-5xl mx-auto px-6 text-center">
-      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-cyan-500/30 bg-cyan-500/10 text-cyan-400 text-xs font-bold uppercase tracking-wider mb-6">
-        HVAC • Electrical • Roofing • Plumbing • Trade Services
+  <section class="pt-24 pb-20 border-b border-[#1f2328]">
+    <div class="max-w-4xl mx-auto px-6">
+      <div class="text-xs font-semibold uppercase tracking-wider text-[#8a8f98] mb-6">
+        HVAC / Electrical / Roofing / Plumbing / Trade Services
       </div>
-      <h1 class="font-display text-4xl md:text-6xl font-extrabold text-white tracking-tight leading-tight mb-6">
-        Dominate The Local Map Pack.<br>
-        <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-sky-300 to-blue-500">
-          Capture High-Ticket Jobs Before Your Competitors.
-        </span>
+      <h1 class="text-4xl sm:text-6xl md:text-7xl font-extrabold text-white tracking-[-0.035em] leading-[1.05] mb-8">
+        Dominate the local map pack. Capture high-ticket jobs before competitors pick up.
       </h1>
-      <p class="text-lg md:text-xl text-slate-400 max-w-3xl mx-auto mb-10 leading-relaxed">
-        Stop wasting budget on shared lead aggregators. We turn local trade contractors into the verified #1 choice across Google Maps, AI Answer Engines, and local voice search, complete with instant customer response automation.
+      <p class="text-base sm:text-lg text-[#8a8f98] leading-relaxed max-w-3xl mb-12 font-normal">
+        Stop wasting budget on shared lead aggregators. We turn local trade contractors into the verified #1 choice across Google Maps, local voice search, and high-intent homeowner queries, complete with instant customer response automation.
       </p>
-      <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-        <a href="#services" class="w-full sm:w-auto px-8 py-4 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-base transition shadow-lg shadow-blue-600/30">
-          Explore The Infrastructure
+      <div class="flex flex-col sm:flex-row items-center gap-4">
+        <a href="#services" class="w-full sm:w-auto px-6 py-3.5 rounded bg-white text-black hover:bg-slate-200 font-bold text-xs uppercase tracking-wider transition text-center">
+          Explore Infrastructure
         </a>
-        <a href="#quote" class="w-full sm:w-auto px-8 py-4 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-200 font-semibold text-base transition">
+        <a href="#quote" class="w-full sm:w-auto px-6 py-3.5 rounded border border-[#2e343b] bg-[#08090a] hover:bg-[#121417] text-white font-medium text-xs tracking-tight transition text-center">
           Claim Local Territory
         </a>
       </div>
@@ -79,113 +75,101 @@
   </section>
 
   <!-- Core Services Taxonomy Grid -->
-  <section id="services" class="py-20 border-b border-slate-800/80">
-    <div class="max-w-7xl mx-auto px-6">
-      <div class="max-w-3xl mb-14">
-        <span class="text-xs uppercase tracking-widest font-bold text-cyan-400">Complete Local Infrastructure</span>
-        <h2 class="font-display text-3xl md:text-4xl font-bold text-white tracking-tight mt-2">
-          The 4 Pillars of Home Service Search Hegemony
-        </h2>
+  <section id="services" class="py-24 border-b border-[#1f2328] bg-[#040405]">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="max-w-2xl mb-16">
+        <h2 class="text-xs font-semibold uppercase tracking-wider text-[#8a8f98] mb-3">Core Pillars</h2>
+        <p class="text-2xl sm:text-3xl font-bold text-white tracking-tight">The 4 foundations of local contractor search dominance.</p>
       </div>
 
       <div class="grid md:grid-cols-2 gap-8">
-        <div class="p-8 rounded-2xl bg-slate-900/60 border border-slate-800">
-          <div class="w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 font-bold mb-6">
-            01
-          </div>
-          <h3 class="font-display text-xl font-bold text-white mb-3">Google Business Profile & Map Pack Ranking</h3>
-          <p class="text-slate-400 text-sm leading-relaxed mb-4">
+        
+        <div class="p-8 rounded border border-[#1f2328] bg-black">
+          <div class="text-xs font-mono text-[#8a8f98] mb-4">01 / MAP PACK RANKING</div>
+          <h3 class="text-base font-bold text-white mb-3">Google Business Profile Optimization</h3>
+          <p class="text-sm text-[#8a8f98] leading-relaxed mb-4">
             70% of high-intent homeowner calls originate in the top 3 Map Pack spots. We optimize secondary categories, manage geotagged project updates, and build localized citation anchors so your business holds top ranking across target service zip codes.
           </p>
-          <ul class="text-xs text-slate-300 space-y-2">
-            <li>✓ Bi-weekly service and project updates</li>
-            <li>✓ Category and product catalog engineering</li>
-            <li>✓ Geotargeted trade coverage optimization</li>
+          <ul class="text-xs text-[#8a8f98] space-y-2">
+            <li><span class="text-white font-mono">—</span> Bi-weekly service and project updates</li>
+            <li><span class="text-white font-mono">—</span> Category and product catalog engineering</li>
+            <li><span class="text-white font-mono">—</span> Geotargeted trade coverage optimization</li>
           </ul>
         </div>
 
-        <div class="p-8 rounded-2xl bg-slate-900/60 border border-slate-800">
-          <div class="w-12 h-12 rounded-xl bg-blue-500/10 border border-blue-500/30 flex items-center justify-center text-blue-400 font-bold mb-6">
-            02
-          </div>
-          <h3 class="font-display text-xl font-bold text-white mb-3">Local Review Syndication & Reputation Playbooks</h3>
-          <p class="text-slate-400 text-sm leading-relaxed mb-4">
-            AI engines rank businesses on customer review sentiment and keyword frequency. We implement automated review ingestion sequences and craft keyword-rich responses that feed Google’s ranking algorithms.
+        <div class="p-8 rounded border border-[#1f2328] bg-black">
+          <div class="text-xs font-mono text-[#8a8f98] mb-4">02 / REPUTATION SYNDICATION</div>
+          <h3 class="text-base font-bold text-white mb-3">Automated Review Collection</h3>
+          <p class="text-sm text-[#8a8f98] leading-relaxed mb-4">
+            Search engines rank trade businesses on customer review sentiment and keyword density. We implement automated review ingestion sequences and craft keyword-rich responses that feed Google’s ranking algorithms.
           </p>
-          <ul class="text-xs text-slate-300 space-y-2">
-            <li>✓ Post-job automated review collection routing</li>
-            <li>✓ Algorithm-friendly owner review response playbooks</li>
-            <li>✓ Cross-platform citation synchronization</li>
+          <ul class="text-xs text-[#8a8f98] space-y-2">
+            <li><span class="text-white font-mono">—</span> Post-job automated review collection routing</li>
+            <li><span class="text-white font-mono">—</span> Algorithm-friendly owner review response playbooks</li>
+            <li><span class="text-white font-mono">—</span> Cross-platform citation synchronization</li>
           </ul>
         </div>
 
-        <div class="p-8 rounded-2xl bg-slate-900/60 border border-slate-800">
-          <div class="w-12 h-12 rounded-xl bg-indigo-500/10 border border-indigo-500/30 flex items-center justify-center text-indigo-400 font-bold mb-6">
-            03
-          </div>
-          <h3 class="font-display text-xl font-bold text-white mb-3">AEO / GEO Structured FAQ Schema</h3>
-          <p class="text-slate-400 text-sm leading-relaxed mb-4">
-            When homeowners ask Google, Siri, or ChatGPT "Who is the best electrical contractor for a 200A panel upgrade near me?", AI pulls directly from structured schema. We deploy technical schema data that makes your company the extracted answer.
+        <div class="p-8 rounded border border-[#1f2328] bg-black">
+          <div class="text-xs font-mono text-[#8a8f98] mb-4">03 / TECHNICAL EXTRACTION</div>
+          <h3 class="text-base font-bold text-white mb-3">Structured Local Schema Hubs</h3>
+          <p class="text-sm text-[#8a8f98] leading-relaxed mb-4">
+            When homeowners search "Who is the best electrical contractor for a 200A panel upgrade near me?", machines pull directly from structured data. We deploy technical schema markup that makes your company the extracted choice.
           </p>
-          <ul class="text-xs text-slate-300 space-y-2">
-            <li>✓ High-speed static service landing pages</li>
-            <li>✓ JSON-LD LocalBusiness and Service schema</li>
-            <li>✓ Solved-job pricing and repair FAQ hubs</li>
+          <ul class="text-xs text-[#8a8f98] space-y-2">
+            <li><span class="text-white font-mono">—</span> High-speed static service landing pages</li>
+            <li><span class="text-white font-mono">—</span> JSON-LD LocalBusiness and Service schema</li>
+            <li><span class="text-white font-mono">—</span> Solved-job pricing and repair FAQ hubs</li>
           </ul>
         </div>
 
-        <div class="p-8 rounded-2xl bg-slate-900/60 border border-slate-800">
-          <div class="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 font-bold mb-6">
-            04
-          </div>
-          <h3 class="font-display text-xl font-bold text-white mb-3">Automated Customer Messaging & Response</h3>
-          <p class="text-slate-400 text-sm leading-relaxed mb-4">
-            If you don't answer a customer within 5 minutes, they call the next contractor. We deploy automated inbound response funnels that immediately capture job parameters, qualify budget, and sync to your calendar or dispatch.
+        <div class="p-8 rounded border border-[#1f2328] bg-black">
+          <div class="text-xs font-mono text-[#8a8f98] mb-4">04 / SPEED TO LEAD</div>
+          <h3 class="text-base font-bold text-white mb-3">Automated Customer Messaging</h3>
+          <p class="text-sm text-[#8a8f98] leading-relaxed mb-4">
+            If you don't answer an inbound customer within 5 minutes, they call the next contractor on Google. We deploy automated inbound response funnels that immediately capture job parameters, qualify budget, and sync to dispatch.
           </p>
-          <ul class="text-xs text-slate-300 space-y-2">
-            <li>✓ Instant SMS/Email response triggers</li>
-            <li>✓ Emergency vs. scheduled job triage</li>
-            <li>✓ Zero lead leakage while your crews are in the field</li>
+          <ul class="text-xs text-[#8a8f98] space-y-2">
+            <li><span class="text-white font-mono">—</span> Instant SMS/Email response triggers</li>
+            <li><span class="text-white font-mono">—</span> Emergency vs. scheduled job triage</li>
+            <li><span class="text-white font-mono">—</span> Zero lead leakage while your crews are in the field</li>
           </ul>
         </div>
+
       </div>
     </div>
   </section>
 
   <!-- Intake / Quote Section -->
-  <section id="quote" class="py-20 bg-[#020617]">
-    <div class="max-w-4xl mx-auto px-6">
-      <div class="text-center mb-12">
-        <span class="text-xs uppercase tracking-widest font-bold text-cyan-400">Territory Lock</span>
-        <h2 class="font-display text-3xl md:text-4xl font-bold text-white tracking-tight mt-2 mb-3">
-          Request A Local Search Audit For Your Trade Business
-        </h2>
-        <p class="text-slate-400 text-sm max-w-xl mx-auto">
-          We protect your market by partnering with only one primary trade contractor per service territory.
-        </p>
+  <section id="quote" class="py-24 border-b border-[#1f2328]">
+    <div class="max-w-3xl mx-auto px-6">
+      <div class="mb-12">
+        <h2 class="text-xs font-semibold uppercase tracking-wider text-[#8a8f98] mb-2">Territory Protection</h2>
+        <p class="text-3xl font-extrabold text-white tracking-tight">Request a local search audit for your trade business.</p>
+        <p class="text-xs text-[#8a8f98] mt-2">We protect your market by partnering with only one primary trade contractor per service territory.</p>
       </div>
 
-      <div class="bg-slate-900/80 border border-slate-800 rounded-3xl p-8 md:p-10 shadow-xl">
-        <form action="mailto:hello@moreprofitusa.com" method="post" enctype="text/plain" class="space-y-6">
-          <div class="grid md:grid-cols-2 gap-6">
+      <div class="border border-[#1f2328] bg-[#08090a] rounded p-8 sm:p-10">
+        <form action="mailto:parry@moreprofitusa.com" method="post" enctype="text/plain" class="space-y-6">
+          <div class="grid sm:grid-cols-2 gap-6">
             <div>
-              <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">Company Name</label>
-              <input type="text" name="company" required placeholder="e.g. Apex Electrical & Mechanical" class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-white focus:outline-none focus:border-cyan-500 text-sm">
+              <label class="block text-xs font-mono uppercase text-[#8a8f98] mb-2">Company Name</label>
+              <input type="text" name="company" required placeholder="e.g. Apex Electrical & Mechanical" class="w-full px-4 py-3 rounded bg-black border border-[#1f2328] text-white text-xs focus:outline-none focus:border-white transition">
             </div>
             <div>
-              <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">Contact Name</label>
-              <input type="text" name="contact" required placeholder="Owner or GM Name" class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-white focus:outline-none focus:border-cyan-500 text-sm">
+              <label class="block text-xs font-mono uppercase text-[#8a8f98] mb-2">Contact Name</label>
+              <input type="text" name="contact" required placeholder="Owner or GM Name" class="w-full px-4 py-3 rounded bg-black border border-[#1f2328] text-white text-xs focus:outline-none focus:border-white transition">
             </div>
           </div>
 
-          <div class="grid md:grid-cols-2 gap-6">
+          <div class="grid sm:grid-cols-2 gap-6">
             <div>
-              <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">Phone</label>
-              <input type="tel" name="phone" required placeholder="(555) 000-0000" class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-white focus:outline-none focus:border-cyan-500 text-sm">
+              <label class="block text-xs font-mono uppercase text-[#8a8f98] mb-2">Phone</label>
+              <input type="tel" name="phone" required placeholder="(555) 555-5555" class="w-full px-4 py-3 rounded bg-black border border-[#1f2328] text-white text-xs focus:outline-none focus:border-white transition">
             </div>
             <div>
-              <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">Primary Trade</label>
-              <select name="trade" class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-white focus:outline-none focus:border-cyan-500 text-sm">
+              <label class="block text-xs font-mono uppercase text-[#8a8f98] mb-2">Primary Trade</label>
+              <select name="trade" class="w-full px-4 py-3 rounded bg-black border border-[#1f2328] text-white text-xs focus:outline-none focus:border-white transition">
                 <option value="Electrical">Electrical Contractor</option>
                 <option value="HVAC">HVAC / Heating & Air</option>
                 <option value="Plumbing">Plumbing Services</option>
@@ -196,27 +180,31 @@
           </div>
 
           <div>
-            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">Primary Service Area / Target Zip Codes</label>
-            <input type="text" name="service_area" placeholder="e.g. Greater Bay Area, Solano County, Central Valley" class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-white focus:outline-none focus:border-cyan-500 text-sm">
+            <label class="block text-xs font-mono uppercase text-[#8a8f98] mb-2">Primary Service Area / Target Zip Codes</label>
+            <input type="text" name="service_area" placeholder="e.g. Greater Bay Area, Solano County, Central Valley" class="w-full px-4 py-3 rounded bg-black border border-[#1f2328] text-white text-xs focus:outline-none focus:border-white transition">
           </div>
 
-          <button type="submit" class="w-full py-4 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-500 hover:opacity-90 text-white font-bold text-base transition shadow-lg shadow-cyan-500/20">
+          <button type="submit" class="w-full py-4 rounded bg-white text-black hover:bg-slate-200 font-bold text-xs uppercase tracking-wider transition">
             Submit Territory Review
           </button>
         </form>
+
+        <div class="mt-6 text-center text-xs text-[#8a8f98]">
+          Direct questions: <a href="mailto:parry@moreprofitusa.com" class="text-white hover:underline">parry@moreprofitusa.com</a>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- Footer -->
-  <footer class="py-12 border-t border-slate-800/80 bg-slate-950 text-slate-500 text-xs">
-    <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
+  <footer class="py-12 bg-black text-[#8a8f98] text-xs">
+    <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
       <div>&copy; 2026 MoreProfitUSA. All rights reserved.</div>
       <div class="flex space-x-6">
-        <a href="/" class="hover:text-slate-300">Home</a>
-        <a href="/real-estate" class="hover:text-slate-300">Real Estate</a>
-        <a href="/home-services" class="hover:text-slate-300">Home Services</a>
-        <a href="/about" class="hover:text-slate-300">About</a>
+        <a href="/" class="hover:text-white transition">Home</a>
+        <a href="/real-estate" class="hover:text-white transition">Real Estate</a>
+        <a href="/home-services" class="hover:text-white transition">Home Services</a>
+        <a href="/about" class="hover:text-white transition">About</a>
       </div>
     </div>
   </footer>
