@@ -8,119 +8,114 @@
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
       theme: {
         extend: {
           fontFamily: {
-            sans: ['Plus Jakarta Sans', 'sans-serif'],
-            display: ['Space Grotesk', 'sans-serif'],
+            sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
           },
           colors: {
-            navy: { 950: '#020617', 900: '#0b132b', 800: '#1c2541' },
-            cyanAccent: '#38bdf8',
-            blueAccent: '#2563eb'
+            black: '#000000',
+            surface: '#08090a',
+            subtle: '#121417',
+            muted: '#8a8f98',
+            borderSubtle: '#1f2328'
           }
         }
       }
     }
   </script>
 </head>
-<body class="bg-[#020617] text-slate-100 font-sans antialiased selection:bg-cyan-500 selection:text-black">
+<body class="bg-black text-slate-100 font-sans antialiased selection:bg-white selection:text-black">
 
-  <div class="fixed top-0 left-1/2 -translate-x-1/2 w-[700px] h-[400px] bg-gradient-to-b from-blue-600/20 to-cyan-500/10 rounded-full blur-3xl pointer-events-none -z-10"></div>
-
-  <!-- Navigation -->
-  <nav class="border-b border-slate-800/80 bg-[#020617]/85 backdrop-blur-md sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-      <a href="/" class="flex items-center space-x-2">
-        <span class="font-display text-2xl font-bold tracking-tight text-white">MoreProfit<span class="text-cyan-400">USA</span></span>
+  <!-- Header / Navigation -->
+  <header class="border-b border-[#1f2328] bg-black/90 backdrop-blur sticky top-0 z-50">
+    <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+      <a href="/" class="text-base font-bold tracking-tight text-white flex items-center gap-2">
+        <span>MoreProfit<span class="text-slate-400">USA</span></span>
       </a>
-      <div class="hidden md:flex items-center space-x-8 text-sm font-semibold text-slate-300">
+      <nav class="hidden md:flex items-center space-x-7 text-xs font-medium text-[#8a8f98]">
         <a href="/real-estate" class="hover:text-white transition">Real Estate</a>
         <a href="/home-services" class="hover:text-white transition">Home Services</a>
         <a href="/about" class="hover:text-white transition">About</a>
-      </div>
+      </nav>
       <div>
-        <a href="/about" class="px-5 py-2.5 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-700 text-white font-semibold text-sm transition">
+        <a href="/about" class="px-4 py-2 rounded border border-[#2e343b] bg-[#08090a] hover:bg-white hover:text-black text-white font-medium text-xs tracking-tight transition">
           Our Story
         </a>
       </div>
     </div>
-  </nav>
+  </header>
 
-  <!-- Hero Portal -->
-  <header class="pt-24 pb-20 md:pt-36 md:pb-28">
-    <div class="max-w-5xl mx-auto px-6 text-center">
-      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-cyan-500/30 bg-cyan-500/10 text-cyan-400 text-xs font-bold uppercase tracking-wider mb-6">
-        Turnkey Organic Growth • Time Freedom • Closed Revenue
+  <!-- Hero Section -->
+  <section class="pt-24 pb-20 border-b border-[#1f2328]">
+    <div class="max-w-4xl mx-auto px-6">
+      <div class="text-xs font-semibold uppercase tracking-wider text-[#8a8f98] mb-6">
+        Turnkey Organic Growth / Market Infrastructure
       </div>
-      <h1 class="font-display text-4xl md:text-6xl font-extrabold text-white tracking-tight leading-tight mb-6">
-        More Qualified Inbound Leads.<br>
-        <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-sky-300 to-blue-500">
-          Better Content Systems In A Fraction of the Time.
-        </span>
+      <h1 class="text-4xl sm:text-6xl md:text-7xl font-extrabold text-white tracking-[-0.035em] leading-[1.05] mb-8">
+        More qualified inbound leads. Better content systems in a fraction of the time.
       </h1>
-      <p class="text-lg md:text-xl text-slate-400 max-w-3xl mx-auto mb-16 leading-relaxed">
+      <p class="text-base sm:text-lg text-[#8a8f98] leading-relaxed max-w-3xl mb-12 font-normal">
         We build and execute complete, done-for-you organic brand and local search systems for ambitious real estate agents and trade business owners. You focus on sales and operations—we deliver the positioning, content, and local trust assets that make clients choose you first.
       </p>
 
-      <!-- Vertical Doorways -->
-      <div class="grid md:grid-cols-2 gap-8 text-left max-w-4xl mx-auto">
+      <!-- Pathway Doorways -->
+      <div class="grid md:grid-cols-2 gap-6 pt-4">
         
-        <!-- Real Estate Pathway -->
-        <a href="/real-estate" class="group p-8 rounded-3xl bg-slate-900/70 border border-slate-800 hover:border-cyan-500/50 hover:bg-[#0b132b] transition-all shadow-xl block">
-          <div class="inline-block px-3 py-1 rounded bg-blue-500/10 border border-blue-500/30 text-blue-400 text-xs font-bold uppercase mb-4">
-            Specialized Engine
-          </div>
-          <h2 class="font-display text-2xl font-bold text-white group-hover:text-cyan-400 transition mb-3">
+        <!-- Real Estate Box -->
+        <a href="/real-estate" class="group p-8 rounded border border-[#1f2328] bg-[#08090a] hover:border-white transition block">
+          <div class="text-xs font-mono uppercase text-[#8a8f98] mb-3">Vertical 01</div>
+          <h2 class="text-xl font-bold text-white group-hover:text-slate-200 transition mb-3">
             For Real Estate Agents & Teams →
           </h2>
-          <p class="text-slate-400 text-sm leading-relaxed mb-6">
+          <p class="text-xs sm:text-sm text-[#8a8f98] leading-relaxed mb-6">
             Stop guessing what to post. Get 15–30 custom buyer carousels, video scripts, Google Business Profile management, and a dedicated personal website that turn cold followers into pre-sold buyer and seller clients.
           </p>
-          <span class="text-xs font-bold text-cyan-400 group-hover:underline">Explore Real Estate Retainers & Proof</span>
+          <span class="text-xs font-bold text-white uppercase tracking-wider group-hover:underline">Explore Retainers & Proof</span>
         </a>
 
-        <!-- Home Services Pathway -->
-        <a href="/home-services" class="group p-8 rounded-3xl bg-slate-900/70 border border-slate-800 hover:border-cyan-500/50 hover:bg-[#0b132b] transition-all shadow-xl block">
-          <div class="inline-block px-3 py-1 rounded bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-xs font-bold uppercase mb-4">
-            Specialized Engine
-          </div>
-          <h2 class="font-display text-2xl font-bold text-white group-hover:text-cyan-400 transition mb-3">
+        <!-- Home Services Box -->
+        <a href="/home-services" class="group p-8 rounded border border-[#1f2328] bg-[#08090a] hover:border-white transition block">
+          <div class="text-xs font-mono uppercase text-[#8a8f98] mb-3">Vertical 02</div>
+          <h2 class="text-xl font-bold text-white group-hover:text-slate-200 transition mb-3">
             For Home Services & Contractors →
           </h2>
-          <p class="text-slate-400 text-sm leading-relaxed mb-6">
+          <p class="text-xs sm:text-sm text-[#8a8f98] leading-relaxed mb-6">
             Lock down top Google Map Pack rankings, automate high-converting review collection, and capture high-margin repair and installation jobs before competitors even pick up the phone.
           </p>
-          <span class="text-xs font-bold text-cyan-400 group-hover:underline">Explore Contractor Systems & Territory</span>
+          <span class="text-xs font-bold text-white uppercase tracking-wider group-hover:underline">Explore Contractor Systems</span>
         </a>
 
       </div>
     </div>
-  </header>
+  </section>
 
-  <!-- Outcome Pillars Section -->
-  <section class="py-20 border-t border-slate-800/80 bg-slate-950/40">
-    <div class="max-w-7xl mx-auto px-6">
+  <!-- Output Metrics Section -->
+  <section class="py-24 border-b border-[#1f2328] bg-[#040405]">
+    <div class="max-w-6xl mx-auto px-6">
       <div class="grid md:grid-cols-3 gap-8">
-        <div class="p-8 rounded-2xl bg-slate-900/60 border border-slate-800">
-          <div class="text-cyan-400 font-display text-2xl font-bold mb-3">15+ Hours Saved Weekly</div>
-          <p class="text-slate-400 text-sm leading-relaxed">
+        <div class="p-8 rounded border border-[#1f2328] bg-black">
+          <div class="text-xs font-mono text-[#8a8f98] mb-3">01 / TIME LEVERAGE</div>
+          <div class="text-xl font-bold text-white mb-2">15+ Hours Saved Weekly</div>
+          <p class="text-xs sm:text-sm text-[#8a8f98] leading-relaxed">
             No more designing in Canva late at night, writing captions from scratch, or troubleshooting local profiles. We research, write, format, and syndicate everything for you.
           </p>
         </div>
-        <div class="p-8 rounded-2xl bg-slate-900/60 border border-slate-800">
-          <div class="text-blue-400 font-display text-2xl font-bold mb-3">Pre-Sold Inbound Clients</div>
-          <p class="text-slate-400 text-sm leading-relaxed">
-            Content that educates buyers on realistic numbers, neighborhood pricing, and job costs builds deep authority before you ever speak. Prospects call ready to work with you.
+        <div class="p-8 rounded border border-[#1f2328] bg-black">
+          <div class="text-xs font-mono text-[#8a8f98] mb-3">02 / BUYER CONVERSION</div>
+          <div class="text-xl font-bold text-white mb-2">Pre-Sold Inbound Clients</div>
+          <p class="text-xs sm:text-sm text-[#8a8f98] leading-relaxed">
+            Content that educates buyers on realistic numbers, neighborhood pricing, and job costs builds deep authority before you ever speak. Prospects reach out ready to work.
           </p>
         </div>
-        <div class="p-8 rounded-2xl bg-slate-900/60 border border-slate-800">
-          <div class="text-indigo-400 font-display text-2xl font-bold mb-3">Permanent Search Equity</div>
-          <p class="text-slate-400 text-sm leading-relaxed">
+        <div class="p-8 rounded border border-[#1f2328] bg-black">
+          <div class="text-xs font-mono text-[#8a8f98] mb-3">03 / ASSET ACCUMULATION</div>
+          <div class="text-xl font-bold text-white mb-2">Permanent Search Equity</div>
+          <p class="text-xs sm:text-sm text-[#8a8f98] leading-relaxed">
             Unlike social feeds that disappear after 24 hours, our synchronized web and Google Business Profile systems build compounding local search authority that pays dividends for years.
           </p>
         </div>
@@ -129,13 +124,14 @@
   </section>
 
   <!-- Footer -->
-  <footer class="py-12 border-t border-slate-800/80 bg-slate-950 text-slate-500 text-xs">
-    <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
+  <footer class="py-12 bg-black text-[#8a8f98] text-xs">
+    <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
       <div>&copy; 2026 MoreProfitUSA. All rights reserved.</div>
       <div class="flex space-x-6">
-        <a href="/real-estate" class="hover:text-slate-300">Real Estate</a>
-        <a href="/home-services" class="hover:text-slate-300">Home Services</a>
-        <a href="/about" class="hover:text-slate-300">About</a>
+        <a href="/" class="hover:text-white transition">Home</a>
+        <a href="/real-estate" class="hover:text-white transition">Real Estate</a>
+        <a href="/home-services" class="hover:text-white transition">Home Services</a>
+        <a href="/about" class="hover:text-white transition">About</a>
       </div>
     </div>
   </footer>
