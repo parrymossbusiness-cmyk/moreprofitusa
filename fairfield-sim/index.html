@@ -13,30 +13,13 @@
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
-  <!-- Schema Markup for AEO/GEO Ranking -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    "name": "Fairfield Real Estate Survival Quest",
-    "applicationCategory": "GameApplication",
-    "operatingSystem": "Web Browser",
-    "author": {
-      "@type": "RealEstateAgent",
-      "name": "Otis White Jr.",
-      "url": "https://otiswhitejrrealty.com",
-      "areaServed": "Fairfield, CA"
-    }
-  }
-  </script>
-
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      background: #EAE6DF;
+      background: #E5E0D8;
       background-image: 
-        radial-gradient(#CFC8BD 1.5px, transparent 1.5px),
-        linear-gradient(to bottom, rgba(234,230,223,0.9), #EAE6DF);
+        radial-gradient(#C4BCB0 1.5px, transparent 1.5px),
+        linear-gradient(to bottom, rgba(229,224,216,0.9), #E5E0D8);
       background-size: 20px 20px, 100% 100%;
       font-family: 'JetBrains Mono', monospace;
       color: #111;
@@ -45,12 +28,52 @@
       display: flex;
       justify-content: center;
     }
-    .shake { animation: shake 0.3s cubic-bezier(.36,.07,.19,.97) both; }
-    @keyframes shake {
-      10%, 90% { transform: translate3d(-1px, 0, 0); }
-      20%, 80% { transform: translate3d(2px, 0, 0); }
-      30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
-      40%, 60% { transform: translate3d(4px, 0, 0); }
+
+    /* === GAME ANIMATIONS === */
+    @keyframes floatBob {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-6px) rotate(-1deg); }
+    }
+    @keyframes cloudDrift {
+      0% { transform: translateX(-60px); }
+      100% { transform: translateX(520px); }
+    }
+    @keyframes highwayDrive {
+      0% { transform: translateX(-40px); }
+      100% { transform: translateX(560px); }
+    }
+    @keyframes trainSpeed {
+      0% { transform: translateX(560px); }
+      100% { transform: translateX(-80px); }
+    }
+    @keyframes pulseGlow {
+      0%, 100% { box-shadow: 3px 3px 0px #111; }
+      50% { box-shadow: 3px 3px 0px #CCFF00, 0 0 12px rgba(204,255,0,0.6); }
+    }
+    @keyframes popFloatUp {
+      0% { opacity: 0; transform: translateY(10px) scale(0.8); }
+      20% { opacity: 1; transform: translateY(-5px) scale(1.1); }
+      100% { opacity: 0; transform: translateY(-30px) scale(1); }
+    }
+    @keyframes cardSlideIn {
+      0% { opacity: 0; transform: translateY(14px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes screenShake {
+      10%, 90% { transform: translate3d(-2px, 0, 0); }
+      20%, 80% { transform: translate3d(3px, 0, 0); }
+      30%, 50%, 70% { transform: translate3d(-5px, 0, 0); }
+      40%, 60% { transform: translate3d(5px, 0, 0); }
+    }
+
+    .anim-bob { animation: floatBob 3s ease-in-out infinite; }
+    .anim-slide { animation: cardSlideIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+    .anim-shake { animation: screenShake 0.35s cubic-bezier(.36,.07,.19,.97) both; }
+    .pulse-btn { animation: pulseGlow 2s infinite; }
+
+    button {
+      font-family: 'JetBrains Mono', monospace;
+      transition: transform 0.08s ease, box-shadow 0.08s ease, background 0.15s ease;
     }
     button:active {
       transform: translate(2px, 2px) !important;
@@ -65,7 +88,7 @@
   <script type="text/babel">
     const { useState, useEffect } = React;
 
-    // Web Audio Synthesizer (Instant 8-bit sound effects, 0kb assets)
+    // Web Audio Synthesizer for 8-bit sound effects
     const playSfx = (type) => {
       try {
         const ctx = new (window.AudioContext || window.webkitAudioContext)();
@@ -85,7 +108,7 @@
           osc.type = 'sawtooth';
           osc.frequency.setValueAtTime(160, now);
           osc.frequency.exponentialRampToValueAtTime(40, now + 0.25);
-          gain.gain.setValueAtTime(0.2, now);
+          gain.gain.setValueAtTime(0.25, now);
           gain.gain.exponentialRampToValueAtTime(0.01, now + 0.25);
           osc.start(now);
           osc.stop(now + 0.25);
@@ -100,7 +123,7 @@
         median: 720000,
         melloRoos: 3200,
         hoa: 185,
-        lore: "Intersection of I-80 & I-680. Solano's premier commute launchpad to SF & Walnut Creek."
+        lore: "I-80 & I-680 intersection. Solano's premier commute launchpad to SF & Walnut Creek."
       },
       greenValley: {
         name: "Green Valley / Eastridge",
@@ -108,7 +131,7 @@
         median: 910000,
         melloRoos: 1800,
         hoa: 340,
-        lore: "Surrounded by vineyards and oak hills. Quick 15m cruise into Napa's Coombsville pocket."
+        lore: "Nestled against Napa vineyards. Golf courses and luxury custom estates."
       },
       central: {
         name: "Downtown / Travis Corridor",
@@ -116,44 +139,49 @@
         median: 535000,
         melloRoos: 0,
         hoa: 0,
-        lore: "County Seat center. Near Travis AFB, Allan Witt Park, and historic 1859 Waterman roots."
+        lore: "Solano County Seat center. Historic 1859 Waterman roots, near Travis AFB."
       }
     };
 
     function App() {
-      // Game Stats
-      const [stage, setStage] = useState(1); // 1: Buyer Class, 2: District, 3: Commute, 4: Lore/Trivia, 5: Escrow
+      const [stage, setStage] = useState(1);
       const [districtKey, setDistrictKey] = useState('cordelia');
       const [cash, setCash] = useState(95000);
       const [sanity, setSanity] = useState(85);
       const [bisScore, setBisScore] = useState(30);
       const [buyerClass, setBuyerClass] = useState('Tech Commuter');
       const [shaking, setShaking] = useState(false);
+      const [floatingText, setFloatingText] = useState(null);
       const [gameOver, setGameOver] = useState(null);
       const [leadSent, setLeadSent] = useState(false);
       const [phone, setPhone] = useState('');
 
       const dist = DISTRICTS[districtKey];
 
-      // Solano County Dynamic Cost Engine
+      // Dynamic Financial Engine
       const loan = Math.max(0, dist.median - cash);
       const monthlyPI = Math.round((loan * (0.065 / 12)) / (1 - Math.pow(1 + 0.065 / 12, -360)));
       const monthlyTax = Math.round((dist.median * 0.0119) / 12);
       const monthlyCFD = Math.round(dist.melloRoos / 12);
       const totalNut = monthlyPI + monthlyTax + monthlyCFD + dist.hoa;
 
-      const triggerShake = () => {
-        setShaking(true);
-        setTimeout(() => setShaking(false), 400);
+      const showFloatingPopup = (text, color = '#CCFF00') => {
+        setFloatingText({ text, color });
+        setTimeout(() => setFloatingText(null), 1200);
       };
 
-      // Stage Transitions
+      const triggerShake = () => {
+        setShaking(true);
+        setTimeout(() => setShaking(false), 380);
+      };
+
       const pickClass = (title, startingCash, startingSanity) => {
         playSfx('coin');
         setBuyerClass(title);
         setCash(startingCash);
         setSanity(startingSanity);
         setBisScore(bisScore + 15);
+        showFloatingPopup(`+$${(startingCash/1000)}k Starting Bank!`, '#CCFF00');
         setStage(2);
       };
 
@@ -161,6 +189,7 @@
         playSfx('coin');
         setDistrictKey(key);
         setBisScore(bisScore + 15);
+        showFloatingPopup(`Locked ${DISTRICTS[key].name}!`, '#7000FF');
         setStage(3);
       };
 
@@ -170,11 +199,13 @@
           triggerShake();
           setSanity(Math.max(10, sanity - 30));
           setBisScore(bisScore + 10);
+          showFloatingPopup(`-30% Sanity (I-80 Bottleneck!)`, '#FF4D4D');
         } else {
           playSfx('coin');
-          setCash(cash - 1200); // Year transit card
+          setCash(cash - 1200);
           setSanity(Math.min(100, sanity + 15));
           setBisScore(bisScore + 20);
+          showFloatingPopup(`+15% Sanity (Amtrak WiFi Perk!)`, '#CCFF00');
         }
         setStage(4);
       };
@@ -182,12 +213,14 @@
       const handleLoreChoice = (answer) => {
         if (answer === 'correct') {
           playSfx('coin');
-          setCash(cash + 2500); // Civic First-Time Credit
+          setCash(cash + 2500);
           setBisScore(bisScore + 15);
+          showFloatingPopup(`+$2,500 Waterman Civic Grant!`, '#CCFF00');
         } else {
           playSfx('hit');
           triggerShake();
           setSanity(sanity - 10);
+          showFloatingPopup(`-10% Sanity (Civic Penalty)`, '#FF4D4D');
         }
         setStage(5);
       };
@@ -197,47 +230,198 @@
           playSfx('hit');
           triggerShake();
           setGameOver({
-            title: "ESCROW NIGHTMARE: Cordelia AC & Termite Burst",
-            desc: "You waived property inspections to win against 3 Bay Area cash offers. HVAC compressor blew and the 1990s foundation had dry rot.",
-            loss: "-$24,000 Surprise Repair"
+            title: "ESCROW NIGHTMARE: Cordelia AC & Dry Rot Shock",
+            desc: "You waived inspection to win a bidding war. The AC compressor blew out and the foundation had severe dry rot.",
+            loss: "-$24,000 Surprise Repair Bill"
           });
         } else {
           playSfx('coin');
           setCash(cash - 850);
           setBisScore(bisScore + 20);
-          setStage(6); // Victory
+          showFloatingPopup(`Protected By 7-Day Inspection!`, '#7000FF');
+          setStage(6);
         }
       };
 
       return (
-        <div className={shaking ? 'shake' : ''} style={{
-          maxWidth: '580px',
+        <div className={shaking ? 'anim-shake' : ''} style={{
+          maxWidth: '560px',
           width: '100%',
           background: '#FFFDF9',
           border: '3px solid #111',
           padding: '16px',
-          boxShadow: '8px 8px 0px #111'
+          boxShadow: '8px 8px 0px #111',
+          position: 'relative',
+          overflow: 'hidden'
         }}>
-          
-          {/* Header Bar */}
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '3px solid #111', paddingBottom: '10px', marginBottom: '14px' }}>
+
+          {/* Floating Game Popups */}
+          {floatingText && (
+            <div style={{
+              position: 'absolute',
+              top: '45%',
+              left: '50%',
+              transform: 'translateX(-50%)',
+              background: floatingText.color,
+              color: '#111',
+              border: '2px solid #111',
+              padding: '6px 14px',
+              fontWeight: '900',
+              fontSize: '13px',
+              zIndex: 999,
+              boxShadow: '3px 3px 0px #111',
+              animation: 'popFloatUp 1.2s forwards',
+              pointerEvents: 'none'
+            }}>
+              {floatingText.text}
+            </div>
+          )}
+
+          {/* HUD Top Bar */}
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '3px solid #111', paddingBottom: '10px', marginBottom: '12px' }}>
             <div>
               <span style={{ background: '#CCFF00', padding: '3px 8px', fontWeight: '800', fontSize: '11px', border: '2px solid #111', boxShadow: '2px 2px 0px #111' }}>
                 FAIRFIELD SURVIVAL v2.0
               </span>
               <div style={{ fontSize: '10px', marginTop: '4px', color: '#666', fontWeight: '700' }}>
-                CITY OF FAIRFIELD • POP. 123K • SOLANO SEAT
+                STAGE {stage} OF 6 • SOLANO SEAT
               </div>
             </div>
             <div style={{ textAlign: 'right' }}>
-              <div style={{ fontSize: '9px', fontWeight: '700', color: '#888' }}>INTENT GAUGE</div>
-              <div style={{ fontSize: '18px', fontWeight: '900', color: bisScore >= 70 ? '#7000FF' : '#111' }}>
+              <div style={{ fontSize: '9px', fontWeight: '700', color: '#888' }}>INTENT RATING</div>
+              <div style={{ fontSize: '19px', fontWeight: '900', color: bisScore >= 70 ? '#7000FF' : '#111' }}>
                 {bisScore}/100
               </div>
             </div>
           </div>
 
-          {/* Real-Time Sims-Style Stat Gauges */}
+          {/* === DYNAMIC ANIMATED VIEWPORT (The Visual Game Canvas) === */}
+          <div style={{
+            height: '140px',
+            background: 'linear-gradient(to bottom, #8AD4EB 0%, #D2EDF7 65%, #C2DF8E 66%, #8BB85C 100%)',
+            border: '2px solid #111',
+            borderRadius: '4px',
+            position: 'relative',
+            overflow: 'hidden',
+            marginBottom: '14px',
+            boxShadow: 'inset 0 0 10px rgba(0,0,0,0.1)'
+          }}>
+            {/* Drifting Clouds */}
+            <div style={{
+              position: 'absolute',
+              top: '12px',
+              left: '0',
+              fontSize: '22px',
+              animation: 'cloudDrift 14s linear infinite',
+              opacity: 0.9
+            }}>☁️</div>
+            <div style={{
+              position: 'absolute',
+              top: '28px',
+              left: '0',
+              fontSize: '16px',
+              animation: 'cloudDrift 22s linear infinite',
+              animationDelay: '6s',
+              opacity: 0.7
+            }}>☁️</div>
+
+            {/* Solano Sun */}
+            <div style={{
+              position: 'absolute',
+              top: '10px',
+              right: '16px',
+              width: '32px',
+              height: '32px',
+              borderRadius: '50%',
+              background: '#FFD700',
+              border: '2px solid #111',
+              boxShadow: '0 0 10px rgba(255,215,0,0.8)'
+            }}></div>
+
+            {/* Bobbing Isometric Neighborhood Cluster */}
+            <div className="anim-bob" style={{
+              position: 'absolute',
+              bottom: '30px',
+              left: '50%',
+              transform: 'translateX(-50%)',
+              display: 'flex',
+              alignItems: 'flex-end',
+              gap: '12px',
+              zIndex: 2
+            }}>
+              <div style={{ fontSize: '28px', filter: 'drop-shadow(2px 3px 0px rgba(0,0,0,0.25))' }}>🏡</div>
+              <div style={{ fontSize: '38px', filter: 'drop-shadow(2px 4px 0px rgba(0,0,0,0.3))' }}>
+                {districtKey === 'greenValley' ? '🏰' : districtKey === 'cordelia' ? '🏘️' : '🏠'}
+              </div>
+              <div style={{ fontSize: '26px', filter: 'drop-shadow(2px 3px 0px rgba(0,0,0,0.25))' }}>🌳</div>
+              <div style={{ fontSize: '24px', filter: 'drop-shadow(2px 3px 0px rgba(0,0,0,0.25))' }}>🏭</div>
+            </div>
+
+            {/* Micro-Highway Strip (I-80 / Amtrak Rail Corridor) */}
+            <div style={{
+              position: 'absolute',
+              bottom: '0',
+              left: '0',
+              right: '0',
+              height: '22px',
+              background: '#333',
+              borderTop: '2px solid #111',
+              zIndex: 3,
+              overflow: 'hidden'
+            }}>
+              {/* Lane Divider Dashes */}
+              <div style={{
+                position: 'absolute',
+                top: '9px',
+                left: '0',
+                right: '0',
+                height: '2px',
+                backgroundImage: 'linear-gradient(90deg, #FFD700 50%, transparent 50%)',
+                backgroundSize: '16px 2px'
+              }}></div>
+
+              {/* Driving Cars */}
+              <div style={{
+                position: 'absolute',
+                top: '1px',
+                fontSize: '13px',
+                animation: 'highwayDrive 5s linear infinite'
+              }}>🚗</div>
+              <div style={{
+                position: 'absolute',
+                top: '1px',
+                fontSize: '13px',
+                animation: 'highwayDrive 8s linear infinite',
+                animationDelay: '2.5s'
+              }}>🚙</div>
+
+              {/* Amtrak Capitol Corridor Train moving opposite */}
+              <div style={{
+                position: 'absolute',
+                top: '1px',
+                fontSize: '13px',
+                animation: 'trainSpeed 7s linear infinite'
+              }}>🚆</div>
+            </div>
+
+            {/* Current Region Tag in Viewport */}
+            <div style={{
+              position: 'absolute',
+              top: '8px',
+              left: '8px',
+              background: 'rgba(255,255,255,0.92)',
+              border: '2px solid #111',
+              padding: '2px 8px',
+              fontSize: '10px',
+              fontWeight: '800',
+              boxShadow: '2px 2px 0px #111',
+              zIndex: 4
+            }}>
+              📍 {dist.name.toUpperCase()}
+            </div>
+          </div>
+
+          {/* Living HUD Gauges */}
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '6px', marginBottom: '14px' }}>
             <div style={{ border: '2px solid #111', padding: '6px', background: '#FFF', boxShadow: '2px 2px 0px #111' }}>
               <div style={{ fontSize: '9px', color: '#666', fontWeight: '700' }}>LIQUID CASH</div>
@@ -255,9 +439,9 @@
             </div>
           </div>
 
-          {/* STAGE 1: Buyer Class Archetype */}
+          {/* === STAGE 1: Character Select === */}
           {stage === 1 && (
-            <div style={{ border: '3px solid #111', padding: '14px', background: '#FFF', boxShadow: '4px 4px 0px #111' }}>
+            <div className="anim-slide" style={{ border: '3px solid #111', padding: '14px', background: '#FFF', boxShadow: '4px 4px 0px #111' }}>
               <div style={{ fontSize: '10px', color: '#7000FF', fontWeight: '800' }}>STAGE 01: CHOOSE YOUR CHARACTER</div>
               <h3 style={{ fontFamily: 'Space Grotesk', fontSize: '16px', margin: '4px 0 10px 0' }}>Who is braving the Solano housing market?</h3>
               
@@ -286,22 +470,27 @@
             </div>
           )}
 
-          {/* STAGE 2: Interactive Territory / District Pick */}
+          {/* === STAGE 2: Interactive Territory / District Pick === */}
           {stage === 2 && (
-            <div style={{ border: '3px solid #111', padding: '14px', background: '#FFF', boxShadow: '4px 4px 0px #111' }}>
+            <div className="anim-slide" style={{ border: '3px solid #111', padding: '14px', background: '#FFF', boxShadow: '4px 4px 0px #111' }}>
               <div style={{ fontSize: '10px', color: '#7000FF', fontWeight: '800' }}>STAGE 02: SELECT TARGET FAIRFIELD TERRAIN</div>
               <h3 style={{ fontFamily: 'Space Grotesk', fontSize: '16px', margin: '4px 0 10px 0' }}>Where do you set up base camp?</h3>
               
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '8px', marginBottom: '12px' }}>
                 {Object.keys(DISTRICTS).map((k) => (
-                  <div key={k} onClick={() => setDistrictKey(k)} style={{
+                  <div key={k} onClick={() => selectDistrict(k)} style={{
                     border: '2px solid #111',
-                    padding: '8px 4px',
+                    padding: '10px 4px',
                     textAlign: 'center',
                     background: districtKey === k ? '#CCFF00' : '#F7F4EB',
                     boxShadow: districtKey === k ? '3px 3px 0px #7000FF' : '2px 2px 0px #111',
-                    cursor: 'pointer'
+                    cursor: 'pointer',
+                    transform: districtKey === k ? 'translateY(-3px)' : 'none',
+                    transition: 'all 0.1s ease'
                   }}>
+                    <div style={{ fontSize: '18px', marginBottom: '2px' }}>
+                      {k === 'greenValley' ? '🍷' : k === 'cordelia' ? '🚗' : '🏡'}
+                    </div>
                     <div style={{ fontSize: '10px', fontWeight: '800' }}>{DISTRICTS[k].name.split(' ')[0]}</div>
                     <div style={{ fontSize: '9px', color: '#555' }}>${(DISTRICTS[k].median/1000)}k</div>
                   </div>
@@ -316,21 +505,21 @@
                 </div>
               </div>
 
-              <button onClick={() => selectDistrict(districtKey)} style={{
+              <button onClick={() => setStage(3)} className="pulse-btn" style={{
                 width: '100%', padding: '12px', background: '#CCFF00', border: '2px solid #111', fontWeight: '800', cursor: 'pointer', boxShadow: '3px 3px 0px #111'
               }}>
-                LOCK IN {dist.name.toUpperCase()} & MOVE FORWARD
+                LOCK IN {dist.name.toUpperCase()} & ADVANCE
               </button>
             </div>
           )}
 
-          {/* STAGE 3: Commute / Transit Gauntlet */}
+          {/* === STAGE 3: Commute / Transit Gauntlet === */}
           {stage === 3 && (
-            <div style={{ border: '3px solid #111', padding: '14px', background: '#FFF', boxShadow: '4px 4px 0px #111' }}>
+            <div className="anim-slide" style={{ border: '3px solid #111', padding: '14px', background: '#FFF', boxShadow: '4px 4px 0px #111' }}>
               <div style={{ fontSize: '10px', color: '#7000FF', fontWeight: '800' }}>STAGE 03: THE CORRIDOR COMMUTE DILEMMA</div>
               <h3 style={{ fontFamily: 'Space Grotesk', fontSize: '16px', margin: '4px 0 8px 0' }}>How do you get to the job center?</h3>
               <p style={{ fontSize: '12px', color: '#444', lineHeight: '1.4', marginBottom: '12px' }}>
-                Fairfield is 41.6 sq miles. Living in {dist.name} means navigating the notorious I-80/680 junction or using the Capitol Corridor line.
+                Fairfield spans 41.6 sq miles. Living in {dist.name} means navigating the notorious I-80/680 junction or using the Capitol Corridor line.
               </p>
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
@@ -351,13 +540,13 @@
             </div>
           )}
 
-          {/* STAGE 4: Local History & Civic Trivia Buff */}
+          {/* === STAGE 4: Local History & Civic Trivia Buff === */}
           {stage === 4 && (
-            <div style={{ border: '3px solid #111', padding: '14px', background: '#FFF', boxShadow: '4px 4px 0px #111' }}>
+            <div className="anim-slide" style={{ border: '3px solid #111', padding: '14px', background: '#FFF', boxShadow: '4px 4px 0px #111' }}>
               <div style={{ fontSize: '10px', color: '#7000FF', fontWeight: '800' }}>STAGE 04: CIVIC TRIVIA & CITY HALL PERK</div>
               <h3 style={{ fontFamily: 'Space Grotesk', fontSize: '16px', margin: '4px 0 8px 0' }}>Fairfield City Knowledge Check</h3>
               <p style={{ fontSize: '12px', color: '#444', lineHeight: '1.4', marginBottom: '12px' }}>
-                Mayor Rick Vaccaro's City Council and local industrial giants (Jelly Belly & Anheuser-Busch) power the municipal base. Prove you know Fairfield:
+                Mayor Rick Vaccaro's City Council and industrial engines (Jelly Belly & Anheuser-Busch) power the municipal tax base. Prove you know Fairfield:
               </p>
               
               <div style={{ background: '#FFFDF0', border: '2px dashed #111', padding: '8px', fontSize: '11px', marginBottom: '12px' }}>
@@ -379,9 +568,9 @@
             </div>
           )}
 
-          {/* STAGE 5: Escrow Gauntlet */}
+          {/* === STAGE 5: Escrow Gauntlet === */}
           {stage === 5 && !gameOver && (
-            <div style={{ border: '3px solid #111', padding: '14px', background: '#FFF', boxShadow: '4px 4px 0px #111' }}>
+            <div className="anim-slide" style={{ border: '3px solid #111', padding: '14px', background: '#FFF', boxShadow: '4px 4px 0px #111' }}>
               <div style={{ fontSize: '10px', color: '#FF4D4D', fontWeight: '800' }}>STAGE 05: THE MULTIPLE-OFFER PRESSURE COOKER</div>
               <h3 style={{ fontFamily: 'Space Grotesk', fontSize: '16px', margin: '4px 0 8px 0' }}>Offer Table in {dist.name}</h3>
               <p style={{ fontSize: '12px', color: '#444', lineHeight: '1.4', marginBottom: '12px' }}>
@@ -403,9 +592,9 @@
             </div>
           )}
 
-          {/* GAME OVER (Rage Bait / Viral Share) */}
+          {/* GAME OVER (Rage Bait / Viral Screen) */}
           {gameOver && (
-            <div style={{ border: '3px solid #FF4D4D', padding: '16px', background: '#FFF', textAlign: 'center', boxShadow: '5px 5px 0px #FF4D4D' }}>
+            <div className="anim-shake" style={{ border: '3px solid #FF4D4D', padding: '16px', background: '#FFF', textAlign: 'center', boxShadow: '5px 5px 0px #FF4D4D' }}>
               <div style={{ fontSize: '11px', fontWeight: '800', color: '#FF4D4D' }}>ESCROW REJECTED</div>
               <h3 style={{ margin: '8px 0', fontFamily: 'Space Grotesk', fontSize: '17px' }}>{gameOver.title}</h3>
               <p style={{ fontSize: '12px', color: '#555', marginBottom: '10px' }}>{gameOver.desc}</p>
@@ -413,14 +602,14 @@
               <button onClick={() => { setGameOver(null); setStage(1); setSanity(85); setCash(95000); }} style={{
                 padding: '10px 20px', background: '#111', color: '#FFF', border: 'none', fontWeight: '800', cursor: 'pointer', boxShadow: '3px 3px 0px #CCFF00'
               }}>
-                TRY AGAIN
+                RETRY SIMULATION
               </button>
             </div>
           )}
 
-          {/* STAGE 6: VICTORY & HIGH-INTENT LEAD ROUTING */}
+          {/* === STAGE 6: VICTORY & HIGH-INTENT LEAD ROUTING === */}
           {stage === 6 && (
-            <div style={{ border: '3px solid #7000FF', padding: '16px', background: '#FFF', boxShadow: '5px 5px 0px #7000FF' }}>
+            <div className="anim-slide" style={{ border: '3px solid #7000FF', padding: '16px', background: '#FFF', boxShadow: '5px 5px 0px #7000FF' }}>
               <div style={{ fontSize: '10px', color: '#7000FF', fontWeight: '800' }}>MISSION COMPLETE: KEYS UNLOCKED</div>
               <h3 style={{ fontFamily: 'Space Grotesk', fontSize: '17px', margin: '4px 0 8px 0' }}>
                 YOU SURVIVED FAIRFIELD, CA
@@ -456,7 +645,7 @@
             </div>
           )}
 
-          {/* Footer */}
+          {/* Footer Branding */}
           <div style={{ textAlign: 'center', marginTop: '14px', fontSize: '10px', color: '#888', fontWeight: '600' }}>
             MOREPROFITUSA AI ENGINE • PROUD PARTNER OF OTIS WHITE JR. REALTY
           </div>
