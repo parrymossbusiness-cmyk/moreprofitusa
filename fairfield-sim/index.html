@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fairfield First-Time Homebuyer Simulator | Solano County Edition</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700;800&family=Space+Grotesk:wght@600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- React & Babel CDNs (Zero Build Tooling Required) -->
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <!-- Machine-Readable Structured Data for AEO / GEO / Google Bots -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Fairfield First-Time Homebuyer Simulator",
+    "operatingSystem": "Web Browser",
+    "applicationCategory": "RealEstateApplication",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "author": {
+      "@type": "RealEstateAgent",
+      "name": "Otis White Jr.",
+      "url": "https://otiswhitejrrealty.com",
+      "areaServed": [
+        "Fairfield, CA",
+        "Cordelia, CA",
+        "Green Valley, CA",
+        "Solano County, CA"
+      ]
+    }
+  }
+  </script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      background-color: #EFECE6;
+      background-image: 
+        linear-gradient(#DDD8CE 1px, transparent 1px),
+        linear-gradient(90deg, #DDD8CE 1px, transparent 1px);
+      background-size: 24px 24px;
+      font-family: 'JetBrains Mono', monospace;
+      color: #111;
+      padding: 24px 12px;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+    }
+    button {
+      font-family: 'JetBrains Mono', monospace;
+      transition: transform 0.05s ease, box-shadow 0.05s ease;
+    }
+    button:active {
+      transform: translate(2px, 2px) !important;
+      box-shadow: 1px 1px 0px #000 !important;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState } = React;
+
+    const FAIRFIELD_DATA = {
+      city: "Fairfield",
+      county: "Solano",
+      countyTransferTaxRate: 0.0011, // $1.10 per $1,000
+      districts: {
+        cordelia: {
+          name: "Cordelia (I-80 / 680 Hub)",
+          medianPrice: 720000,
+          melloRoosAnnual: 3200,
+          avgHOA: 180,
+          commuteProfile: "45m to SF / 30m to Walnut Creek",
+          vibe: "Master-planned family subdivisions"
+        },
+        greenValley: {
+          name: "Green Valley / Eastridge",
+          medianPrice: 910000,
+          melloRoosAnnual: 1800,
+          avgHOA: 340,
+          commuteProfile: "Wine Country border, quick Napa access",
+          vibe: "Golf course adjacent, executive homes"
+        },
+        centralFairfield: {
+          name: "Central Fairfield / Travis",
+          medianPrice: 535000,
+          melloRoosAnnual: 0,
+          avgHOA: 0,
+          commuteProfile: "Local employment & Travis AFB access",
+          vibe: "Established post-war ranch & starter homes"
+        }
+      }
+    };
+
+    function FairfieldSimulator() {
+      const [cash, setCash] = useState(90000);
+      const [income, setIncome] = useState(140000);
+      const [selectedDistrict, setSelectedDistrict] = useState('cordelia');
+      const [turn, setTurn] = useState(1);
+      const [bisScore, setBisScore] = useState(25);
+      const [gameOver, setGameOver] = useState(null);
+      const [leadCaptured, setLeadCaptured] = useState(false);
+      const [phone, setPhone] = useState('');
+
+      const district = FAIRFIELD_DATA.districts[selectedDistrict];
+
+      // Dynamic Solano County Math
+      const loanAmount = Math.max(0, district.medianPrice - cash);
+      const estMortgagePI = Math.round((loanAmount * (0.065 / 12)) / (1 - Math.pow(1 + 0.065 / 12, -360)));
+      const monthlyPropertyTax = Math.round((district.medianPrice * 0.0119) / 12);
+      const monthlyMelloRoos = Math.round(district.melloRoosAnnual / 12);
+      const totalMonthlyNut = estMortgagePI + monthlyPropertyTax + monthlyMelloRoos + district.avgHOA;
+      const dtiRatio = Math.round((totalMonthlyNut / (income / 12)) * 100);
+
+      const handleTurnChoice = (choice) => {
+        if (turn === 1) {
+          if (choice === 'max_down') {
+            setCash(cash - 25000);
+            setBisScore(bisScore + 25);
+          } else {
+            setBisScore(bisScore + 10);
+          }
+          setTurn(2);
+        } else if (turn === 2) {
+          if (choice === 'waive_inspection') {
+            setGameOver({
+              status: "FAILED ESCROW (BLINDSIDED)",
+              reason: "You waived property inspection on a 1990s Cordelia build. The AC condenser failed and extensive roof dry-rot was uncovered.",
+              cost: "-$22,500 Out of Pocket Expense"
+            });
+          } else {
+            setCash(cash - 850);
+            setBisScore(bisScore + 30);
+            setTurn(3);
+          }
+        }
+      };
+
+      const handleLeadSubmit = (e) => {
+        e.preventDefault();
+        setLeadCaptured(true);
+      };
+
+      return (
+        <div style={{
+          maxWidth: '620px',
+          width: '100%',
+          background: '#F7F4EB',
+          border: '3px solid #111',
+          padding: '20px',
+          boxShadow: '8px 8px 0px #111'
+        }}>
+          
+          {/* Neo-Brutalist HUD Header */}
+          <div style={{
+            borderBottom: '3px solid #111',
+            paddingBottom: '14px',
+            marginBottom: '16px',
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center'
+          }}>
+            <div>
+              <span style={{
+                background: '#CCFF00',
+                padding: '4px 10px',
+                fontWeight: '800',
+                fontSize: '13px',
+                border: '2px solid #111',
+                boxShadow: '2px 2px 0px #111'
+              }}>
+                FAIRFIELD SIMULATOR
+              </span>
+              <div style={{ fontSize: '11px', marginTop: '6px', color: '#555', fontWeight: '700' }}>
+                SOLANO COUNTY MUNICIPAL ENGINE v1.0
+              </div>
+            </div>
+            <div style={{ textAlign: 'right' }}>
+              <div style={{ fontSize: '10px', fontWeight: '700', color: '#666' }}>INTENT RATING</div>
+              <div style={{
+                fontSize: '20px',
+                fontWeight: '900',
+                color: bisScore >= 70 ? '#7000FF' : '#111'
+              }}>
+                {bisScore}/100
+              </div>
+            </div>
+          </div>
+
+          {/* 2.5D Isometric Interactive Selector */}
+          <div style={{
+            background: '#E5DFD3',
+            border: '2px solid #111',
+            padding: '20px 10px',
+            position: 'relative',
+            marginBottom: '16px',
+            boxShadow: 'inset 0 0 10px rgba(0,0,0,0.05)'
+          }}>
+            <div style={{
+              display: 'flex',
+              justifyContent: 'center',
+              gap: '16px',
+              transform: 'perspective(600px) rotateX(25deg)'
+            }}>
+              {Object.keys(FAIRFIELD_DATA.districts).map((dKey) => {
+                const isSelected = selectedDistrict === dKey;
+                return (
+                  <div
+                    key={dKey}
+                    onClick={() => setSelectedDistrict(dKey)}
+                    style={{
+                      width: '110px',
+                      padding: '12px 6px',
+                      background: isSelected ? '#CCFF00' : '#FFF',
+                      border: '3px solid #111',
+                      cursor: 'pointer',
+                      textAlign: 'center',
+                      boxShadow: isSelected ? '5px 5px 0px #7000FF' : '3px 3px 0px #111',
+                      transform: isSelected ? 'translateY(-6px)' : 'none',
+                      transition: 'all 0.1s ease'
+                    }}
+                  >
+                    <div style={{ fontSize: '16px', marginBottom: '4px' }}>
+                      {dKey === 'greenValley' ? '🍷' : dKey === 'cordelia' ? '🚗' : '🏡'}
+                    </div>
+                    <div style={{ fontSize: '11px', fontWeight: '800' }}>
+                      {dKey === 'greenValley' ? 'GREEN VLY' : dKey === 'cordelia' ? 'CORDELIA' : 'CENTRAL'}
+                    </div>
+                    <div style={{ fontSize: '10px', color: '#555', marginTop: '4px' }}>
+                      ${(FAIRFIELD_DATA.districts[dKey].medianPrice / 1000)}k
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+            <div style={{
+              textAlign: 'center',
+              marginTop: '16px',
+              fontSize: '11px',
+              fontWeight: '700',
+              background: '#FFF',
+              border: '2px solid #111',
+              padding: '6px'
+            }}>
+              SELECTED: {district.name} ({district.commuteProfile})
+            </div>
+          </div>
+
+          {/* Financial Readout Grid */}
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: '16px' }}>
+            <div style={{ border: '2px solid #111', padding: '10px', background: '#FFF', boxShadow: '3px 3px 0px #111' }}>
+              <div style={{ fontSize: '10px', fontWeight: '700', color: '#666' }}>LIQUID CASH RESERVES</div>
+              <div style={{ fontSize: '20px', fontWeight: '900' }}>${cash.toLocaleString()}</div>
+            </div>
+            <div style={{ border: '2px solid #111', padding: '10px', background: '#FFF', boxShadow: '3px 3px 0px #111' }}>
+              <div style={{ fontSize: '10px', fontWeight: '700', color: '#666' }}>SOLANO COUNTY DTI</div>
+              <div style={{ fontSize: '20px', fontWeight: '900', color: dtiRatio > 43 ? '#FF4D4D' : '#111' }}>
+                {dtiRatio}% {dtiRatio > 43 ? '⚠️ STRESS' : '✅ HEALTHY'}
+              </div>
+            </div>
+          </div>
+
+          {/* Micro-Market Data Detail */}
+          <div style={{
+            border: '2px dashed #111',
+            padding: '10px',
+            marginBottom: '16px',
+            background: '#FFF',
+            fontSize: '11px',
+            lineHeight: '1.6'
+          }}>
+            <div><strong>Median Benchmark:</strong> ${district.medianPrice.toLocaleString()}</div>
+            <div><strong>Mello-Roos CFD Special Tax:</strong> ${district.melloRoosAnnual}/year (${monthlyMelloRoos}/mo)</div>
+            <div><strong>Estimated Monthly Nut:</strong> <strong>${totalMonthlyNut.toLocaleString()}/mo</strong> (P&I, 1.19% Tax, CFD, HOA)</div>
+          </div>
+
+          {/* Turn 1 Card */}
+          {!gameOver && turn === 1 && (
+            <div style={{ border: '3px solid #111', padding: '14px', background: '#FFF', boxShadow: '4px 4px 0px #111' }}>
+              <div style={{ fontSize: '11px', fontWeight: '800', color: '#7000FF', marginBottom: '4px' }}>
+                DECISION POINT 01 OF 03
+              </div>
+              <h4 style={{ margin: '0 0 8px 0', fontSize: '15px', fontFamily: 'Space Grotesk, sans-serif' }}>
+                The Commuter Dilemma
+              </h4>
+              <p style={{ fontSize: '12px', lineHeight: '1.5', color: '#333' }}>
+                You're submitting an offer on a 3-bedroom home in {district.name}. Sellers want proof of strong liquidity to cover the Solano County tax assessment and closing adjustments.
+              </p>
+              <div style={{ display: 'flex', gap: '10px', marginTop: '14px' }}>
+                <button 
+                  onClick={() => handleTurnChoice('max_down')}
+                  style={{
+                    flex: 1,
+                    padding: '12px 8px',
+                    background: '#CCFF00',
+                    border: '2px solid #111',
+                    fontWeight: '800',
+                    cursor: 'pointer',
+                    boxShadow: '3px 3px 0px #111',
+                    fontSize: '11px'
+                  }}>
+                  Put Down Extra $25k Cash
+                </button>
+                <button 
+                  onClick={() => handleTurnChoice('hold_reserves')}
+                  style={{
+                    flex: 1,
+                    padding: '12px 8px',
+                    background: '#FFF',
+                    border: '2px solid #111',
+                    fontWeight: '800',
+                    cursor: 'pointer',
+                    boxShadow: '3px 3px 0px #111',
+                    fontSize: '11px'
+                  }}>
+                  Hold Liquid Reserves
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* Turn 2 Card */}
+          {!gameOver && turn === 2 && (
+            <div style={{ border: '3px solid #111', padding: '14px', background: '#FFF', boxShadow: '4px 4px 0px #111' }}>
+              <div style={{ fontSize: '11px', fontWeight: '800', color: '#7000FF', marginBottom: '4px' }}>
+                DECISION POINT 02 OF 03
+              </div>
+              <h4 style={{ margin: '0 0 8px 0', fontSize: '15px', fontFamily: 'Space Grotesk, sans-serif' }}>
+                Multiple Offers in {district.name}
+              </h4>
+              <p style={{ fontSize: '12px', lineHeight: '1.5', color: '#333' }}>
+                A competing Bay Area commuter offer just matched your price. The listing agent asks if you will waive your property inspection contingency to lock the deal.
+              </p>
+              <div style={{ display: 'flex', gap: '10px', marginTop: '14px' }}>
+                <button 
+                  onClick={() => handleTurnChoice('waive_inspection')}
+                  style={{
+                    flex: 1,
+                    padding: '12px 8px',
+                    background: '#FF4D4D',
+                    color: '#FFF',
+                    border: '2px solid #111',
+                    fontWeight: '800',
+                    cursor: 'pointer',
+                    boxShadow: '3px 3px 0px #111',
+                    fontSize: '11px'
+                  }}>
+                  Waive Inspection (High Risk)
+                </button>
+                <button 
+                  onClick={() => handleTurnChoice('keep_inspection')}
+                  style={{
+                    flex: 1,
+                    padding: '12px 8px',
+                    background: '#CCFF00',
+                    border: '2px solid #111',
+                    fontWeight: '800',
+                    cursor: 'pointer',
+                    boxShadow: '3px 3px 0px #111',
+                    fontSize: '11px'
+                  }}>
+                  Demand 7-Day Inspection
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* Game Over Screen (Rage Bait / Viral Share) */}
+          {gameOver && (
+            <div style={{ border: '3px solid #FF4D4D', padding: '18px', background: '#FFF', textAlign: 'center', boxShadow: '5px 5px 0px #FF4D4D' }}>
+              <div style={{ fontSize: '11px', fontWeight: '800', color: '#FF4D4D' }}>TRANSACTION TERMINATED</div>
+              <h3 style={{ margin: '6px 0', fontSize: '16px', fontFamily: 'Space Grotesk, sans-serif' }}>{gameOver.status}</h3>
+              <p style={{ fontSize: '12px', color: '#444', lineHeight: '1.5', margin: '8px 0' }}>{gameOver.reason}</p>
+              <div style={{ fontWeight: '800', fontSize: '14px', color: '#FF4D4D', margin: '10px 0' }}>{gameOver.cost}</div>
+              <button 
+                onClick={() => { setGameOver(null); setTurn(1); setCash(90000); setBisScore(25); }}
+                style={{
+                  padding: '10px 20px',
+                  background: '#111',
+                  color: '#FFF',
+                  border: '2px solid #111',
+                  fontWeight: '800',
+                  cursor: 'pointer',
+                  boxShadow: '3px 3px 0px #CCFF00',
+                  fontSize: '12px',
+                  marginTop: '6px'
+                }}>
+                RETRY SIMULATION
+              </button>
+            </div>
+          )}
+
+          {/* Turn 3: High-Intent Lead Conversion */}
+          {!gameOver && turn === 3 && (
+            <div style={{ border: '3px solid #7000FF', padding: '18px', background: '#FFF', boxShadow: '5px 5px 0px #7000FF' }}>
+              <div style={{ fontSize: '11px', fontWeight: '800', color: '#7000FF' }}>ESCROW CLEARED</div>
+              <h3 style={{ margin: '6px 0', fontSize: '17px', fontFamily: 'Space Grotesk, sans-serif' }}>
+                OFFER ACCEPTED IN {district.name.toUpperCase()}
+              </h3>
+              <p style={{ fontSize: '12px', lineHeight: '1.5', color: '#333' }}>
+                Your financial structure cleared the Solano County underwriting benchmark and CFD Mello-Roos requirements. Your total estimated monthly nut is <strong>${totalMonthlyNut.toLocaleString()}/mo</strong>.
+              </p>
+              
+              {!leadCaptured ? (
+                <form onSubmit={handleLeadSubmit} style={{ marginTop: '14px' }}>
+                  <label style={{ fontSize: '11px', fontWeight: '800', display: 'block', marginBottom: '6px' }}>
+                    ENTER CELL TO RECEIVE YOUR VERIFIED FAIRFIELD ESCROW AUDIT:
+                  </label>
+                  <input 
+                    type="tel" 
+                    placeholder="(707) 555-0199" 
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                    required
+                    style={{
+                      width: '100%',
+                      padding: '10px',
+                      border: '2px solid #111',
+                      marginBottom: '10px',
+                      fontFamily: 'JetBrains Mono, monospace',
+                      fontSize: '14px',
+                      fontWeight: '700'
+                    }} 
+                  />
+                  <button 
+                    type="submit"
+                    style={{
+                      width: '100%',
+                      padding: '12px',
+                      background: '#7000FF',
+                      color: '#FFF',
+                      border: '2px solid #111',
+                      fontWeight: '800',
+                      cursor: 'pointer',
+                      boxShadow: '3px 3px 0px #111',
+                      fontSize: '12px'
+                    }}>
+                    DISPATCH MY ESCROW DOSSIER
+                  </button>
+                </form>
+              ) : (
+                <div style={{
+                  background: '#CCFF00',
+                  padding: '12px',
+                  border: '2px solid #111',
+                  fontSize: '12px',
+                  fontWeight: '800',
+                  marginTop: '12px',
+                  boxShadow: '3px 3px 0px #111'
+                }}>
+                  ✅ Dossier Queued! Otis White Jr. will text your custom Cordelia/Green Valley assessment shortly.
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* Footer Branding */}
+          <div style={{
+            marginTop: '16px',
+            textAlign: 'center',
+            fontSize: '10px',
+            color: '#777',
+            fontWeight: '600'
+          }}>
+            POWERED BY MOREPROFITUSA REAL ESTATE ENGINE • SOLANO COUNTY MLS DATA
+          </div>
+
+        </div>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<FairfieldSimulator />);
+  </script>
+</body>
+</html>
