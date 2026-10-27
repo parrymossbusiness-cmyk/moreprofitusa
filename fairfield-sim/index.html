@@ -9,16 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700;800&family=Space+Grotesk:wght@700;800&display=swap" rel="stylesheet">
   
-  <!-- React & Babel CDNs -->
-  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
-  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-
-  <!-- Three.js + OrbitControls (3D WebGL Engine) -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
-
-  <!-- Schema Markup for AEO / GEO -->
+  <!-- Machine-Readable Schema for AEO/GEO Search -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -38,7 +29,7 @@
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      background: #E5E0D8;
+      background-color: #E5E0D8;
       background-image: 
         radial-gradient(#C4BCB0 1.5px, transparent 1.5px),
         linear-gradient(to bottom, rgba(229,224,216,0.9), #E5E0D8);
@@ -49,9 +40,42 @@
       min-height: 100vh;
       display: flex;
       justify-content: center;
+      align-items: flex-start;
       -webkit-tap-highlight-color: transparent;
     }
 
+    #game-container {
+      max-width: 560px;
+      width: 100%;
+      background: #FFFDF9;
+      border: 3px solid #111;
+      padding: 16px;
+      box-shadow: 8px 8px 0px #111;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Keyframe Animations */
+    @keyframes cloudDrift {
+      0% { transform: translateX(-50px); }
+      100% { transform: translateX(540px); }
+    }
+    @keyframes carDrive {
+      0% { transform: translateX(-40px); }
+      100% { transform: translateX(560px); }
+    }
+    @keyframes trainSpeed {
+      0% { transform: translateX(560px); }
+      100% { transform: translateX(-80px); }
+    }
+    @keyframes floatVoxel {
+      0%, 100% { transform: translateY(0px) rotateX(25deg); }
+      50% { transform: translateY(-5px) rotateX(25deg); }
+    }
+    @keyframes pulseCta {
+      0%, 100% { transform: scale(1); box-shadow: 4px 4px 0px #111; }
+      50% { transform: scale(1.02); box-shadow: 6px 6px 0px #7000FF; }
+    }
     @keyframes popFloatUp {
       0% { opacity: 0; transform: translateY(10px) scale(0.8); }
       20% { opacity: 1; transform: translateY(-5px) scale(1.1); }
@@ -63,18 +87,10 @@
       30%, 50%, 70% { transform: translate3d(-5px, 0, 0); }
       40%, 60% { transform: translate3d(5px, 0, 0); }
     }
-    @keyframes cardSlideIn {
-      0% { opacity: 0; transform: translateY(12px); }
-      100% { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes pulseCta {
-      0%, 100% { transform: scale(1); box-shadow: 4px 4px 0px #111; }
-      50% { transform: scale(1.02); box-shadow: 6px 6px 0px #7000FF; }
-    }
 
     .anim-shake { animation: screenShake 0.35s cubic-bezier(.36,.07,.19,.97) both; }
-    .anim-slide { animation: cardSlideIn 0.22s ease-out forwards; }
     .btn-pulse { animation: pulseCta 2s infinite ease-in-out; }
+    .float-voxel { animation: floatVoxel 2.8s ease-in-out infinite; }
 
     button {
       font-family: 'JetBrains Mono', monospace;
@@ -84,16 +100,166 @@
       transform: translate(2px, 2px) !important;
       box-shadow: 1px 1px 0px #000 !important;
     }
+    .hidden { display: none !important; }
   </style>
 </head>
 <body>
 
-  <div id="root"></div>
+  <div id="game-container">
 
-  <script type="text/babel">
-    const { useState, useEffect, useRef } = React;
+    <!-- Floating Action Alert -->
+    <div id="floating-popup" class="hidden" style="position:absolute; top:40%; left:50%; transform:translateX(-50%); background:#CCFF00; color:#111; border:2px solid #111; padding:6px 14px; font-weight:900; font-size:13px; z-index:999; box-shadow:3px 3px 0px #111; pointer-events:none; animation:popFloatUp 1.2s forwards;"></div>
 
-    const playSfx = (type) => {
+    <!-- ========================================================
+         SCREEN 0: SPLASH ONBOARDING (WHY & HOW)
+         ======================================================== -->
+    <div id="screen-splash">
+      <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:3px solid #111; padding-bottom:12px; marginBottom:16px;">
+        <span style="background:#CCFF00; padding:4px 10px; font-weight:800; font-size:12px; border:2px solid #111; box-shadow:2px 2px 0px #111;">
+          EAST BAY REAL ESTATE ENGINE
+        </span>
+        <span style="font-size:11px; font-weight:800; color:#777;">
+          SOLANO CO. v3.0
+        </span>
+      </div>
+
+      <div style="text-align:left; margin-top:14px; margin-bottom:18px;">
+        <h1 style="font-family:'Space Grotesk', sans-serif; font-size:25px; line-height:1.15; margin:0 0 10px 0; font-weight:800;">
+          CAN YOU AFFORD TO BUY IN FAIRFIELD, CA?
+        </h1>
+        <p style="font-size:13px; line-height:1.5; color:#444;">
+          Most first-time buyers get blindsided by <strong>Mello-Roos CFD special taxes</strong>, the <strong>I-80 commute bottleneck</strong>, and <strong>inspection pitfalls</strong> in escrow.
+        </p>
+      </div>
+
+      <!-- Curated How-It-Works Box -->
+      <div style="background:#F7F4EB; border:3px solid #111; padding:14px; margin-bottom:18px; box-shadow:4px 4px 0px #111;">
+        <div style="font-size:11px; font-weight:800; color:#7000FF; margin-bottom:8px;">
+          HOW THE 3D SIMULATION WORKS:
+        </div>
+        
+        <div style="display:flex; flex-direction:column; gap:10px; font-size:12px;">
+          <div style="display:flex; gap:8px; align-items:flex-start;">
+            <span style="background:#111; color:#FFF; padding:2px 6px; font-size:10px; font-weight:800;">1</span>
+            <div><strong>Pick Your Archetype:</strong> Calibrate starting cash, income, and DTI stress.</div>
+          </div>
+          <div style="display:flex; gap:8px; align-items:flex-start;">
+            <span style="background:#111; color:#FFF; padding:2px 6px; font-size:10px; font-weight:800;">2</span>
+            <div><strong>Scout Districts:</strong> Compare Cordelia, Green Valley & Central Fairfield math.</div>
+          </div>
+          <div style="display:flex; gap:8px; align-items:flex-start;">
+            <span style="background:#111; color:#FFF; padding:2px 6px; font-size:10px; font-weight:800;">3</span>
+            <div><strong>Survive Escrow:</strong> Solve the multiple-offer crisis to unlock Otis White Jr.'s verified strategy.</div>
+          </div>
+        </div>
+      </div>
+
+      <button id="btn-start" class="btn-pulse" style="width:100%; padding:16px; background:#CCFF00; border:3px solid #111; font-size:14px; font-weight:900; cursor:pointer; letter-spacing:0.5px;">
+        ENTER 3D FAIRFIELD SIMULATION ➔
+      </button>
+
+      <div style="text-align:center; margin-top:14px; font-size:10px; color:#888; font-weight:700;">
+        POWERED BY MOREPROFITUSA • REAL MLS & MUNICIPAL DATA
+      </div>
+    </div>
+
+    <!-- ========================================================
+         SCREEN 1+: ACTIVE SIMULATOR (HIDDEN UNTIL START CLICKED)
+         ======================================================== -->
+    <div id="screen-game" class="hidden">
+      
+      <!-- Top Arcade HUD -->
+      <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:3px solid #111; padding-bottom:10px; margin-bottom:12px;">
+        <div>
+          <span style="background:#CCFF00; padding:3px 8px; font-weight:800; font-size:11px; border:2px solid #111; box-shadow:2px 2px 0px #111;">
+            FAIRFIELD 3D SIMCITY
+          </span>
+          <div id="hud-stage-label" style="font-size:10px; margin-top:4px; color:#666; font-weight:700;">
+            STAGE 1 OF 6 • SOLANO SEAT
+          </div>
+        </div>
+        <div style="text-align:right;">
+          <div style="font-size:9px; font-weight:700; color:#888;">INTENT RATING</div>
+          <div id="hud-bis-score" style="font-size:19px; font-weight:900; color:#111;">30/100</div>
+        </div>
+      </div>
+
+      <!-- 3D Voxel Animated Canvas (CSS 3D / Zero CDN Dependencies) -->
+      <div style="height:170px; background:linear-gradient(to bottom, #8AD4EB 0%, #D2EDF7 65%, #C2DF8E 66%, #8BB85C 100%); border:3px solid #111; border-radius:4px; position:relative; overflow:hidden; margin-bottom:14px; box-shadow:inset 0 0 10px rgba(0,0,0,0.1);">
+        
+        <!-- Drifting Clouds -->
+        <div style="position:absolute; top:10px; left:0; font-size:22px; animation:cloudDrift 14s linear infinite; opacity:0.9;">☁️</div>
+        <div style="position:absolute; top:26px; left:0; font-size:16px; animation:cloudDrift 22s linear infinite; animation-delay:5s; opacity:0.7;">☁️</div>
+        
+        <!-- Sun -->
+        <div style="position:absolute; top:10px; right:16px; width:30px; height:30px; border-radius:50%; background:#FFD700; border:2px solid #111; box-shadow:0 0 10px rgba(255,215,0,0.8);"></div>
+
+        <!-- 3D Voxel Buildings Floating Cluster -->
+        <div class="float-voxel" style="position:absolute; bottom:30px; left:50%; transform:translateX(-50%) perspective(500px) rotateX(25deg); display:flex; align-items:flex-end; gap:10px; z-index:2;">
+          <div style="width:34px; height:50px; background:#FDFBF7; border:2px solid #111; box-shadow:4px 4px 0px #111; display:flex; flex-direction:column; justify-content:space-around; align-items:center;">
+            <div style="width:10px; height:10px; background:#FFE066; border:1px solid #111;"></div>
+            <div style="width:10px; height:10px; background:#FFE066; border:1px solid #111;"></div>
+          </div>
+          <div id="voxel-main-building" style="width:44px; height:75px; background:#EAD8B5; border:3px solid #111; box-shadow:5px 5px 0px #111; display:flex; flex-direction:column; justify-content:space-around; align-items:center;">
+            <div style="width:12px; height:12px; background:#FFE066; border:1px solid #111;"></div>
+            <div style="width:12px; height:12px; background:#FFE066; border:1px solid #111;"></div>
+            <div style="width:12px; height:12px; background:#FFE066; border:1px solid #111;"></div>
+          </div>
+          <div style="width:36px; height:45px; background:#B8D8A0; border:2px solid #111; box-shadow:4px 4px 0px #111; display:flex; flex-direction:column; justify-content:space-around; align-items:center;">
+            <div style="width:10px; height:10px; background:#FFE066; border:1px solid #111;"></div>
+          </div>
+          <div style="font-size:24px;">🌳</div>
+        </div>
+
+        <!-- Animated Highway Strip -->
+        <div style="position:absolute; bottom:0; left:0; right:0; height:24px; background:#333; border-top:2px solid #111; z-index:3; overflow:hidden;">
+          <div style="position:absolute; top:10px; left:0; right:0; height:2px; background-image:linear-gradient(90deg, #FFD700 50%, transparent 50%); background-size:16px 2px;"></div>
+          <div style="position:absolute; top:2px; font-size:14px; animation:carDrive 5s linear infinite;">🚗</div>
+          <div style="position:absolute; top:2px; font-size:14px; animation:trainSpeed 7s linear infinite;">🚆</div>
+        </div>
+
+        <!-- Viewport Region Badge -->
+        <div id="viewport-district-tag" style="position:absolute; top:8px; left:8px; background:rgba(255,255,255,0.92); border:2px solid #111; padding:3px 8px; font-size:10px; font-weight:800; box-shadow:2px 2px 0px #111; z-index:4;">
+          📍 CORDELIA JUNCTION
+        </div>
+        <div id="viewport-price-tag" style="position:absolute; bottom:28px; right:8px; background:rgba(204,255,0,0.95); border:2px solid #111; padding:2px 6px; font-size:9px; font-weight:800; z-index:4;">
+          MEDIAN: $720K
+        </div>
+      </div>
+
+      <!-- Living Stat HUD -->
+      <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:6px; margin-bottom:14px;">
+        <div style="border:2px solid #111; padding:6px; background:#FFF; box-shadow:2px 2px 0px #111;">
+          <div style="font-size:9px; color:#666; font-weight:700;">LIQUID CASH</div>
+          <div id="stat-cash" style="font-size:15px; font-weight:900;">$95,000</div>
+        </div>
+        <div style="border:2px solid #111; padding:6px; background:#FFF; box-shadow:2px 2px 0px #111;">
+          <div style="font-size:9px; color:#666; font-weight:700;">SANITY / ENERGY</div>
+          <div id="stat-sanity" style="font-size:15px; font-weight:900; color:#00A86B;">85% ⚡</div>
+        </div>
+        <div style="border:2px solid #111; padding:6px; background:#FFF; box-shadow:2px 2px 0px #111;">
+          <div style="font-size:9px; color:#666; font-weight:700;">EST. MONTHLY</div>
+          <div id="stat-monthly" style="font-size:15px; font-weight:900;">$5,116</div>
+        </div>
+      </div>
+
+      <!-- STAGE CONTAINER (Dynamically Populated with Curated Cards) -->
+      <div id="stage-card" style="border:3px solid #111; padding:14px; background:#FFF; box-shadow:4px 4px 0px #111;">
+        <!-- Injected via JavaScript -->
+      </div>
+
+      <!-- In-Game Footer -->
+      <div style="text-align:center; margin-top:14px; font-size:10px; color:#888; font-weight:600;">
+        MOREPROFITUSA AI ENGINE • PROUD PARTNER OF OTIS WHITE JR. REALTY
+      </div>
+
+    </div>
+
+  </div>
+
+  <script>
+    // 8-Bit Web Audio Synthesizer
+    function playSfx(type) {
       try {
         const ctx = new (window.AudioContext || window.webkitAudioContext)();
         const osc = ctx.createOscillator();
@@ -118,7 +284,7 @@
           osc.stop(now + 0.25);
         }
       } catch(e) {}
-    };
+    }
 
     const DISTRICTS = {
       cordelia: {
@@ -127,8 +293,7 @@
         median: 720000,
         melloRoos: 3200,
         hoa: 185,
-        targetX: -14,
-        lore: "I-80 & I-680 intersection. Solano's premier commuter hub for SF & Walnut Creek."
+        lore: "I-80 & I-680 intersection. Solano's premier commute launchpad to SF & Walnut Creek."
       },
       greenValley: {
         name: "Green Valley / Eastridge",
@@ -136,8 +301,7 @@
         median: 910000,
         melloRoos: 1800,
         hoa: 340,
-        targetX: 0,
-        lore: "Nestled in oak hills near Napa vineyards. Golf courses & executive homes."
+        lore: "Nestled in oak hills near Napa vineyards. Golf courses & luxury master-planned tracts."
       },
       central: {
         name: "Downtown / Travis Corridor",
@@ -145,687 +309,337 @@
         median: 535000,
         melloRoos: 0,
         hoa: 0,
-        targetX: 14,
-        lore: "Solano County Seat. Post-war ranch homes, near Travis AFB & Allan Witt Park."
+        lore: "Solano County Seat. Post-war ranches, zero Mello-Roos CFD debt, near Travis AFB."
       }
     };
 
-    // === THREE.JS 3D PROCEDURAL CITY ENGINE ===
-    function ThreeCityCanvas({ districtKey }) {
-      const mountRef = useRef(null);
-      const cameraRef = useRef(null);
+    // State Variables
+    let stage = 1;
+    let districtKey = 'cordelia';
+    let cash = 95000;
+    let sanity = 85;
+    let bisScore = 30;
 
-      useEffect(() => {
-        const container = mountRef.current;
-        if (!container) return;
-
-        const width = container.clientWidth;
-        const height = container.clientHeight;
-
-        const scene = new THREE.Scene();
-        scene.background = new THREE.Color(0xDCECF4);
-        scene.fog = new THREE.Fog(0xDCECF4, 35, 75);
-
-        const camera = new THREE.PerspectiveCamera(40, width / height, 1, 1000);
-        camera.position.set(22, 28, 32);
-        cameraRef.current = camera;
-
-        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-        renderer.setSize(width, height);
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-        renderer.shadowMap.enabled = true;
-        renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-        container.appendChild(renderer.domElement);
-
-        const controls = new THREE.OrbitControls(camera, renderer.domElement);
-        controls.enableDamping = true;
-        controls.dampingFactor = 0.08;
-        controls.maxPolarAngle = Math.PI / 2.15;
-        controls.minDistance = 15;
-        controls.maxDistance = 55;
-        controls.target.set(0, 0, 0);
-
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.75);
-        scene.add(ambientLight);
-
-        const dirLight = new THREE.DirectionalLight(0xfff6d5, 0.95);
-        dirLight.position.set(30, 45, 20);
-        dirLight.castShadow = true;
-        scene.add(dirLight);
-
-        const groundGeo = new THREE.PlaneGeometry(100, 100);
-        const groundMat = new THREE.MeshLambertMaterial({ color: 0x82A860 });
-        const ground = new THREE.Mesh(groundGeo, groundMat);
-        ground.rotation.x = -Math.PI / 2;
-        ground.receiveShadow = true;
-        scene.add(ground);
-
-        const roadGeo = new THREE.PlaneGeometry(100, 4.5);
-        const roadMat = new THREE.MeshLambertMaterial({ color: 0x333339 });
-        const road = new THREE.Mesh(roadGeo, roadMat);
-        road.rotation.x = -Math.PI / 2;
-        road.position.set(0, 0.05, 8);
-        road.receiveShadow = true;
-        scene.add(road);
-
-        const buildingMatWhite = new THREE.MeshLambertMaterial({ color: 0xFDFBF7 });
-        const buildingMatTan = new THREE.MeshLambertMaterial({ color: 0xEAD8B5 });
-        const buildingMatGreen = new THREE.MeshLambertMaterial({ color: 0xB8D8A0 });
-        const roofMat = new THREE.MeshLambertMaterial({ color: 0x933D2D });
-        const windowMatLit = new THREE.MeshBasicMaterial({ color: 0xFFE066 });
-
-        const districtConfigs = [
-          { key: 'cordelia', xOffset: -14, count: 12, heightRange: [2.5, 5], color: buildingMatTan },
-          { key: 'greenValley', xOffset: 0, count: 10, heightRange: [4.5, 9], color: buildingMatWhite },
-          { key: 'central', xOffset: 14, count: 14, heightRange: [2, 4], color: buildingMatGreen }
-        ];
-
-        districtConfigs.forEach(d => {
-          for (let i = 0; i < d.count; i++) {
-            const h = d.heightRange[0] + Math.random() * (d.heightRange[1] - d.heightRange[0]);
-            const w = 1.8 + Math.random() * 0.8;
-            const bGeo = new THREE.BoxGeometry(w, h, w);
-            const building = new THREE.Mesh(bGeo, d.color);
-            
-            const row = Math.floor(i / 4);
-            const col = i % 4;
-            const z = (row * 3.5) - 6;
-            const x = d.xOffset + ((col - 1.5) * 2.8) + (Math.random() * 0.4);
-
-            building.position.set(x, h / 2, z);
-            building.castShadow = true;
-            building.receiveShadow = true;
-            scene.add(building);
-
-            const rGeo = new THREE.BoxGeometry(w * 0.95, 0.35, w * 0.95);
-            const roof = new THREE.Mesh(rGeo, roofMat);
-            roof.position.set(x, h + 0.18, z);
-            roof.castShadow = true;
-            scene.add(roof);
-
-            if (Math.random() > 0.4) {
-              const winGeo = new THREE.BoxGeometry(0.35, 0.45, w + 0.05);
-              const win = new THREE.Mesh(winGeo, windowMatLit);
-              win.position.set(x, h * 0.65, z);
-              scene.add(win);
-            }
-          }
-        });
-
-        const carGeo = new THREE.BoxGeometry(0.9, 0.5, 0.5);
-        const car1 = new THREE.Mesh(carGeo, new THREE.MeshLambertMaterial({ color: 0xFF3B30 }));
-        const car2 = new THREE.Mesh(carGeo, new THREE.MeshLambertMaterial({ color: 0x007AFF }));
-        car1.position.set(-25, 0.35, 7.2);
-        car2.position.set(25, 0.35, 8.8);
-        scene.add(car1);
-        scene.add(car2);
-
-        let animId;
-        const animate = () => {
-          animId = requestAnimationFrame(animate);
-          car1.position.x += 0.12;
-          if (car1.position.x > 35) car1.position.x = -35;
-          car2.position.x -= 0.09;
-          if (car2.position.x < -35) car2.position.x = 35;
-          controls.update();
-          renderer.render(scene, camera);
-        };
-        animate();
-
-        const handleResize = () => {
-          if (!container) return;
-          camera.aspect = container.clientWidth / container.clientHeight;
-          camera.updateProjectionMatrix();
-          renderer.setSize(container.clientWidth, container.clientHeight);
-        };
-        window.addEventListener('resize', handleResize);
-
-        return () => {
-          cancelAnimationFrame(animId);
-          window.removeEventListener('resize', handleResize);
-          if (renderer.domElement && container.contains(renderer.domElement)) {
-            container.removeChild(renderer.domElement);
-          }
-          renderer.dispose();
-        };
-      }, []);
-
-      useEffect(() => {
-        if (!cameraRef.current) return;
-        const targetX = DISTRICTS[districtKey].targetX;
-        const startX = cameraRef.current.position.x;
-        const destX = targetX + 16;
-        let step = 0;
-        const panInterval = setInterval(() => {
-          step += 0.05;
-          cameraRef.current.position.x = THREE.MathUtils.lerp(startX, destX, step);
-          if (step >= 1) clearInterval(panInterval);
-        }, 16);
-        return () => clearInterval(panInterval);
-      }, [districtKey]);
-
-      return (
-        <div ref={mountRef} style={{ width: '100%', height: '100%', position: 'relative', cursor: 'grab' }} />
-      );
-    }
-
-    // === MAIN SIMULATOR COMPONENT ===
-    function App() {
-      // Game States (0 = Start Screen / Splash)
-      const [gameStarted, setGameStarted] = useState(false);
-      const [stage, setStage] = useState(1);
-      const [districtKey, setDistrictKey] = useState('cordelia');
-      const [cash, setCash] = useState(95000);
-      const [sanity, setSanity] = useState(85);
-      const [bisScore, setBisScore] = useState(30);
-      const [buyerClass, setBuyerClass] = useState('Tech Commuter');
-      const [shaking, setShaking] = useState(false);
-      const [floatingText, setFloatingText] = useState(null);
-      const [gameOver, setGameOver] = useState(null);
-      const [leadSent, setLeadSent] = useState(false);
-      const [phone, setPhone] = useState('');
-
+    function calcMonthly() {
       const dist = DISTRICTS[districtKey];
-
-      // Dynamic Math Engine
       const loan = Math.max(0, dist.median - cash);
       const monthlyPI = Math.round((loan * (0.065 / 12)) / (1 - Math.pow(1 + 0.065 / 12, -360)));
       const monthlyTax = Math.round((dist.median * 0.0119) / 12);
       const monthlyCFD = Math.round(dist.melloRoos / 12);
-      const totalNut = monthlyPI + monthlyTax + monthlyCFD + dist.hoa;
-
-      const showFloatingPopup = (text, color = '#CCFF00') => {
-        setFloatingText({ text, color });
-        setTimeout(() => setFloatingText(null), 1200);
-      };
-
-      const triggerShake = () => {
-        setShaking(true);
-        setTimeout(() => setShaking(false), 380);
-      };
-
-      const startGame = () => {
-        playSfx('coin');
-        setGameStarted(true);
-      };
-
-      const pickClass = (title, startingCash, startingSanity) => {
-        playSfx('coin');
-        setBuyerClass(title);
-        setCash(startingCash);
-        setSanity(startingSanity);
-        setBisScore(bisScore + 15);
-        showFloatingPopup(`+$${(startingCash/1000)}k Bank!`, '#CCFF00');
-        setStage(2);
-      };
-
-      const selectDistrict = (key) => {
-        playSfx('coin');
-        setDistrictKey(key);
-        setBisScore(bisScore + 15);
-        showFloatingPopup(`Camera Pan: ${DISTRICTS[key].name}!`, '#7000FF');
-      };
-
-      const handleCommuteChoice = (mode) => {
-        if (mode === 'drive') {
-          playSfx('hit');
-          triggerShake();
-          setSanity(Math.max(10, sanity - 30));
-          setBisScore(bisScore + 10);
-          showFloatingPopup(`-30% Sanity (I-80 Bottleneck!)`, '#FF4D4D');
-        } else {
-          playSfx('coin');
-          setCash(cash - 1200);
-          setSanity(Math.min(100, sanity + 15));
-          setBisScore(bisScore + 20);
-          showFloatingPopup(`+15% Sanity (Train WiFi Perk!)`, '#CCFF00');
-        }
-        setStage(4);
-      };
-
-      const handleLoreChoice = (answer) => {
-        if (answer === 'correct') {
-          playSfx('coin');
-          setCash(cash + 2500);
-          setBisScore(bisScore + 15);
-          showFloatingPopup(`+$2,500 Waterman Grant!`, '#CCFF00');
-        } else {
-          playSfx('hit');
-          triggerShake();
-          setSanity(sanity - 10);
-          showFloatingPopup(`-10% Sanity (Civic Penalty)`, '#FF4D4D');
-        }
-        setStage(5);
-      };
-
-      const handleEscrowChoice = (waive) => {
-        if (waive) {
-          playSfx('hit');
-          triggerShake();
-          setGameOver({
-            title: "ESCROW NIGHTMARE: Cordelia AC & Dry Rot Burst",
-            desc: "You waived inspection to beat 3 Bay Area cash offers. HVAC compressor blew and foundation dry rot was revealed.",
-            loss: "-$24,000 Surprise Repair"
-          });
-        } else {
-          playSfx('coin');
-          setCash(cash - 850);
-          setBisScore(bisScore + 20);
-          showFloatingPopup(`Protected By 7-Day Inspection!`, '#7000FF');
-          setStage(6);
-        }
-      };
-
-      return (
-        <div className={shaking ? 'anim-shake' : ''} style={{
-          maxWidth: '560px',
-          width: '100%',
-          background: '#FFFDF9',
-          border: '3px solid #111',
-          padding: '16px',
-          boxShadow: '8px 8px 0px #111',
-          position: 'relative',
-          overflow: 'hidden'
-        }}>
-
-          {/* Floating Action Alerts */}
-          {floatingText && (
-            <div style={{
-              position: 'absolute',
-              top: '40%',
-              left: '50%',
-              transform: 'translateX(-50%)',
-              background: floatingText.color,
-              color: '#111',
-              border: '2px solid #111',
-              padding: '6px 14px',
-              fontWeight: '900',
-              fontSize: '13px',
-              zIndex: 999,
-              boxShadow: '3px 3px 0px #111',
-              animation: 'popFloatUp 1.2s forwards',
-              pointerEvents: 'none'
-            }}>
-              {floatingText.text}
-            </div>
-          )}
-
-          {/* ========================================================
-              SCREEN 0: CLEAN ONBOARDING / START SCREEN
-             ======================================================== */}
-          {!gameStarted ? (
-            <div className="anim-slide" style={{ padding: '8px 0' }}>
-              
-              {/* Header Badge */}
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '3px solid #111', paddingBottom: '12px', marginBottom: '16px' }}>
-                <span style={{ background: '#CCFF00', padding: '4px 10px', fontWeight: '800', fontSize: '12px', border: '2px solid #111', boxShadow: '2px 2px 0px #111' }}>
-                  EAST BAY REAL ESTATE ENGINE
-                </span>
-                <span style={{ fontSize: '11px', fontWeight: '800', color: '#777' }}>
-                  SOLANO CO. v2.4
-                </span>
-              </div>
-
-              {/* Hook & Title */}
-              <div style={{ textAlign: 'left', marginBottom: '18px' }}>
-                <h1 style={{ fontFamily: 'Space Grotesk', fontSize: '26px', lineHeight: '1.15', margin: '0 0 10px 0', fontWeight: '800' }}>
-                  CAN YOU AFFORD TO BUY IN FAIRFIELD, CA?
-                </h1>
-                <p style={{ fontSize: '13px', lineHeight: '1.5', color: '#444' }}>
-                  Most first-time buyers get blindsided by <strong>Mello-Roos CFD special taxes</strong>, the <strong>I-80 commute bottleneck</strong>, and <strong>inspection pitfalls</strong> in escrow.
-                </p>
-              </div>
-
-              {/* Curated How-It-Works Box */}
-              <div style={{ background: '#F7F4EB', border: '3px solid #111', padding: '14px', marginBottom: '18px', boxShadow: '4px 4px 0px #111' }}>
-                <div style={{ fontSize: '11px', fontWeight: '800', color: '#7000FF', marginBottom: '8px' }}>
-                  HOW THE 3D SIMULATION WORKS:
-                </div>
-                
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', fontSize: '12px' }}>
-                  <div style={{ display: 'flex', gap: '8px', alignItems: 'flex-start' }}>
-                    <span style={{ background: '#111', color: '#FFF', padding: '2px 6px', fontSize: '10px', fontWeight: '800' }}>1</span>
-                    <div><strong>Pick Your Archetype:</strong> Calibrate your starting cash, income, and DTI stress.</div>
-                  </div>
-                  <div style={{ display: 'flex', gap: '8px', alignItems: 'flex-start' }}>
-                    <span style={{ background: '#111', color: '#FFF', padding: '2px 6px', fontSize: '10px', fontWeight: '800' }}>2</span>
-                    <div><strong>Scout in 3D:</strong> Swipe & fly the 3D camera across Cordelia, Green Valley & Central tracts.</div>
-                  </div>
-                  <div style={{ display: 'flex', gap: '8px', alignItems: 'flex-start' }}>
-                    <span style={{ background: '#111', color: '#FFF', padding: '2px 6px', fontSize: '10px', fontWeight: '800' }}>3</span>
-                    <div><strong>Survive Escrow:</strong> Solve the multiple-offer crisis to unlock Otis White Jr.'s verified strategy.</div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Start Button */}
-              <button 
-                onClick={startGame}
-                className="btn-pulse"
-                style={{
-                  width: '100%',
-                  padding: '16px',
-                  background: '#CCFF00',
-                  border: '3px solid #111',
-                  fontSize: '14px',
-                  fontWeight: '900',
-                  cursor: 'pointer',
-                  letterSpacing: '0.5px'
-                }}>
-                ENTER 3D FAIRFIELD SIMULATION ➔
-              </button>
-
-              <div style={{ textAlign: 'center', marginTop: '14px', fontSize: '10px', color: '#888', fontWeight: '700' }}>
-                POWERED BY MOREPROFITUSA • REAL MLS & MUNICIPAL DATA
-              </div>
-
-            </div>
-          ) : (
-
-            /* ========================================================
-               ACTIVE GAME ENGINE (With Curated Guidance)
-               ======================================================== */
-            <div>
-
-              {/* Active HUD Header */}
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '3px solid #111', paddingBottom: '10px', marginBottom: '12px' }}>
-                <div>
-                  <span style={{ background: '#CCFF00', padding: '3px 8px', fontWeight: '800', fontSize: '11px', border: '2px solid #111', boxShadow: '2px 2px 0px #111' }}>
-                    FAIRFIELD 3D SIMCITY
-                  </span>
-                  <div style={{ fontSize: '10px', marginTop: '4px', color: '#666', fontWeight: '700' }}>
-                    STAGE {stage} OF 6 • SOLANO SEAT
-                  </div>
-                </div>
-                <div style={{ textAlign: 'right' }}>
-                  <div style={{ fontSize: '9px', fontWeight: '700', color: '#888' }}>INTENT RATING</div>
-                  <div style={{ fontSize: '19px', fontWeight: '900', color: bisScore >= 70 ? '#7000FF' : '#111' }}>
-                    {bisScore}/100
-                  </div>
-                </div>
-              </div>
-
-              {/* 3D WebGL City Canvas with Interactive Guidance Overlay */}
-              <div style={{
-                height: '180px',
-                border: '3px solid #111',
-                borderRadius: '4px',
-                position: 'relative',
-                overflow: 'hidden',
-                marginBottom: '14px',
-                boxShadow: 'inset 0 0 10px rgba(0,0,0,0.1)'
-              }}>
-                <ThreeCityCanvas districtKey={districtKey} />
-
-                {/* Micro-Instructions for 3D Viewport */}
-                <div style={{
-                  position: 'absolute',
-                  top: '8px',
-                  left: '8px',
-                  background: 'rgba(255,255,255,0.92)',
-                  border: '2px solid #111',
-                  padding: '3px 8px',
-                  fontSize: '9px',
-                  fontWeight: '800',
-                  boxShadow: '2px 2px 0px #111',
-                  pointerEvents: 'none'
-                }}>
-                  📍 {dist.name.toUpperCase()} • 👆 DRAG 3D TO ROTATE
-                </div>
-
-                <div style={{
-                  position: 'absolute',
-                  bottom: '6px',
-                  right: '8px',
-                  background: 'rgba(204,255,0,0.95)',
-                  border: '2px solid #111',
-                  padding: '2px 6px',
-                  fontSize: '9px',
-                  fontWeight: '800',
-                  pointerEvents: 'none'
-                }}>
-                  MEDIAN: ${(dist.median / 1000)}K
-                </div>
-              </div>
-
-              {/* Real-Time Sims-Style Stat Gauges */}
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '6px', marginBottom: '14px' }}>
-                <div style={{ border: '2px solid #111', padding: '6px', background: '#FFF', boxShadow: '2px 2px 0px #111' }}>
-                  <div style={{ fontSize: '9px', color: '#666', fontWeight: '700' }}>LIQUID CASH</div>
-                  <div style={{ fontSize: '15px', fontWeight: '900' }}>${cash.toLocaleString()}</div>
-                </div>
-                <div style={{ border: '2px solid #111', padding: '6px', background: '#FFF', boxShadow: '2px 2px 0px #111' }}>
-                  <div style={{ fontSize: '9px', color: '#666', fontWeight: '700' }}>SANITY / ENERGY</div>
-                  <div style={{ fontSize: '15px', fontWeight: '900', color: sanity < 50 ? '#FF4D4D' : '#00A86B' }}>
-                    {sanity}% {sanity < 50 ? '⚠️' : '⚡'}
-                  </div>
-                </div>
-                <div style={{ border: '2px solid #111', padding: '6px', background: '#FFF', boxShadow: '2px 2px 0px #111' }}>
-                  <div style={{ fontSize: '9px', color: '#666', fontWeight: '700' }}>EST. MONTHLY</div>
-                  <div style={{ fontSize: '15px', fontWeight: '900' }}>${totalNut.toLocaleString()}</div>
-                </div>
-              </div>
-
-              {/* === STAGE 1: Character Select === */}
-              {stage === 1 && (
-                <div className="anim-slide" style={{ border: '3px solid #111', padding: '14px', background: '#FFF', boxShadow: '4px 4px 0px #111' }}>
-                  <div style={{ fontSize: '10px', color: '#7000FF', fontWeight: '800' }}>STEP 1 OF 5: CALIBRATE FINANCES</div>
-                  <h3 style={{ fontFamily: 'Space Grotesk', fontSize: '16px', margin: '4px 0 10px 0' }}>Select your buyer profile:</h3>
-                  
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                    <button onClick={() => pickClass("SF/Oakland Tech Commuter", 130000, 75)} style={{
-                      padding: '10px', background: '#FFF', border: '2px solid #111', textAlign: 'left', cursor: 'pointer', boxShadow: '3px 3px 0px #111'
-                    }}>
-                      <strong>💻 SF/Oakland Hybrid Commuter</strong>
-                      <div style={{ fontSize: '11px', color: '#555', marginTop: '2px' }}>Starting Cash: $130,000 | Sanity: 75% | Trapped on I-80</div>
-                    </button>
-
-                    <button onClick={() => pickClass("Travis AFB / Defense Family", 45000, 95)} style={{
-                      padding: '10px', background: '#FFF', border: '2px solid #111', textAlign: 'left', cursor: 'pointer', boxShadow: '3px 3px 0px #111'
-                    }}>
-                      <strong>🎖️ Travis AFB / Public Servant</strong>
-                      <div style={{ fontSize: '11px', color: '#555', marginTop: '2px' }}>Starting Cash: $45,000 | Sanity: 95% | VA 0% Down Benefit</div>
-                    </button>
-
-                    <button onClick={() => pickClass("Local Solano Upgrader", 90000, 90)} style={{
-                      padding: '10px', background: '#FFF', border: '2px solid #111', textAlign: 'left', cursor: 'pointer', boxShadow: '3px 3px 0px #111'
-                    }}>
-                      <strong>🏡 Local Solano Upgrader</strong>
-                      <div style={{ fontSize: '11px', color: '#555', marginTop: '2px' }}>Starting Cash: $90,000 | Sanity: 90% | Escaping rental inflation</div>
-                    </button>
-                  </div>
-                </div>
-              )}
-
-              {/* === STAGE 2: Interactive Territory / District Pick === */}
-              {stage === 2 && (
-                <div className="anim-slide" style={{ border: '3px solid #111', padding: '14px', background: '#FFF', boxShadow: '4px 4px 0px #111' }}>
-                  <div style={{ fontSize: '10px', color: '#7000FF', fontWeight: '800' }}>STEP 2 OF 5: SELECT FAIRFIELD POCKET</div>
-                  <h3 style={{ fontFamily: 'Space Grotesk', fontSize: '16px', margin: '4px 0 10px 0' }}>Tap a district to fly the 3D camera:</h3>
-                  
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '8px', marginBottom: '12px' }}>
-                    {Object.keys(DISTRICTS).map((k) => (
-                      <div key={k} onClick={() => selectDistrict(k)} style={{
-                        border: '2px solid #111',
-                        padding: '10px 4px',
-                        textAlign: 'center',
-                        background: districtKey === k ? '#CCFF00' : '#F7F4EB',
-                        boxShadow: districtKey === k ? '3px 3px 0px #7000FF' : '2px 2px 0px #111',
-                        cursor: 'pointer',
-                        transform: districtKey === k ? 'translateY(-3px)' : 'none',
-                        transition: 'all 0.1s ease'
-                      }}>
-                        <div style={{ fontSize: '18px', marginBottom: '2px' }}>
-                          {k === 'greenValley' ? '🍷' : k === 'cordelia' ? '🚗' : '🏡'}
-                        </div>
-                        <div style={{ fontSize: '10px', fontWeight: '800' }}>{DISTRICTS[k].name.split(' ')[0]}</div>
-                        <div style={{ fontSize: '9px', color: '#555' }}>${(DISTRICTS[k].median/1000)}k</div>
-                      </div>
-                    ))}
-                  </div>
-
-                  <div style={{ border: '2px dashed #111', padding: '8px', fontSize: '11px', background: '#FAFAFA', marginBottom: '12px' }}>
-                    <div><strong>{dist.name} ({dist.tag})</strong></div>
-                    <div style={{ color: '#555', marginTop: '4px' }}>{dist.lore}</div>
-                    <div style={{ marginTop: '6px', fontWeight: '700' }}>
-                      CFD Mello-Roos Tax: ${dist.melloRoos}/yr | HOA: ${dist.hoa}/mo
-                    </div>
-                  </div>
-
-                  <button onClick={() => setStage(3)} style={{
-                    width: '100%', padding: '12px', background: '#CCFF00', border: '2px solid #111', fontWeight: '800', cursor: 'pointer', boxShadow: '3px 3px 0px #111'
-                  }}>
-                    LOCK IN {dist.name.toUpperCase()} & ADVANCE ➔
-                  </button>
-                </div>
-              )}
-
-              {/* === STAGE 3: Commute / Transit Gauntlet === */}
-              {stage === 3 && (
-                <div className="anim-slide" style={{ border: '3px solid #111', padding: '14px', background: '#FFF', boxShadow: '4px 4px 0px #111' }}>
-                  <div style={{ fontSize: '10px', color: '#7000FF', fontWeight: '800' }}>STEP 3 OF 5: THE COMMUTE STRATEGY</div>
-                  <h3 style={{ fontFamily: 'Space Grotesk', fontSize: '16px', margin: '4px 0 8px 0' }}>How will you reach work?</h3>
-                  <p style={{ fontSize: '12px', color: '#444', lineHeight: '1.4', marginBottom: '12px' }}>
-                    Fairfield covers 41.6 sq miles. Living in {dist.name} means managing the I-80/680 junction or utilizing the Capitol Corridor train.
-                  </p>
-
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                    <button onClick={() => handleCommuteChoice('drive')} style={{
-                      padding: '10px', background: '#FFF', border: '2px solid #111', textAlign: 'left', cursor: 'pointer', boxShadow: '3px 3px 0px #111'
-                    }}>
-                      <strong>🚗 Solo Drive via I-80</strong>
-                      <div style={{ fontSize: '11px', color: '#555' }}>Cost: $0 upfront | Risk: Traffic bottleneck drains -30% Sanity</div>
-                    </button>
-
-                    <button onClick={() => handleCommuteChoice('train')} style={{
-                      padding: '10px', background: '#FFF', border: '2px solid #111', textAlign: 'left', cursor: 'pointer', boxShadow: '3px 3px 0px #111'
-                    }}>
-                      <strong>🚆 Fairfield-Vacaville Hannigan Train Pass</strong>
-                      <div style={{ fontSize: '11px', color: '#555' }}>Cost: $1,200/yr | Reward: Coffee, WiFi, +15% Sanity Boost</div>
-                    </button>
-                  </div>
-                </div>
-              )}
-
-              {/* === STAGE 4: Local History & Civic Trivia Buff === */}
-              {stage === 4 && (
-                <div className="anim-slide" style={{ border: '3px solid #111', padding: '14px', background: '#FFF', boxShadow: '4px 4px 0px #111' }}>
-                  <div style={{ fontSize: '10px', color: '#7000FF', fontWeight: '800' }}>STEP 4 OF 5: CIVIC KNOWLEDGE PERK</div>
-                  <h3 style={{ fontFamily: 'Space Grotesk', fontSize: '16px', margin: '4px 0 8px 0' }}>Fairfield City Knowledge Check</h3>
-                  <p style={{ fontSize: '12px', color: '#444', lineHeight: '1.4', marginBottom: '12px' }}>
-                    Mayor Rick Vaccaro's City Council and local industrial bases (Jelly Belly & Anheuser-Busch) power Solano services. Prove your knowledge:
-                  </p>
-                  
-                  <div style={{ background: '#FFFDF0', border: '2px dashed #111', padding: '8px', fontSize: '11px', marginBottom: '12px' }}>
-                    <strong>Trivia:</strong> Who founded Fairfield in 1859 and named it after his Connecticut hometown?
-                  </div>
-
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                    <button onClick={() => handleLoreChoice('correct')} style={{
-                      padding: '10px', background: '#CCFF00', border: '2px solid #111', textAlign: 'left', cursor: 'pointer', boxShadow: '3px 3px 0px #111', fontWeight: '700'
-                    }}>
-                      ⚓ Clipper Ship Captain Robert H. Waterman (+$2,500 City Credit)
-                    </button>
-                    <button onClick={() => handleLoreChoice('wrong')} style={{
-                      padding: '10px', background: '#FFF', border: '2px solid #111', textAlign: 'left', cursor: 'pointer', boxShadow: '3px 3px 0px #111'
-                    }}>
-                      General Mariano Vallejo (Penalty: -10% Sanity)
-                    </button>
-                  </div>
-                </div>
-              )}
-
-              {/* === STAGE 5: Escrow Gauntlet === */}
-              {stage === 5 && !gameOver && (
-                <div className="anim-slide" style={{ border: '3px solid #111', padding: '14px', background: '#FFF', boxShadow: '4px 4px 0px #111' }}>
-                  <div style={{ fontSize: '10px', color: '#FF4D4D', fontWeight: '800' }}>STEP 5 OF 5: ESCROW PRESSURE COOKER</div>
-                  <h3 style={{ fontFamily: 'Space Grotesk', fontSize: '16px', margin: '4px 0 8px 0' }}>Bidding War in {dist.name}</h3>
-                  <p style={{ fontSize: '12px', color: '#444', lineHeight: '1.4', marginBottom: '12px' }}>
-                    Your ${dist.median.toLocaleString()} offer is matched with a Bay Area all-cash investor. The seller wants you to waive property and roof inspections.
-                  </p>
-
-                  <div style={{ display: 'flex', gap: '8px' }}>
-                    <button onClick={() => handleEscrowChoice(true)} style={{
-                      flex: 1, padding: '12px 6px', background: '#FF4D4D', color: '#FFF', border: '2px solid #111', fontWeight: '800', cursor: 'pointer', boxShadow: '3px 3px 0px #111', fontSize: '11px'
-                    }}>
-                      Waive Inspection (Risky)
-                    </button>
-                    <button onClick={() => handleEscrowChoice(false)} style={{
-                      flex: 1, padding: '12px 6px', background: '#CCFF00', border: '2px solid #111', fontWeight: '800', cursor: 'pointer', boxShadow: '3px 3px 0px #111', fontSize: '11px'
-                    }}>
-                      Demand 7-Day Inspection (-$850)
-                    </button>
-                  </div>
-                </div>
-              )}
-
-              {/* GAME OVER (Rage Bait / Viral Screen) */}
-              {gameOver && (
-                <div className="anim-shake" style={{ border: '3px solid #FF4D4D', padding: '16px', background: '#FFF', textAlign: 'center', boxShadow: '5px 5px 0px #FF4D4D' }}>
-                  <div style={{ fontSize: '11px', fontWeight: '800', color: '#FF4D4D' }}>ESCROW TERMINATED</div>
-                  <h3 style={{ margin: '8px 0', fontFamily: 'Space Grotesk', fontSize: '17px' }}>{gameOver.title}</h3>
-                  <p style={{ fontSize: '12px', color: '#555', marginBottom: '10px' }}>{gameOver.desc}</p>
-                  <div style={{ fontSize: '14px', fontWeight: '800', color: '#FF4D4D', marginBottom: '12px' }}>{gameOver.loss}</div>
-                  <button onClick={() => { setGameOver(null); setStage(1); setSanity(85); setCash(95000); }} style={{
-                    padding: '10px 20px', background: '#111', color: '#FFF', border: 'none', fontWeight: '800', cursor: 'pointer', boxShadow: '3px 3px 0px #CCFF00'
-                  }}>
-                    RETRY SIMULATION
-                  </button>
-                </div>
-              )}
-
-              {/* === STAGE 6: VICTORY & HIGH-INTENT LEAD ROUTING === */}
-              {stage === 6 && (
-                <div className="anim-slide" style={{ border: '3px solid #7000FF', padding: '16px', background: '#FFF', boxShadow: '5px 5px 0px #7000FF' }}>
-                  <div style={{ fontSize: '10px', color: '#7000FF', fontWeight: '800' }}>MISSION COMPLETE: KEYS UNLOCKED</div>
-                  <h3 style={{ fontFamily: 'Space Grotesk', fontSize: '17px', margin: '4px 0 8px 0' }}>
-                    YOU SURVIVED FAIRFIELD, CA
-                  </h3>
-                  <p style={{ fontSize: '12px', lineHeight: '1.4', color: '#333', marginBottom: '12px' }}>
-                    You survived the Solano transfer tax, beat the I-80 commute, and protected your reserves. Your estimated total monthly nut in {dist.name} is <strong>${totalNut.toLocaleString()}/mo</strong>.
-                  </p>
-
-                  {!leadSent ? (
-                    <form onSubmit={(e) => { e.preventDefault(); setLeadSent(true); }} style={{ marginTop: '10px' }}>
-                      <label style={{ fontSize: '11px', fontWeight: '800', display: 'block', marginBottom: '6px' }}>
-                        ENTER CELL TO RECEIVE YOUR VERIFIED FAIRFIELD ACTION PLAN:
-                      </label>
-                      <input 
-                        type="tel"
-                        placeholder="(707) 555-0144"
-                        value={phone}
-                        onChange={(e) => setPhone(e.target.value)}
-                        required
-                        style={{ width: '100%', padding: '10px', border: '2px solid #111', marginBottom: '8px', fontFamily: 'monospace', fontWeight: '700' }}
-                      />
-                      <button type="submit" style={{
-                        width: '100%', padding: '12px', background: '#7000FF', color: '#FFF', border: '2px solid #111', fontWeight: '800', cursor: 'pointer', boxShadow: '3px 3px 0px #111'
-                      }}>
-                        DISPATCH PLAN TO OTIS WHITE JR.
-                      </button>
-                    </form>
-                  ) : (
-                    <div style={{ background: '#CCFF00', padding: '10px', border: '2px solid #111', fontSize: '12px', fontWeight: '800', boxShadow: '2px 2px 0px #111' }}>
-                      🎯 Dossier Dispatched! Otis White Jr. will text your custom Cordelia/Green Valley feasibility report shortly.
-                    </div>
-                  )}
-                </div>
-              )}
-
-              {/* In-Game Footer */}
-              <div style={{ textAlign: 'center', marginTop: '14px', fontSize: '10px', color: '#888', fontWeight: '600' }}>
-                MOREPROFITUSA AI ENGINE • PROUD PARTNER OF OTIS WHITE JR. REALTY
-              </div>
-
-            </div>
-          )}
-
-        </div>
-      );
+      return monthlyPI + monthlyTax + monthlyCFD + dist.hoa;
     }
 
-    const root = ReactDOM.createRoot(document.getElementById('root'));
-    root.render(<App />);
+    function updateHud() {
+      const dist = DISTRICTS[districtKey];
+      const nut = calcMonthly();
+
+      document.getElementById('hud-stage-label').innerText = `STAGE ${stage} OF 6 • SOLANO SEAT`;
+      document.getElementById('hud-bis-score').innerText = `${bisScore}/100`;
+      document.getElementById('hud-bis-score').style.color = bisScore >= 70 ? '#7000FF' : '#111';
+
+      document.getElementById('stat-cash').innerText = `$${cash.toLocaleString()}`;
+      document.getElementById('stat-sanity').innerHTML = `${sanity}% ${sanity < 50 ? '⚠️' : '⚡'}`;
+      document.getElementById('stat-sanity').style.color = sanity < 50 ? '#FF4D4D' : '#00A86B';
+      document.getElementById('stat-monthly').innerText = `$${nut.toLocaleString()}`;
+
+      document.getElementById('viewport-district-tag').innerText = `📍 ${dist.name.toUpperCase()}`;
+      document.getElementById('viewport-price-tag').innerText = `MEDIAN: $${Math.round(dist.median / 1000)}K`;
+    }
+
+    function showPopup(text, color = '#CCFF00') {
+      const pop = document.getElementById('floating-popup');
+      pop.innerText = text;
+      pop.style.background = color;
+      pop.classList.remove('hidden');
+      setTimeout(() => pop.classList.add('hidden'), 1200);
+    }
+
+    function shakeScreen() {
+      const c = document.getElementById('game-container');
+      c.classList.add('anim-shake');
+      setTimeout(() => c.classList.remove('anim-shake'), 380);
+    }
+
+    // Curated Stage Rendering Engine
+    function renderStage() {
+      updateHud();
+      const card = document.getElementById('stage-card');
+      const dist = DISTRICTS[districtKey];
+      const nut = calcMonthly();
+
+      if (stage === 1) {
+        card.innerHTML = `
+          <div style="font-size:10px; color:#7000FF; font-weight:800;">STEP 1 OF 5: FINANCIAL CALIBRATION</div>
+          <h3 style="font-family:'Space Grotesk', sans-serif; font-size:16px; margin:4px 0 6px 0;">Who is braving the Solano market?</h3>
+          
+          <div style="background:#F7F4EB; border:2px dashed #111; padding:8px 10px; margin-bottom:12px; font-size:11px; line-height:1.4;">
+            <div style="font-weight:800; color:#111;">🎯 MISSION: Set your starting financial baseline.</div>
+            <div style="color:#555; margin-top:2px;"><strong>Why it matters:</strong> Your down payment dictates whether you can absorb Solano County closing fees and property taxes.</div>
+            <div style="color:#7000FF; margin-top:4px; font-weight:700;">💡 Otis Tip: Military buyers qualify for 0% down VA loans near Travis AFB.</div>
+          </div>
+
+          <div style="display:flex; flex-direction:column; gap:8px;">
+            <button onclick="pickClass('Tech Commuter', 130000, 75)" style="padding:10px; background:#FFF; border:2px solid #111; text-align:left; cursor:pointer; box-shadow:3px 3px 0px #111;">
+              <strong>💻 SF/Oakland Hybrid Commuter</strong>
+              <div style="font-size:11px; color:#555; margin-top:2px;">Starting Cash: $130,000 | Sanity: 75% | Trapped on I-80</div>
+            </button>
+            <button onclick="pickClass('Travis AFB', 45000, 95)" style="padding:10px; background:#FFF; border:2px solid #111; text-align:left; cursor:pointer; box-shadow:3px 3px 0px #111;">
+              <strong>🎖️ Travis AFB / Public Servant</strong>
+              <div style="font-size:11px; color:#555; margin-top:2px;">Starting Cash: $45,000 | Sanity: 95% | VA 0% Down Benefit</div>
+            </button>
+            <button onclick="pickClass('Solano Local', 90000, 90)" style="padding:10px; background:#FFF; border:2px solid #111; text-align:left; cursor:pointer; box-shadow:3px 3px 0px #111;">
+              <strong>🏡 Local Solano Upgrader</strong>
+              <div style="font-size:11px; color:#555; margin-top:2px;">Starting Cash: $90,000 | Sanity: 90% | Escaping rental inflation</div>
+            </button>
+          </div>
+        `;
+      } else if (stage === 2) {
+        card.innerHTML = `
+          <div style="font-size:10px; color:#7000FF; font-weight:800;">STEP 2 OF 5: TARGET TERRAIN & TAX SCOUTING</div>
+          <h3 style="font-family:'Space Grotesk', sans-serif; font-size:16px; margin:4px 0 6px 0;">Where do you set up base camp?</h3>
+          
+          <div style="background:#F7F4EB; border:2px dashed #111; padding:8px 10px; margin-bottom:12px; font-size:11px; line-height:1.4;">
+            <div style="font-weight:800; color:#111;">🎯 MISSION: Balance purchase price against Mello-Roos CFD debt.</div>
+            <div style="color:#555; margin-top:2px;"><strong>Why it matters:</strong> Cordelia adds up to $3,200/yr in CFD special taxes that inflate your monthly nut. Central Fairfield has zero CFD debt.</div>
+            <div style="color:#7000FF; margin-top:4px; font-weight:700;">💡 Otis Tip: Tap each district button below to compare true monthly payments.</div>
+          </div>
+
+          <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:8px; margin-bottom:12px;">
+            <div onclick="selectDistrict('cordelia')" style="border:2px solid #111; padding:10px 4px; text-align:center; background:${districtKey==='cordelia'?'#CCFF00':'#F7F4EB'}; box-shadow:${districtKey==='cordelia'?'3px 3px 0px #7000FF':'2px 2px 0px #111'}; cursor:pointer;">
+              <div style="font-size:16px;">🚗</div>
+              <div style="font-size:10px; font-weight:800;">CORDELIA</div>
+              <div style="font-size:9px; color:#555;">$720k</div>
+            </div>
+            <div onclick="selectDistrict('greenValley')" style="border:2px solid #111; padding:10px 4px; text-align:center; background:${districtKey==='greenValley'?'#CCFF00':'#F7F4EB'}; box-shadow:${districtKey==='greenValley'?'3px 3px 0px #7000FF':'2px 2px 0px #111'}; cursor:pointer;">
+              <div style="font-size:16px;">🍷</div>
+              <div style="font-size:10px; font-weight:800;">GREEN VLY</div>
+              <div style="font-size:9px; color:#555;">$910k</div>
+            </div>
+            <div onclick="selectDistrict('central')" style="border:2px solid #111; padding:10px 4px; text-align:center; background:${districtKey==='central'?'#CCFF00':'#F7F4EB'}; box-shadow:${districtKey==='central'?'3px 3px 0px #7000FF':'2px 2px 0px #111'}; cursor:pointer;">
+              <div style="font-size:16px;">🏡</div>
+              <div style="font-size:10px; font-weight:800;">CENTRAL</div>
+              <div style="font-size:9px; color:#555;">$535k</div>
+            </div>
+          </div>
+
+          <div style="border:2px dashed #111; padding:8px; font-size:11px; background:#FAFAFA; margin-bottom:12px;">
+            <div><strong>${dist.name} (${dist.tag})</strong></div>
+            <div style="color:#555; margin-top:4px;">${dist.lore}</div>
+            <div style="margin-top:6px; font-weight:700;">
+              CFD Mello-Roos Tax: $${dist.melloRoos}/yr | HOA: $${dist.hoa}/mo
+            </div>
+          </div>
+
+          <button onclick="advanceStage(3)" style="width:100%; padding:12px; background:#CCFF00; border:2px solid #111; font-weight:800; cursor:pointer; box-shadow:3px 3px 0px #111;">
+            LOCK IN ${dist.name.toUpperCase()} & ADVANCE ➔
+          </button>
+        `;
+      } else if (stage === 3) {
+        card.innerHTML = `
+          <div style="font-size:10px; color:#7000FF; font-weight:800;">STEP 3 OF 5: THE COMMUTE STRATEGY</div>
+          <h3 style="font-family:'Space Grotesk', sans-serif; font-size:16px; margin:4px 0 6px 0;">How do you reach work?</h3>
+          
+          <div style="background:#F7F4EB; border:2px dashed #111; padding:8px 10px; margin-bottom:12px; font-size:11px; line-height:1.4;">
+            <div style="font-weight:800; color:#111;">🎯 MISSION: Protect your daily energy against the I-80 corridor.</div>
+            <div style="color:#555; margin-top:2px;"><strong>Why it matters:</strong> Fairfield covers 41.6 sq miles. The I-80/680 junction creates severe gridlock that drains energy, while rail preserves productivity.</div>
+            <div style="color:#7000FF; margin-top:4px; font-weight:700;">💡 Otis Tip: Driving is free upfront, but transit passes unlock remote work perks.</div>
+          </div>
+
+          <div style="display:flex; flex-direction:column; gap:8px;">
+            <button onclick="handleCommute('drive')" style="padding:10px; background:#FFF; border:2px solid #111; text-align:left; cursor:pointer; box-shadow:3px 3px 0px #111;">
+              <strong>🚗 Solo Drive via I-80</strong>
+              <div style="font-size:11px; color:#555;">Cost: $0 upfront | Risk: Traffic bottleneck drains -30% Sanity</div>
+            </button>
+            <button onclick="handleCommute('train')" style="padding:10px; background:#FFF; border:2px solid #111; text-align:left; cursor:pointer; box-shadow:3px 3px 0px #111;">
+              <strong>🚆 Fairfield-Vacaville Hannigan Train Pass</strong>
+              <div style="font-size:11px; color:#555;">Cost: $1,200/yr | Reward: Coffee, WiFi, +15% Sanity Boost</div>
+            </button>
+          </div>
+        `;
+      } else if (stage === 4) {
+        card.innerHTML = `
+          <div style="font-size:10px; color:#7000FF; font-weight:800;">STEP 4 OF 5: CIVIC KNOWLEDGE PERK</div>
+          <h3 style="font-family:'Space Grotesk', sans-serif; font-size:16px; margin:4px 0 6px 0;">Fairfield City Knowledge Check</h3>
+          
+          <div style="background:#F7F4EB; border:2px dashed #111; padding:8px 10px; margin-bottom:12px; font-size:11px; line-height:1.4;">
+            <div style="font-weight:800; color:#111;">🎯 MISSION: Unlock a $2,500 municipal closing credit by proving city knowledge.</div>
+            <div style="color:#555; margin-top:2px;"><strong>Why it matters:</strong> Knowing your city's roots and commercial tax base (Jelly Belly & Anheuser-Busch) reveals long-term appreciation trends.</div>
+            <div style="color:#7000FF; margin-top:4px; font-weight:700;">💡 Otis Tip: Answer correctly to add $2,500 liquid cash back to your bank.</div>
+          </div>
+          
+          <div style="background:#FFFDF0; border:2px dashed #111; padding:8px; font-size:11px; margin-bottom:12px;">
+            <strong>Trivia:</strong> Who founded Fairfield in 1859 and named it after his Connecticut hometown?
+          </div>
+
+          <div style="display:flex; flex-direction:column; gap:8px;">
+            <button onclick="handleLore(true)" style="padding:10px; background:#CCFF00; border:2px solid #111; text-align:left; cursor:pointer; box-shadow:3px 3px 0px #111; font-weight:700;">
+              ⚓ Clipper Ship Captain Robert H. Waterman (+$2,500 City Credit)
+            </button>
+            <button onclick="handleLore(false)" style="padding:10px; background:#FFF; border:2px solid #111; text-align:left; cursor:pointer; box-shadow:3px 3px 0px #111;">
+              General Mariano Vallejo (Penalty: -10% Sanity)
+            </button>
+          </div>
+        `;
+      } else if (stage === 5) {
+        card.innerHTML = `
+          <div style="font-size:10px; color:#FF4D4D; font-weight:800;">STEP 5 OF 5: THE BIDDING WAR PRESSURE COOKER</div>
+          <h3 style="font-family:'Space Grotesk', sans-serif; font-size:16px; margin:4px 0 6px 0;">Offer Table in ${dist.name}</h3>
+          
+          <div style="background:#F7F4EB; border:2px dashed #111; padding:8px 10px; margin-bottom:12px; font-size:11px; line-height:1.4;">
+            <div style="font-weight:800; color:#111;">🎯 MISSION: Decide whether to waive inspection contingencies to win.</div>
+            <div style="color:#555; margin-top:2px;"><strong>Why it matters:</strong> Bay Area cash investors frequently waive contingencies. Waiving gets you the house, but risks catastrophic out-of-pocket repairs.</div>
+            <div style="color:#7000FF; margin-top:4px; font-weight:700;">💡 Otis Tip: Never waive inspection on 1990s Solano builds without reviewing roof and HVAC disclosures.</div>
+          </div>
+
+          <p style="font-size:12px; color:#444; line-height:1.4; margin-bottom:12px;">
+            Your $${dist.median.toLocaleString()} offer is tied with an all-cash investor. The listing agent asks you to waive inspections right now.
+          </p>
+
+          <div style="display:flex; gap:8px;">
+            <button onclick="handleEscrow(true)" style="flex:1; padding:12px 6px; background:#FF4D4D; color:#FFF; border:2px solid #111; font-weight:800; cursor:pointer; box-shadow:3px 3px 0px #111; font-size:11px;">
+              Waive Inspection (Risky)
+            </button>
+            <button onclick="handleEscrow(false)" style="flex:1; padding:12px 6px; background:#CCFF00; border:2px solid #111; font-weight:800; cursor:pointer; box-shadow:3px 3px 0px #111; font-size:11px;">
+              Demand 7-Day Inspection (-$850)
+            </button>
+          </div>
+        `;
+      } else if (stage === 6) {
+        card.innerHTML = `
+          <div style="font-size:10px; color:#7000FF; font-weight:800;">MISSION COMPLETE: KEYS UNLOCKED</div>
+          <h3 style="font-family:'Space Grotesk', sans-serif; font-size:17px; margin:4px 0 8px 0;">
+            YOU SURVIVED FAIRFIELD, CA
+          </h3>
+          
+          <div style="background:#F7F4EB; border:2px dashed #111; padding:8px 10px; margin-bottom:12px; font-size:11px; line-height:1.4;">
+            <div style="font-weight:800; color:#111;">🎉 VERIFIED RESULT: You beat the Solano County gauntlet.</div>
+            <div style="color:#555; margin-top:2px;">You protected your cash reserves, navigated CFD assessments, and avoided a $24,000 inspection disaster in ${dist.name}.</div>
+            <div style="color:#7000FF; margin-top:4px; font-weight:700;">Total Estimated Monthly Nut: $${nut.toLocaleString()}/mo</div>
+          </div>
+
+          <div id="lead-form-box">
+            <label style="font-size:11px; font-weight:800; display:block; margin-bottom:6px;">
+              ENTER CELL TO RECEIVE YOUR VERIFIED FAIRFIELD ACTION PLAN:
+            </label>
+            <input id="user-phone" type="tel" placeholder="(707) 555-0144" style="width:100%; padding:10px; border:2px solid #111; margin-bottom:8px; font-family:monospace; font-weight:700;" />
+            <button onclick="submitLead()" style="width:100%; padding:12px; background:#7000FF; color:#FFF; border:2px solid #111; font-weight:800; cursor:pointer; box-shadow:3px 3px 0px #111;">
+              DISPATCH PLAN TO OTIS WHITE JR.
+            </button>
+          </div>
+        `;
+      }
+    }
+
+    // Game Actions
+    document.getElementById('btn-start').addEventListener('click', function() {
+      playSfx('coin');
+      document.getElementById('screen-splash').classList.add('hidden');
+      document.getElementById('screen-game').classList.remove('hidden');
+      renderStage();
+    });
+
+    window.pickClass = function(title, startingCash, startingSanity) {
+      playSfx('coin');
+      cash = startingCash;
+      sanity = startingSanity;
+      bisScore += 15;
+      showPopup(`+$${Math.round(startingCash/1000)}k Bank!`, '#CCFF00');
+      stage = 2;
+      renderStage();
+    };
+
+    window.selectDistrict = function(key) {
+      playSfx('coin');
+      districtKey = key;
+      bisScore += 10;
+      showPopup(`Locked ${DISTRICTS[key].name}!`, '#7000FF');
+      renderStage();
+    };
+
+    window.advanceStage = function(next) {
+      playSfx('coin');
+      stage = next;
+      renderStage();
+    };
+
+    window.handleCommute = function(mode) {
+      if (mode === 'drive') {
+        playSfx('hit');
+        shakeScreen();
+        sanity = Math.max(10, sanity - 30);
+        bisScore += 10;
+        showPopup(`-30% Sanity (I-80 Bottleneck!)`, '#FF4D4D');
+      } else {
+        playSfx('coin');
+        cash -= 1200;
+        sanity = Math.min(100, sanity + 15);
+        bisScore += 20;
+        showPopup(`+15% Sanity (Train WiFi Perk!)`, '#CCFF00');
+      }
+      stage = 4;
+      renderStage();
+    };
+
+    window.handleLore = function(correct) {
+      if (correct) {
+        playSfx('coin');
+        cash += 2500;
+        bisScore += 15;
+        showPopup(`+$2,500 Waterman Grant!`, '#CCFF00');
+      } else {
+        playSfx('hit');
+        shakeScreen();
+        sanity -= 10;
+        showPopup(`-10% Sanity (Civic Penalty)`, '#FF4D4D');
+      }
+      stage = 5;
+      renderStage();
+    };
+
+    window.handleEscrow = function(waive) {
+      if (waive) {
+        playSfx('hit');
+        shakeScreen();
+        const card = document.getElementById('stage-card');
+        card.innerHTML = `
+          <div style="border:3px solid #FF4D4D; padding:16px; background:#FFF; text-align:center;">
+            <div style="font-size:11px; font-weight:800; color:#FF4D4D;">ESCROW TERMINATED</div>
+            <h3 style="margin:8px 0; font-family:'Space Grotesk', sans-serif; font-size:17px;">DISASTER: AC & Dry Rot Burst</h3>
+            <p style="font-size:12px; color:#555; margin-bottom:10px;">You waived inspection to beat cash offers. The HVAC compressor blew and foundation dry rot was revealed.</p>
+            <div style="font-size:14px; font-weight:800; color:#FF4D4D; margin-bottom:12px;">-$24,000 Surprise Repair</div>
+            <button onclick="resetGame()" style="padding:10px 20px; background:#111; color:#FFF; border:none; font-weight:800; cursor:pointer; box-shadow:3px 3px 0px #CCFF00;">
+              RETRY SIMULATION
+            </button>
+          </div>
+        `;
+      } else {
+        playSfx('coin');
+        cash -= 850;
+        bisScore += 20;
+        showPopup(`Protected By 7-Day Inspection!`, '#7000FF');
+        stage = 6;
+        renderStage();
+      }
+    };
+
+    window.resetGame = function() {
+      stage = 1;
+      cash = 95000;
+      sanity = 85;
+      bisScore = 30;
+      renderStage();
+    };
+
+    window.submitLead = function() {
+      const p = document.getElementById('user-phone').value;
+      if (!p) return;
+      playSfx('coin');
+      document.getElementById('lead-form-box').innerHTML = `
+        <div style="background:#CCFF00; padding:10px; border:2px solid #111; font-size:12px; font-weight:800; box-shadow:2px 2px 0px #111;">
+          🎯 Dossier Dispatched! Otis White Jr. will text your custom Cordelia/Green Valley feasibility report shortly.
+        </div>
+      `;
+    };
   </script>
 </body>
 </html>
