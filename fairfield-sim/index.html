@@ -3,15 +3,37 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Fairfield Survival: The Homebuying Quest | Otis White Jr.</title>
+  <title>Fairfield 3D SimCity: Homebuyer Survival Quest | Otis White Jr.</title>
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700;800&family=Space+Grotesk:wght@700;800&display=swap" rel="stylesheet">
   
+  <!-- React & Babel CDNs -->
   <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <!-- Three.js + OrbitControls (Git-City 3D WebGL Engine) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+
+  <!-- Schema Markup for AEO / GEO -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Fairfield 3D Homebuyer Survival Quest",
+    "applicationCategory": "GameApplication",
+    "operatingSystem": "Web Browser",
+    "author": {
+      "@type": "RealEstateAgent",
+      "name": "Otis White Jr.",
+      "url": "https://otiswhitejrrealty.com",
+      "areaServed": "Fairfield, CA"
+    }
+  }
+  </script>
 
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -27,37 +49,13 @@
       min-height: 100vh;
       display: flex;
       justify-content: center;
+      -webkit-tap-highlight-color: transparent;
     }
 
-    /* === GAME ANIMATIONS === */
-    @keyframes floatBob {
-      0%, 100% { transform: translateY(0px) rotate(0deg); }
-      50% { transform: translateY(-6px) rotate(-1deg); }
-    }
-    @keyframes cloudDrift {
-      0% { transform: translateX(-60px); }
-      100% { transform: translateX(520px); }
-    }
-    @keyframes highwayDrive {
-      0% { transform: translateX(-40px); }
-      100% { transform: translateX(560px); }
-    }
-    @keyframes trainSpeed {
-      0% { transform: translateX(560px); }
-      100% { transform: translateX(-80px); }
-    }
-    @keyframes pulseGlow {
-      0%, 100% { box-shadow: 3px 3px 0px #111; }
-      50% { box-shadow: 3px 3px 0px #CCFF00, 0 0 12px rgba(204,255,0,0.6); }
-    }
     @keyframes popFloatUp {
       0% { opacity: 0; transform: translateY(10px) scale(0.8); }
       20% { opacity: 1; transform: translateY(-5px) scale(1.1); }
       100% { opacity: 0; transform: translateY(-30px) scale(1); }
-    }
-    @keyframes cardSlideIn {
-      0% { opacity: 0; transform: translateY(14px); }
-      100% { opacity: 1; transform: translateY(0); }
     }
     @keyframes screenShake {
       10%, 90% { transform: translate3d(-2px, 0, 0); }
@@ -65,15 +63,17 @@
       30%, 50%, 70% { transform: translate3d(-5px, 0, 0); }
       40%, 60% { transform: translate3d(5px, 0, 0); }
     }
+    @keyframes cardSlideIn {
+      0% { opacity: 0; transform: translateY(12px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
 
-    .anim-bob { animation: floatBob 3s ease-in-out infinite; }
-    .anim-slide { animation: cardSlideIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
     .anim-shake { animation: screenShake 0.35s cubic-bezier(.36,.07,.19,.97) both; }
-    .pulse-btn { animation: pulseGlow 2s infinite; }
+    .anim-slide { animation: cardSlideIn 0.22s ease-out forwards; }
 
     button {
       font-family: 'JetBrains Mono', monospace;
-      transition: transform 0.08s ease, box-shadow 0.08s ease, background 0.15s ease;
+      transition: transform 0.08s ease, box-shadow 0.08s ease;
     }
     button:active {
       transform: translate(2px, 2px) !important;
@@ -86,9 +86,9 @@
   <div id="root"></div>
 
   <script type="text/babel">
-    const { useState, useEffect } = React;
+    const { useState, useEffect, useRef } = React;
 
-    // Web Audio Synthesizer for 8-bit sound effects
+    // 8-Bit Web Audio Synthesizer
     const playSfx = (type) => {
       try {
         const ctx = new (window.AudioContext || window.webkitAudioContext)();
@@ -108,7 +108,7 @@
           osc.type = 'sawtooth';
           osc.frequency.setValueAtTime(160, now);
           osc.frequency.exponentialRampToValueAtTime(40, now + 0.25);
-          gain.gain.setValueAtTime(0.25, now);
+          gain.gain.setValueAtTime(0.22, now);
           gain.gain.exponentialRampToValueAtTime(0.01, now + 0.25);
           osc.start(now);
           osc.stop(now + 0.25);
@@ -123,7 +123,8 @@
         median: 720000,
         melloRoos: 3200,
         hoa: 185,
-        lore: "I-80 & I-680 intersection. Solano's premier commute launchpad to SF & Walnut Creek."
+        targetX: -12,
+        lore: "I-80 & I-680 intersection. Solano's commute launchpad to SF & Walnut Creek."
       },
       greenValley: {
         name: "Green Valley / Eastridge",
@@ -131,7 +132,8 @@
         median: 910000,
         melloRoos: 1800,
         hoa: 340,
-        lore: "Nestled against Napa vineyards. Golf courses and luxury custom estates."
+        targetX: 0,
+        lore: "Vineyards and rolling hills. Quick 15m cruise into Napa's Coombsville pocket."
       },
       central: {
         name: "Downtown / Travis Corridor",
@@ -139,10 +141,201 @@
         median: 535000,
         melloRoos: 0,
         hoa: 0,
-        lore: "Solano County Seat center. Historic 1859 Waterman roots, near Travis AFB."
+        targetX: 12,
+        lore: "County Seat center. Near Travis AFB, Allan Witt Park, and historic 1859 Waterman roots."
       }
     };
 
+    // === THREE.JS 3D PROCEDURAL CITY ENGINE (srizzon/git-city Inspired) ===
+    function ThreeCityCanvas({ districtKey }) {
+      const mountRef = useRef(null);
+      const sceneRef = useRef(null);
+      const cameraRef = useRef(null);
+
+      useEffect(() => {
+        const container = mountRef.current;
+        if (!container) return;
+
+        const width = container.clientWidth;
+        const height = container.clientHeight;
+
+        // 1. Scene Setup
+        const scene = new THREE.Scene();
+        sceneRef.current = scene;
+        scene.background = new THREE.Color(0xDCECF4);
+        scene.fog = new THREE.Fog(0xDCECF4, 35, 75);
+
+        // 2. Isometric Orthographic-Style Perspective Camera
+        const camera = new THREE.PerspectiveCamera(40, width / height, 1, 1000);
+        camera.position.set(22, 28, 32);
+        cameraRef.current = camera;
+
+        // 3. Renderer
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        renderer.setSize(width, height);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        renderer.shadowMap.enabled = true;
+        renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+        container.appendChild(renderer.domElement);
+
+        // 4. Touch & Orbit Controls
+        const controls = new THREE.OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+        controls.dampingFactor = 0.08;
+        controls.maxPolarAngle = Math.PI / 2.15; // Don't go below ground
+        controls.minDistance = 15;
+        controls.maxDistance = 55;
+        controls.target.set(0, 0, 0);
+
+        // 5. Lighting
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.75);
+        scene.add(ambientLight);
+
+        const dirLight = new THREE.DirectionalLight(0xfff6d5, 0.95);
+        dirLight.position.set(30, 45, 20);
+        dirLight.castShadow = true;
+        dirLight.shadow.mapSize.width = 1024;
+        dirLight.shadow.mapSize.height = 1024;
+        scene.add(dirLight);
+
+        // 6. Ground Grid & Roads
+        const groundGeo = new THREE.PlaneGeometry(100, 100);
+        const groundMat = new THREE.MeshLambertMaterial({ color: 0x82A860 });
+        const ground = new THREE.Mesh(groundGeo, groundMat);
+        ground.rotation.x = -Math.PI / 2;
+        ground.receiveShadow = true;
+        scene.add(ground);
+
+        // I-80 Asphalt Highway Strip
+        const roadGeo = new THREE.PlaneGeometry(100, 4.5);
+        const roadMat = new THREE.MeshLambertMaterial({ color: 0x333339 });
+        const road = new THREE.Mesh(roadGeo, roadMat);
+        road.rotation.x = -Math.PI / 2;
+        road.position.set(0, 0.05, 8);
+        road.receiveShadow = true;
+        scene.add(road);
+
+        // 7. Procedural Pixel Buildings (Git-City Voxel Architecture)
+        const buildingMatWhite = new THREE.MeshLambertMaterial({ color: 0xFDFBF7 });
+        const buildingMatTan = new THREE.MeshLambertMaterial({ color: 0xEAD8B5 });
+        const buildingMatGreen = new THREE.MeshLambertMaterial({ color: 0xB8D8A0 });
+        const roofMat = new THREE.MeshLambertMaterial({ color: 0x933D2D });
+        const windowMatLit = new THREE.MeshBasicMaterial({ color: 0xFFE066 });
+
+        // Generate 3 Districts in 3D Space
+        const districtConfigs = [
+          { key: 'cordelia', xOffset: -14, count: 12, heightRange: [2.5, 5], color: buildingMatTan },
+          { key: 'greenValley', xOffset: 0, count: 10, heightRange: [4.5, 9], color: buildingMatWhite },
+          { key: 'central', xOffset: 14, count: 14, heightRange: [2, 4], color: buildingMatGreen }
+        ];
+
+        districtConfigs.forEach(d => {
+          for (let i = 0; i < d.count; i++) {
+            const h = d.heightRange[0] + Math.random() * (d.heightRange[1] - d.heightRange[0]);
+            const w = 1.8 + Math.random() * 0.8;
+            const bGeo = new THREE.BoxGeometry(w, h, w);
+            const building = new THREE.Mesh(bGeo, d.color);
+            
+            const row = Math.floor(i / 4);
+            const col = i % 4;
+            const z = (row * 3.5) - 6;
+            const x = d.xOffset + ((col - 1.5) * 2.8) + (Math.random() * 0.4);
+
+            building.position.set(x, h / 2, z);
+            building.castShadow = true;
+            building.receiveShadow = true;
+            scene.add(building);
+
+            // Roof Cap
+            const rGeo = new THREE.BoxGeometry(w * 0.95, 0.35, w * 0.95);
+            const roof = new THREE.Mesh(rGeo, roofMat);
+            roof.position.set(x, h + 0.18, z);
+            roof.castShadow = true;
+            scene.add(roof);
+
+            // Lit Pixel Window Feature (srizzon git-city signature)
+            if (Math.random() > 0.4) {
+              const winGeo = new THREE.BoxGeometry(0.35, 0.45, w + 0.05);
+              const win = new THREE.Mesh(winGeo, windowMatLit);
+              win.position.set(x, h * 0.65, z);
+              scene.add(win);
+            }
+          }
+        });
+
+        // 8. Animated Traffic Mesh
+        const carGeo = new THREE.BoxGeometry(0.9, 0.5, 0.5);
+        const carMatRed = new THREE.MeshLambertMaterial({ color: 0xFF3B30 });
+        const carMatBlue = new THREE.MeshLambertMaterial({ color: 0x007AFF });
+        const car1 = new THREE.Mesh(carGeo, carMatRed);
+        const car2 = new THREE.Mesh(carGeo, carMatBlue);
+        car1.position.set(-25, 0.35, 7.2);
+        car2.position.set(25, 0.35, 8.8);
+        scene.add(car1);
+        scene.add(car2);
+
+        // 9. Render Loop
+        let animId;
+        const animate = () => {
+          animId = requestAnimationFrame(animate);
+
+          // Animate traffic on I-80
+          car1.position.x += 0.12;
+          if (car1.position.x > 35) car1.position.x = -35;
+          car2.position.x -= 0.09;
+          if (car2.position.x < -35) car2.position.x = 35;
+
+          controls.update();
+          renderer.render(scene, camera);
+        };
+        animate();
+
+        // Handle Resizing
+        const handleResize = () => {
+          if (!container) return;
+          const w = container.clientWidth;
+          const h = container.clientHeight;
+          camera.aspect = w / h;
+          camera.updateProjectionMatrix();
+          renderer.setSize(w, h);
+        };
+        window.addEventListener('resize', handleResize);
+
+        return () => {
+          cancelAnimationFrame(animId);
+          window.removeEventListener('resize', handleResize);
+          if (renderer.domElement && container.contains(renderer.domElement)) {
+            container.removeChild(renderer.domElement);
+          }
+          renderer.dispose();
+        };
+      }, []);
+
+      // Smooth Camera Fly-Through on District Switch
+      useEffect(() => {
+        if (!cameraRef.current) return;
+        const targetX = DISTRICTS[districtKey].targetX;
+        // Smooth pan camera toward the chosen district
+        const startX = cameraRef.current.position.x;
+        const destX = targetX + 16;
+        let step = 0;
+        const panInterval = setInterval(() => {
+          step += 0.05;
+          cameraRef.current.position.x = THREE.MathUtils.lerp(startX, destX, step);
+          if (step >= 1) clearInterval(panInterval);
+        }, 16);
+        return () => clearInterval(panInterval);
+      }, [districtKey]);
+
+      return (
+        <div 
+          ref={mountRef} 
+          style={{ width: '100%', height: '100%', position: 'relative', cursor: 'grab' }}
+        />
+      );
+    }
+
+    // === MAIN GAME APPLICATION ===
     function App() {
       const [stage, setStage] = useState(1);
       const [districtKey, setDistrictKey] = useState('cordelia');
@@ -158,7 +351,7 @@
 
       const dist = DISTRICTS[districtKey];
 
-      // Dynamic Financial Engine
+      // Dynamic Solano County Math
       const loan = Math.max(0, dist.median - cash);
       const monthlyPI = Math.round((loan * (0.065 / 12)) / (1 - Math.pow(1 + 0.065 / 12, -360)));
       const monthlyTax = Math.round((dist.median * 0.0119) / 12);
@@ -181,7 +374,7 @@
         setCash(startingCash);
         setSanity(startingSanity);
         setBisScore(bisScore + 15);
-        showFloatingPopup(`+$${(startingCash/1000)}k Starting Bank!`, '#CCFF00');
+        showFloatingPopup(`+$${(startingCash/1000)}k Bank!`, '#CCFF00');
         setStage(2);
       };
 
@@ -189,8 +382,7 @@
         playSfx('coin');
         setDistrictKey(key);
         setBisScore(bisScore + 15);
-        showFloatingPopup(`Locked ${DISTRICTS[key].name}!`, '#7000FF');
-        setStage(3);
+        showFloatingPopup(`Flying to ${DISTRICTS[key].name}!`, '#7000FF');
       };
 
       const handleCommuteChoice = (mode) => {
@@ -231,14 +423,14 @@
           triggerShake();
           setGameOver({
             title: "ESCROW NIGHTMARE: Cordelia AC & Dry Rot Shock",
-            desc: "You waived inspection to win a bidding war. The AC compressor blew out and the foundation had severe dry rot.",
+            desc: "You waived inspection to beat 3 Bay Area cash offers. HVAC compressor blew and foundation dry rot was discovered.",
             loss: "-$24,000 Surprise Repair Bill"
           });
         } else {
           playSfx('coin');
           setCash(cash - 850);
           setBisScore(bisScore + 20);
-          showFloatingPopup(`Protected By 7-Day Inspection!`, '#7000FF');
+          showFloatingPopup(`Protected By 7-Day Contingency!`, '#7000FF');
           setStage(6);
         }
       };
@@ -259,7 +451,7 @@
           {floatingText && (
             <div style={{
               position: 'absolute',
-              top: '45%',
+              top: '40%',
               left: '50%',
               transform: 'translateX(-50%)',
               background: floatingText.color,
@@ -277,14 +469,14 @@
             </div>
           )}
 
-          {/* HUD Top Bar */}
+          {/* Top Arcade HUD */}
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '3px solid #111', paddingBottom: '10px', marginBottom: '12px' }}>
             <div>
               <span style={{ background: '#CCFF00', padding: '3px 8px', fontWeight: '800', fontSize: '11px', border: '2px solid #111', boxShadow: '2px 2px 0px #111' }}>
-                FAIRFIELD SURVIVAL v2.0
+                FAIRFIELD 3D SIMCITY
               </span>
               <div style={{ fontSize: '10px', marginTop: '4px', color: '#666', fontWeight: '700' }}>
-                STAGE {stage} OF 6 • SOLANO SEAT
+                SOLANO ENGINE • STAGE {stage} OF 6
               </div>
             </div>
             <div style={{ textAlign: 'right' }}>
@@ -295,133 +487,50 @@
             </div>
           </div>
 
-          {/* === DYNAMIC ANIMATED VIEWPORT (The Visual Game Canvas) === */}
+          {/* === 3D WEBGL INTERACTIVE CITY VIEWPORT === */}
           <div style={{
-            height: '140px',
-            background: 'linear-gradient(to bottom, #8AD4EB 0%, #D2EDF7 65%, #C2DF8E 66%, #8BB85C 100%)',
-            border: '2px solid #111',
+            height: '180px',
+            border: '3px solid #111',
             borderRadius: '4px',
             position: 'relative',
             overflow: 'hidden',
             marginBottom: '14px',
             boxShadow: 'inset 0 0 10px rgba(0,0,0,0.1)'
           }}>
-            {/* Drifting Clouds */}
-            <div style={{
-              position: 'absolute',
-              top: '12px',
-              left: '0',
-              fontSize: '22px',
-              animation: 'cloudDrift 14s linear infinite',
-              opacity: 0.9
-            }}>☁️</div>
-            <div style={{
-              position: 'absolute',
-              top: '28px',
-              left: '0',
-              fontSize: '16px',
-              animation: 'cloudDrift 22s linear infinite',
-              animationDelay: '6s',
-              opacity: 0.7
-            }}>☁️</div>
+            <ThreeCityCanvas districtKey={districtKey} />
 
-            {/* Solano Sun */}
-            <div style={{
-              position: 'absolute',
-              top: '10px',
-              right: '16px',
-              width: '32px',
-              height: '32px',
-              borderRadius: '50%',
-              background: '#FFD700',
-              border: '2px solid #111',
-              boxShadow: '0 0 10px rgba(255,215,0,0.8)'
-            }}></div>
-
-            {/* Bobbing Isometric Neighborhood Cluster */}
-            <div className="anim-bob" style={{
-              position: 'absolute',
-              bottom: '30px',
-              left: '50%',
-              transform: 'translateX(-50%)',
-              display: 'flex',
-              alignItems: 'flex-end',
-              gap: '12px',
-              zIndex: 2
-            }}>
-              <div style={{ fontSize: '28px', filter: 'drop-shadow(2px 3px 0px rgba(0,0,0,0.25))' }}>🏡</div>
-              <div style={{ fontSize: '38px', filter: 'drop-shadow(2px 4px 0px rgba(0,0,0,0.3))' }}>
-                {districtKey === 'greenValley' ? '🏰' : districtKey === 'cordelia' ? '🏘️' : '🏠'}
-              </div>
-              <div style={{ fontSize: '26px', filter: 'drop-shadow(2px 3px 0px rgba(0,0,0,0.25))' }}>🌳</div>
-              <div style={{ fontSize: '24px', filter: 'drop-shadow(2px 3px 0px rgba(0,0,0,0.25))' }}>🏭</div>
-            </div>
-
-            {/* Micro-Highway Strip (I-80 / Amtrak Rail Corridor) */}
-            <div style={{
-              position: 'absolute',
-              bottom: '0',
-              left: '0',
-              right: '0',
-              height: '22px',
-              background: '#333',
-              borderTop: '2px solid #111',
-              zIndex: 3,
-              overflow: 'hidden'
-            }}>
-              {/* Lane Divider Dashes */}
-              <div style={{
-                position: 'absolute',
-                top: '9px',
-                left: '0',
-                right: '0',
-                height: '2px',
-                backgroundImage: 'linear-gradient(90deg, #FFD700 50%, transparent 50%)',
-                backgroundSize: '16px 2px'
-              }}></div>
-
-              {/* Driving Cars */}
-              <div style={{
-                position: 'absolute',
-                top: '1px',
-                fontSize: '13px',
-                animation: 'highwayDrive 5s linear infinite'
-              }}>🚗</div>
-              <div style={{
-                position: 'absolute',
-                top: '1px',
-                fontSize: '13px',
-                animation: 'highwayDrive 8s linear infinite',
-                animationDelay: '2.5s'
-              }}>🚙</div>
-
-              {/* Amtrak Capitol Corridor Train moving opposite */}
-              <div style={{
-                position: 'absolute',
-                top: '1px',
-                fontSize: '13px',
-                animation: 'trainSpeed 7s linear infinite'
-              }}>🚆</div>
-            </div>
-
-            {/* Current Region Tag in Viewport */}
+            {/* In-Canvas Floating Badge */}
             <div style={{
               position: 'absolute',
               top: '8px',
               left: '8px',
               background: 'rgba(255,255,255,0.92)',
               border: '2px solid #111',
-              padding: '2px 8px',
+              padding: '3px 8px',
               fontSize: '10px',
               fontWeight: '800',
               boxShadow: '2px 2px 0px #111',
-              zIndex: 4
+              pointerEvents: 'none'
             }}>
-              📍 {dist.name.toUpperCase()}
+              📍 {dist.name.toUpperCase()} (SWIPE 3D TO EXPLORE)
+            </div>
+
+            <div style={{
+              position: 'absolute',
+              bottom: '6px',
+              right: '8px',
+              background: 'rgba(204,255,0,0.95)',
+              border: '2px solid #111',
+              padding: '2px 6px',
+              fontSize: '9px',
+              fontWeight: '800',
+              pointerEvents: 'none'
+            }}>
+              MEDIAN: ${(dist.median / 1000)}K
             </div>
           </div>
 
-          {/* Living HUD Gauges */}
+          {/* Living HUD Stats */}
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '6px', marginBottom: '14px' }}>
             <div style={{ border: '2px solid #111', padding: '6px', background: '#FFF', boxShadow: '2px 2px 0px #111' }}>
               <div style={{ fontSize: '9px', color: '#666', fontWeight: '700' }}>LIQUID CASH</div>
@@ -474,7 +583,7 @@
           {stage === 2 && (
             <div className="anim-slide" style={{ border: '3px solid #111', padding: '14px', background: '#FFF', boxShadow: '4px 4px 0px #111' }}>
               <div style={{ fontSize: '10px', color: '#7000FF', fontWeight: '800' }}>STAGE 02: SELECT TARGET FAIRFIELD TERRAIN</div>
-              <h3 style={{ fontFamily: 'Space Grotesk', fontSize: '16px', margin: '4px 0 10px 0' }}>Where do you set up base camp?</h3>
+              <h3 style={{ fontFamily: 'Space Grotesk', fontSize: '16px', margin: '4px 0 10px 0' }}>Tap to fly 3D camera to district:</h3>
               
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '8px', marginBottom: '12px' }}>
                 {Object.keys(DISTRICTS).map((k) => (
@@ -505,7 +614,7 @@
                 </div>
               </div>
 
-              <button onClick={() => setStage(3)} className="pulse-btn" style={{
+              <button onClick={() => setStage(3)} style={{
                 width: '100%', padding: '12px', background: '#CCFF00', border: '2px solid #111', fontWeight: '800', cursor: 'pointer', boxShadow: '3px 3px 0px #111'
               }}>
                 LOCK IN {dist.name.toUpperCase()} & ADVANCE
@@ -519,7 +628,7 @@
               <div style={{ fontSize: '10px', color: '#7000FF', fontWeight: '800' }}>STAGE 03: THE CORRIDOR COMMUTE DILEMMA</div>
               <h3 style={{ fontFamily: 'Space Grotesk', fontSize: '16px', margin: '4px 0 8px 0' }}>How do you get to the job center?</h3>
               <p style={{ fontSize: '12px', color: '#444', lineHeight: '1.4', marginBottom: '12px' }}>
-                Fairfield spans 41.6 sq miles. Living in {dist.name} means navigating the notorious I-80/680 junction or using the Capitol Corridor line.
+                Fairfield spans 41.6 sq miles. Living in {dist.name} means navigating the I-80/680 junction or using the Capitol Corridor line.
               </p>
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
