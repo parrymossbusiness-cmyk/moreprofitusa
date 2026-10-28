@@ -126,7 +126,8 @@ td.when{color:var(--brass);font-family:var(--mono);font-size:13px;white-space:no
 .check{display:flex;gap:12px;align-items:flex-start;margin-top:20px;font-size:16px;color:var(--soft);cursor:pointer}
 .check input{width:20px;height:20px;margin-top:3px;accent-color:var(--brass);flex:none}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;margin-top:26px;background:var(--brass);color:var(--on-brass);font-family:var(--display);font-weight:800;font-size:19px;letter-spacing:-.01em;text-decoration:none;padding:17px 28px;border-radius:12px;border:0;cursor:pointer}
-.btn[aria-disabled="true"]{opacity:.4;cursor:not-allowed;pointer-events:none}
+.btn[aria-disabled="true"]{opacity:.4;cursor:not-allowed}
+.status.done{font-family:var(--display);font-weight:800;font-size:20px;color:var(--brass)}
 .status{margin-top:16px;font-size:15px;color:var(--soft)}
 .contact{margin-top:20px;display:flex;flex-wrap:wrap;gap:8px 30px;align-items:baseline}
 .contact .who{font-family:var(--display);font-weight:800;font-size:19px}
@@ -381,8 +382,8 @@ footer{border-top:1px solid var(--line);padding-block:28px 40px;font-size:13px;c
       <input id="acc-name" type="text" autocomplete="name" placeholder="Isaiah Morris">
     </div>
     <label class="check" for="acc-ok"><input id="acc-ok" type="checkbox"><span>I have read this agreement and I accept the deliverables, term and payment schedule.</span></label>
-    <a class="btn" id="acc-btn" href="mailto:parry@moreprofitusa.com" aria-disabled="true">I Accept</a>
-    <p class="status" id="acc-status" hidden>Your email app should open with your acceptance ready to send. If it doesn't, email parry@moreprofitusa.com with "I accept" and your name.</p>
+    <button class="btn" id="acc-btn" type="button" aria-disabled="true">I Accept</button>
+    <p class="status" id="acc-status" role="status" aria-live="polite" hidden></p>
     <div class="contact">
       <span class="who">Parry Moss, MoreProfitUSA</span>
       <span class="em">parry@moreprofitusa.com</span>
@@ -403,23 +404,42 @@ footer{border-top:1px solid var(--line);padding-block:28px 40px;font-size:13px;c
 
 <script>
 (function(){
+  var TO='parry@moreprofitusa.com';
   var name=document.getElementById('acc-name'), ok=document.getElementById('acc-ok'),
       btn=document.getElementById('acc-btn'), status=document.getElementById('acc-status');
-  function update(){
-    var n=name.value.trim(), ready=n.length>1 && ok.checked;
-    btn.setAttribute('aria-disabled', ready?'false':'true');
-    var subject='I accept: Isaiah Morris Agreement';
-    var body='I, '+(n||'[name]')+', accept the MoreProfitUSA agreement:\n\n'+
-      'Trusted Flagship Tier, special rate $2,000 for 3 months.\n'+
-      'Payments of $1,000 due October 30 and December 1, 2026.\n'+
-      'Kickoff strategy call: Tuesday, November 3, 2026.\n\n'+
-      'Accepted on '+new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'})+'.';
-    btn.href='mailto:parry@moreprofitusa.com?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body);
+  var sent=false;
+  function ready(){ return name.value.trim().length>1 && ok.checked && !sent; }
+  function update(){ btn.setAttribute('aria-disabled', ready()?'false':'true'); }
+  function today(){ return new Date().toLocaleString('en-US',{year:'numeric',month:'long',day:'numeric',hour:'numeric',minute:'2-digit',timeZoneName:'short'}); }
+  function terms(){ return 'Trusted Flagship Tier, special rate $2,000 for 3 months. Payments of $1,000 due October 30 and December 1, 2026. Kickoff strategy call: Tuesday, November 3, 2026.'; }
+  function fallback(n){
+    var body='I, '+n+', accept the MoreProfitUSA agreement:\n\n'+terms()+'\n\nAccepted on '+today()+'.';
+    status.textContent='We could not send your acceptance automatically. Your email app will open so you can send it. If it does not, email '+TO+' with "I accept" and your name.';
+    status.className='status'; status.hidden=false;
+    window.location.href='mailto:'+TO+'?subject='+encodeURIComponent('I accept: Isaiah Morris Agreement')+'&body='+encodeURIComponent(body);
   }
   name.addEventListener('input',update); ok.addEventListener('change',update);
-  btn.addEventListener('click',function(e){
-    if(btn.getAttribute('aria-disabled')==='true'){e.preventDefault();return;}
-    status.hidden=false;
+  btn.addEventListener('click',function(){
+    if(!ready()) return;
+    var n=name.value.trim();
+    sent=true; update(); btn.textContent='Sending...';
+    fetch('https://formsubmit.co/ajax/'+TO,{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Accept':'application/json'},
+      body:JSON.stringify({
+        _subject:'Isaiah Morris accepted the agreement',
+        _template:'table', _captcha:'false',
+        Name:n, Accepted:today(), Terms:terms(), Page:location.href
+      })
+    }).then(function(r){return r.json();}).then(function(j){
+      if(String(j.success)!=='true') throw new Error(j.message||'failed');
+      btn.textContent='Accepted';
+      status.textContent='Thank you, '+n.split(' ')[0]+'. Your acceptance is in. Parry will be in touch before your kickoff call on November 3.';
+      status.className='status done'; status.hidden=false;
+      name.disabled=true; ok.disabled=true;
+    }).catch(function(){
+      sent=false; btn.textContent='I Accept'; update(); fallback(n);
+    });
   });
   update();
 })();
