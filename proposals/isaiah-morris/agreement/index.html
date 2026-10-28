@@ -425,12 +425,13 @@ footer{border-top:1px solid var(--line);padding-block:28px 40px;font-size:13px;c
     sent=true; update(); btn.textContent='Sending...';
     var ctl=window.AbortController?new AbortController():null;
     var timer=setTimeout(function(){ if(ctl) ctl.abort(); },15000);
-    fetch('https://formsubmit.co/ajax/'+TO,{
+    fetch('https://api.web3forms.com/submit',{
       method:'POST', signal:ctl?ctl.signal:undefined,
       headers:{'Content-Type':'application/json','Accept':'application/json'},
       body:JSON.stringify({
-        _subject:'Isaiah Morris accepted the agreement',
-        _template:'table', _captcha:'false',
+        access_key:'c3a52fe2-e4b2-4fcb-a52c-041ff8585839',
+        subject:'Isaiah Morris accepted the agreement',
+        from_name:'MoreProfitUSA Agreement Page',
         Name:n, Accepted:today(), Terms:terms(), Page:location.href
       })
     }).then(function(r){clearTimeout(timer);return r.json();}).then(function(j){
