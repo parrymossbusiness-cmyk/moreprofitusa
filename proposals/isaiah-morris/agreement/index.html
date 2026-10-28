@@ -423,15 +423,17 @@ footer{border-top:1px solid var(--line);padding-block:28px 40px;font-size:13px;c
     if(!ready()) return;
     var n=name.value.trim();
     sent=true; update(); btn.textContent='Sending...';
+    var ctl=window.AbortController?new AbortController():null;
+    var timer=setTimeout(function(){ if(ctl) ctl.abort(); },15000);
     fetch('https://formsubmit.co/ajax/'+TO,{
-      method:'POST',
+      method:'POST', signal:ctl?ctl.signal:undefined,
       headers:{'Content-Type':'application/json','Accept':'application/json'},
       body:JSON.stringify({
         _subject:'Isaiah Morris accepted the agreement',
         _template:'table', _captcha:'false',
         Name:n, Accepted:today(), Terms:terms(), Page:location.href
       })
-    }).then(function(r){return r.json();}).then(function(j){
+    }).then(function(r){clearTimeout(timer);return r.json();}).then(function(j){
       if(String(j.success)!=='true') throw new Error(j.message||'failed');
       btn.textContent='Accepted';
       status.textContent='Thank you, '+n.split(' ')[0]+'. Your acceptance is in. Parry will be in touch before your kickoff call on November 3.';
