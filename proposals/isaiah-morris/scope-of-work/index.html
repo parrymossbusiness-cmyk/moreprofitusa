@@ -163,7 +163,8 @@ footer{border-top:1px solid var(--line);padding-block:28px 40px;font-size:13px;c
 </style>
 <style>
 .lines{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
-.opt{position:relative;display:flex;flex-direction:column;gap:12px;border:1px solid var(--line);background:var(--panel);border-radius:16px;padding:24px;cursor:pointer;min-width:0}
+.lines.four{grid-template-columns:repeat(2,minmax(0,1fr))}
+.opt{position:relative;display:flex;flex-direction:column;gap:12px;border:1px solid var(--line);background:var(--panel);border-radius:16px;padding:24px;min-width:0}
 .opt:has(input:checked){border-color:var(--brass);box-shadow:0 0 0 1px var(--brass) inset}
 .opt input[type=radio]{position:absolute;top:22px;right:22px;width:20px;height:20px;margin:0;accent-color:var(--brass)}
 .opt .k{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--brass)}
@@ -209,12 +210,10 @@ footer{border-top:1px solid var(--line);padding-block:28px 40px;font-size:13px;c
 
 <section id="brand-line">
   <p class="eyebrow"><b>01</b> Brand foundation</p>
-  <h2>Choose your <em>brand line.</em></h2>
-  <p class="lede">Your brand line goes in every bio, at the top of your flagship site and on your Google profile. It tells buyers and AI tools who you serve in one line. Pick one below, or write your own. "Let's Get Keyed" stays as your sign-off on every post.</p>
-  <form id="bl-form" class="mt-l" novalidate>
-    <div class="lines">
-      <label class="opt" for="bl-1">
-        <input type="radio" name="line" id="bl-1" value="The agent who works like you do.">
+  <h2>Your <em>brand line.</em></h2>
+  <p class="lede">Your brand line goes in every bio, at the top of your flagship site and on your Google profile. It tells buyers and AI tools who you serve in one line. Here are 4 directions to start from. "Let's Get Keyed" stays as your sign-off on every post.</p>
+  <div class="lines four mt-l">
+      <div class="opt">
         <span class="k">Option 1 · Relatable</span>
         <span class="line">The agent who works like you do.</span>
         <dl>
@@ -222,9 +221,8 @@ footer{border-top:1px solid var(--line);padding-block:28px 40px;font-size:13px;c
           <div><dt>Best for</dt><dd>Union members, trades and working professionals who need an agent who fits their life.</dd></div>
           <div><dt>Where it shows</dt><dd>Bios, site hero, LinkedIn headline</dd></div>
         </dl>
-      </label>
-      <label class="opt" for="bl-2">
-        <input type="radio" name="line" id="bl-2" value="Real numbers. Real advice. Real homes.">
+      </div>
+      <div class="opt">
         <span class="k">Option 2 · Real Talk</span>
         <span class="line">Real numbers. Real advice. Real homes.</span>
         <dl>
@@ -232,9 +230,8 @@ footer{border-top:1px solid var(--line);padding-block:28px 40px;font-size:13px;c
           <div><dt>Best for</dt><dd>Buyers who want the truth about what they can afford before they shop.</dd></div>
           <div><dt>Where it shows</dt><dd>Bios, video intros, carousel covers</dd></div>
         </dl>
-      </label>
-      <label class="opt" for="bl-3">
-        <input type="radio" name="line" id="bl-3" value="100 families. 100 homes. By 2027.">
+      </div>
+      <div class="opt">
         <span class="k">Option 3 · Mission</span>
         <span class="line">100 families. 100 homes. By 2027.</span>
         <dl>
@@ -242,19 +239,18 @@ footer{border-top:1px solid var(--line);padding-block:28px 40px;font-size:13px;c
           <div><dt>Best for</dt><dd>Telling your legacy story and building a following that roots for you.</dd></div>
           <div><dt>Where it shows</dt><dd>Bios, site hero, a progress count on your site</dd></div>
         </dl>
-      </label>
-    </div>
-    <div class="own">
-      <label class="opt" for="bl-own">
-        <input type="radio" name="line" id="bl-own" value="own">
-        <span class="k">Option 4 · Your own</span>
-        <span class="line" style="font-size:19px">Write your own brand line</span>
-        <input type="text" id="bl-own-text" placeholder="Type your brand line here" aria-label="Your own brand line">
-      </label>
-    </div>
-    <button class="btn" id="bl-btn" type="button" aria-disabled="true">Send My Brand Line</button>
-    <p class="status" id="bl-status" role="status" aria-live="polite" hidden></p>
-  </form>
+      </div>
+      <div class="opt">
+        <span class="k">Option 4 · Rich Blood</span>
+        <span class="line">Rich Blood Real Estate. A solid foundation starts here.</span>
+        <dl>
+          <div><dt>Why it works</dt><dd>It puts your Rich Blood philosophy behind your real estate. When your foundation is solid, you are rich within. One name ties your apparel and your real estate together.</dd></div>
+          <div><dt>Best for</dt><dd>Buyers who relate to your story and your elevated streetwear style, and want an agent who talks their language.</dd></div>
+          <div><dt>Where it shows</dt><dd>Bios, site hero, Rich Blood apparel and merch tags</dd></div>
+        </dl>
+      </div>
+  </div>
+  <p class="fine mt-m" style="font-size:15px">These are starting points. We will shape your final brand line together on a call, using your 33 Rich Blood notes.</p>
   <div class="two mt-l">
     <div class="card qa">
       <p class="label on">Why your brand line matters more now</p>
@@ -271,7 +267,7 @@ footer{border-top:1px solid var(--line);padding-block:28px 40px;font-size:13px;c
     </div>
   </div>
   <div class="card mt-l">
-    <p class="label on">After you choose</p>
+    <p class="label on">Once your brand line is set</p>
     <ul class="list">
       <li>We match your name, photo, bio and brand line on every platform.</li>
       <li>We rename your TikTok handle to include your name.</li>
@@ -291,6 +287,10 @@ footer{border-top:1px solid var(--line);padding-block:28px 40px;font-size:13px;c
         <li>Pages: home, about, city guides, New Construction Guide, videos, buyer questions and contact</li>
         <li>Click to call and calendar booking</li>
         <li>The "Are You Mortgage-Ready? Check Your Numbers" form</li>
+        <li>Lead questions that ask where buyers are in the process, how much they plan to put down and which area they want</li>
+        <li>Strong leads are flagged and sent to you automatically</li>
+        <li>Your videos live on your site, not just on social media</li>
+        <li>Each script also becomes an article on your site</li>
         <li>Search setup (schema) so Google and AI tools can read every page</li>
       </ul>
     </div>
@@ -315,10 +315,12 @@ footer{border-top:1px solid var(--line);padding-block:28px 40px;font-size:13px;c
     <div class="card">
       <p class="label on">The Let's Get Keyed Buyers Guide</p>
       <ul class="list">
-        <li>For first-time and move-up buyers</li>
+        <li>Built for first-time buyers who work in unions and the trades</li>
+        <li>Shows how overtime, per diems and your income structure count toward a mortgage</li>
         <li>Includes the topics you decide your buyers need most</li>
         <li>Updated with your new content every 2 weeks</li>
         <li>Interactive steps buyers can tap through and check off</li>
+        <li>Your videos play right inside the guide</li>
         <li>Sent automatically when someone comments or DMs <span class="kw">KEYED</span></li>
       </ul>
     </div>
@@ -329,6 +331,7 @@ footer{border-top:1px solid var(--line);padding-block:28px 40px;font-size:13px;c
         <li>Covers builder incentives, VA and FHA loans, closing costs and popular new construction areas</li>
         <li>An interactive buyer checklist, from pre-approval to getting your keys</li>
         <li>A side-by-side compare of new construction and older homes</li>
+        <li>Your new construction videos play right inside the guide</li>
         <li>Sent automatically when someone comments or DMs <span class="kw">BUILD</span></li>
       </ul>
     </div>
@@ -390,7 +393,9 @@ footer{border-top:1px solid var(--line);padding-block:28px 40px;font-size:13px;c
   <div class="card mt-m">
     <p class="label on">Schedule</p>
     <ul class="list">
-      <li>Setup and verification in November. Google may ask you to record a short video to prove the business is yours.</li>
+      <li>We claim and fix the profile you already started, so you don't end up with two listings</li>
+      <li>Verification in November. Google may ask you to record a short video to prove the business is yours.</li>
+      <li>Google's approval can take 2 to 3 weeks. Your profile goes live as soon as Google approves it.</li>
       <li>Updates twice a month in December and January</li>
       <li>Review requests start once your profile is verified, then go out every month</li>
     </ul>
@@ -404,7 +409,7 @@ footer{border-top:1px solid var(--line);padding-block:28px 40px;font-size:13px;c
     <div class="card">
       <p class="label on">Every month</p>
       <ul class="list">
-        <li>5 Real Talk videos, 30 to 45 seconds each</li>
+        <li>5 short videos, 30 to 45 seconds each. Working title: the Real Talk series</li>
         <li>10 carousels</li>
         <li>Scripts, editing and captions on every post</li>
         <li>One round of revisions on every video</li>
@@ -414,6 +419,26 @@ footer{border-top:1px solid var(--line);padding-block:28px 40px;font-size:13px;c
       <p class="label on">Where it posts</p>
       <ul class="list">
         <li>TikTok</li><li>YouTube Shorts</li><li>Instagram</li><li>Facebook</li><li>LinkedIn</li><li>Threads</li>
+      </ul>
+    </div>
+  </div>
+  <div class="two mt-m">
+    <div class="card">
+      <p class="label on">How scripts work</p>
+      <ul class="list">
+        <li>We send you 30 to 40 scripts across 3 or 4 topics</li>
+        <li>You pick the ones you want to film</li>
+        <li>Film anywhere that feels natural: your set, your car or on your way home from work</li>
+        <li>Send the videos back. We edit and post them.</li>
+        <li>Each script also becomes a carousel and an article on your site</li>
+      </ul>
+    </div>
+    <div class="card">
+      <p class="label on">How we grow your reach</p>
+      <ul class="list">
+        <li>A weekly recap of your results from Instagram, Facebook and YouTube</li>
+        <li>Our goal: at least half of viewers still watching after the first 10 seconds. That tells the apps to show your videos to more people.</li>
+        <li>We update each new batch of scripts based on what worked</li>
       </ul>
     </div>
   </div>
@@ -454,8 +479,13 @@ footer{border-top:1px solid var(--line);padding-block:28px 40px;font-size:13px;c
   <div class="card mt-l">
     <ul class="list">
       <li>Film every 2 weeks, 45 to 60 minutes each time</li>
-      <li>Approve scripts within 3 days</li>
+      <li>Pick and approve scripts within 3 days</li>
       <li>Send photos of yourself, your work and your cities</li>
+      <li>Send your 33 Rich Blood notes</li>
+      <li>Send photos of your Rich Blood hats, socks and apparel</li>
+      <li>Share your brand colors</li>
+      <li>Send the login or email you used for the Google profile you started, plus anything Google asks for to verify it</li>
+      <li>Get the blue check on Instagram and Facebook through Meta Verified. It's a monthly plan you sign up for, and it protects your name from copycats.</li>
       <li>Give us access to your social accounts and Google profile</li>
       <li>Share the names of 3 or more recent clients for Google reviews</li>
     </ul>
@@ -525,49 +555,6 @@ footer{border-top:1px solid var(--line);padding-block:28px 40px;font-size:13px;c
 <footer>Prepared by MoreProfitUSA for Isaiah Morris, November 2026.</footer>
 </div>
 
-<script>
-(function(){
-  var form=document.getElementById('bl-form'), own=document.getElementById('bl-own'), ownText=document.getElementById('bl-own-text'),
-      btn=document.getElementById('bl-btn'), status=document.getElementById('bl-status'), sent=false;
-  function choice(){
-    var c=form.querySelector('input[name=line]:checked'); if(!c) return '';
-    return c.value==='own' ? ownText.value.trim() : c.value;
-  }
-  function update(){ btn.setAttribute('aria-disabled', (choice().length>2 && !sent)?'false':'true'); }
-  form.addEventListener('change',update);
-  ownText.addEventListener('focus',function(){ own.checked=true; update(); });
-  ownText.addEventListener('input',function(){ own.checked=true; update(); });
-  function when(){ return new Date().toLocaleString('en-US',{year:'numeric',month:'long',day:'numeric',hour:'numeric',minute:'2-digit',timeZoneName:'short'}); }
-  btn.addEventListener('click',function(){
-    var line=choice(); if(sent || line.length<3) return;
-    var custom=own.checked;
-    sent=true; update(); btn.textContent='Sending...';
-    var ctl=window.AbortController?new AbortController():null;
-    var timer=setTimeout(function(){ if(ctl) ctl.abort(); },15000);
-    fetch('https://api.web3forms.com/submit',{
-      method:'POST', signal:ctl?ctl.signal:undefined,
-      headers:{'Content-Type':'application/json','Accept':'application/json'},
-      body:JSON.stringify({
-        access_key:'c3a52fe2-e4b2-4fcb-a52c-041ff8585839',
-        subject:'Isaiah Morris chose a brand line',
-        from_name:'MoreProfitUSA Scope of Work Page',
-        'Brand line':line, 'Type':custom?'Wrote his own':'Picked from the options', Sent:when(), Page:location.href
-      })
-    }).then(function(r){clearTimeout(timer);return r.json();}).then(function(j){
-      if(String(j.success)!=='true') throw new Error('failed');
-      btn.textContent='Sent';
-      status.textContent='Got it. Your brand line is "'+line+'". We will use it across your profiles and your flagship site.';
-      status.className='status done'; status.hidden=false;
-      form.querySelectorAll('input').forEach(function(i){ i.disabled=true; });
-    }).catch(function(){
-      sent=false; btn.textContent='Send My Brand Line'; update();
-      status.textContent='That did not go through. Email your choice to parry@moreprofitusa.com.';
-      status.className='status'; status.hidden=false;
-      window.location.href='mailto:parry@moreprofitusa.com?subject='+encodeURIComponent('My brand line')+'&body='+encodeURIComponent('My brand line: '+line);
-    });
-  });
-  update();
-})();
-</script>
+
 
 </body></html>
