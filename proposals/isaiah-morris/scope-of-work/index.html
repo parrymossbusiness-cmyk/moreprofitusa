@@ -175,6 +175,13 @@ footer{border-top:1px solid var(--line);padding-block:28px 40px;font-size:13px;c
 .own{margin-top:16px}
 .own .opt{flex-direction:column}
 .own input[type=text]{font:inherit;font-size:17px;color:var(--text);background:var(--ink);border:1px solid var(--line);border-radius:10px;padding:14px 16px;max-width:100%;width:100%}
+.chips{display:flex;flex-wrap:wrap;gap:10px}
+.chips span{border:1px solid var(--line);background:var(--panel);border-radius:999px;padding:8px 14px;font-size:15px;font-weight:500}
+.qa{display:flex;flex-direction:column;gap:14px}
+.qa h3{font-size:19px}
+.qa p{color:var(--soft);font-size:16px}
+.qa p.label{font-size:12px;color:var(--brass);margin:0}
+.qa p.fine{font-size:14px;color:var(--muted)}
 .two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
 @media (max-width:860px){.lines,.two{grid-template-columns:minmax(0,1fr)}}
 </style>
@@ -196,7 +203,7 @@ footer{border-top:1px solid var(--line);padding-block:28px 40px;font-size:13px;c
     <div><dt>Plan</dt><dd>Trusted Flagship Tier, special rate</dd></div>
     <div><dt>Term</dt><dd>November 2026 through January 2027</dd></div>
     <div><dt>Investment</dt><dd>$2,000, paid as $1,000 on October 30 and $1,000 on December 1</dd></div>
-    <div><dt>Main contact</dt><dd class="hi">Email: parry@moreprofitusa.com</dd></div>
+    <div><dt>Main contact</dt><dd class="hi">parry@moreprofitusa.com<br>310.345.3033</dd></div>
   </dl>
 </section>
 
@@ -248,6 +255,21 @@ footer{border-top:1px solid var(--line);padding-block:28px 40px;font-size:13px;c
     <button class="btn" id="bl-btn" type="button" aria-disabled="true">Send My Brand Line</button>
     <p class="status" id="bl-status" role="status" aria-live="polite" hidden></p>
   </form>
+  <div class="two mt-l">
+    <div class="card qa">
+      <p class="label on">Why your brand line matters more now</p>
+      <p>Buyers now ask Google and AI tools like ChatGPT to name a good agent. Those tools don't read one post. They compare your website, Google profile, reviews, YouTube and LinkedIn, then decide who you are and who you serve.</p>
+      <p>When the same brand line shows up in every one of those places, the AI tools get one clear story. That makes it easier for them to name you for the right search, like "agent for working professionals in Solano County."</p>
+      <p>When every profile says something different, the tools can't tell what you do best. So they name someone else.</p>
+      <p>Your brand line also does the job with people. A buyer who sees it on TikTok, then on Google, then on your site knows they found the same person each time. That builds trust before they ever call you.</p>
+    </div>
+    <div class="card">
+      <p class="label on">Where your brand line will show up</p>
+      <div class="chips">
+        <span>Instagram bio</span><span>TikTok bio</span><span>Facebook page intro</span><span>LinkedIn headline</span><span>YouTube channel</span><span>Threads bio</span><span>Google Business Profile</span><span>Flagship site home page</span><span>Site page titles and search setup</span><span>Let's Get Keyed Buyers Guide</span><span>New Construction Blueprint</span><span>Carousel covers</span><span>Video end screens</span><span>Your email signature</span>
+      </div>
+    </div>
+  </div>
   <div class="card mt-l">
     <p class="label on">After you choose</p>
     <ul class="list">
@@ -286,26 +308,91 @@ footer{border-top:1px solid var(--line);padding-block:28px 40px;font-size:13px;c
 </section>
 
 <section id="guide">
-  <p class="eyebrow"><b>03</b> Let's Get Keyed Buyers Guide</p>
-  <h2>Your guide, on your site.</h2>
-  <div class="card mt-l">
+  <p class="eyebrow"><b>03</b> Your two interactive guides</p>
+  <h2>Built into your site, not stuck in a PDF.</h2>
+  <p class="lede">Both of your guides will be built right into your flagship site. Buyers can tap through them on their phone, and every page ends with a way to reach you. They work as your lead magnets: posts point to them, and buyers who use them raise their hand.</p>
+  <div class="two mt-l">
+    <div class="card">
+      <p class="label on">The Let's Get Keyed Buyers Guide</p>
+      <ul class="list">
+        <li>For first-time and move-up buyers</li>
+        <li>Covers credit, budget, the true cost of owning and buying on a busy schedule</li>
+        <li>Interactive steps buyers can tap through and check off</li>
+        <li>Sent automatically when someone comments or DMs <span class="kw">KEYED</span></li>
+      </ul>
+    </div>
+    <div class="card">
+      <p class="label on">The Bay Area New Construction Blueprint</p>
+      <ul class="list">
+        <li>Built from your current Blueprint, with your FHA new construction story</li>
+        <li>Covers builder incentives, VA and FHA loans, closing costs and popular new construction areas</li>
+        <li>An interactive buyer checklist, from pre-approval to getting your keys</li>
+        <li>A side-by-side compare of new construction and older homes</li>
+        <li>Sent automatically when someone comments or DMs <span class="kw">BUILD</span></li>
+      </ul>
+    </div>
+  </div>
+  <div class="card mt-m">
+    <p class="label on">How both guides bring you leads</p>
     <ul class="list">
-      <li>Lives on your flagship site</li>
       <li>Linked in every profile bio</li>
-      <li>Sent automatically when someone comments or DMs a keyword</li>
-      <li>You can share it after any DM, call or showing</li>
+      <li>"Want Isaiah to call you?" on every page of each guide</li>
+      <li>You can send either guide after any DM, call or showing</li>
+      <li>Search tools can read every page, so the guides also help Google and AI tools find you</li>
     </ul>
+    <p class="fine" style="margin-top:16px">We check every loan program, incentive and number in both guides before they go live.</p>
   </div>
 </section>
 
 <section id="gbp">
   <p class="eyebrow"><b>04</b> Google Business Profile</p>
-  <h2>Found on Google Maps and in AI answers.</h2>
-  <div class="card mt-l">
+  <h2>Your free listing on Google Search and Google Maps.</h2>
+  <p class="lede">A Google Business Profile is your free business listing on Google. It is the box that shows up when someone searches your name, or searches for a real estate agent nearby.</p>
+  <div class="two mt-l">
+    <div class="card qa">
+      <p class="label on">How it connects to Google Maps</p>
+      <p>Your Google Business Profile and your spot on Google Maps are the same listing. You build it once, and Google shows it in two places.</p>
+      <p>When a buyer opens Google Maps and searches "real estate agent near me," the agents who show up on the map come from their Google Business Profiles. Without one, you don't show up on the map at all.</p>
+      <p>The same listing shows up in regular Google searches. AI tools also read it when they decide which agents to name.</p>
+    </div>
+    <div class="card">
+      <p class="label on">What's in your profile</p>
+      <ul class="list">
+        <li>Your name and business category: real estate agent</li>
+        <li>Your phone number and a link to your flagship site</li>
+        <li>Your service areas</li>
+        <li>A business description with your brand line</li>
+        <li>Your photo, logo and photos of your work</li>
+        <li>Updates twice a month that point to your videos and guides</li>
+        <li>Your Google reviews</li>
+      </ul>
+    </div>
+  </div>
+  <div class="two mt-m">
+    <div class="card qa">
+      <p class="label on">Your service areas</p>
+      <p>You don't have a public office, so your profile lists the areas you serve instead of a street address. Your home address stays private.</p>
+      <p>Your service areas tell Google where to show you. When a buyer in one of these areas searches for an agent, you can show up.</p>
+      <div class="chips" style="margin-top:4px">
+        <span>Fairfield</span><span>Vacaville</span><span>Vallejo</span><span>Suisun City</span><span>Benicia</span><span>Dixon</span><span>Oakland</span><span>San Francisco</span><span>Sacramento</span>
+      </div>
+      <p class="fine">Google allows up to 20 service areas. We will confirm your final list on our kickoff call.</p>
+    </div>
+    <div class="card qa">
+      <p class="label on">Why Google reviews matter</p>
+      <p>Reviews are the strongest signal for showing up on Google Maps. Agents with more reviews show up higher and get more calls.</p>
+      <p>AI tools lean on reviews too. Businesses that AI tools recommend have far more Google reviews than the ones they skip.</p>
+      <p>Reviews also do the selling for you. A buyer who reads 20 reviews from people like them is ready to call you.</p>
+      <p>Your testimonials now live only inside your social posts, where Google can't count them. Each month, we send review requests to your past clients so your count keeps growing.</p>
+      <p class="fine">Google does not allow paying for reviews or asking only happy clients. We ask every past client the same way.</p>
+    </div>
+  </div>
+  <div class="card mt-m">
+    <p class="label on">Schedule</p>
     <ul class="list">
-      <li>Setup and claim in November</li>
+      <li>Setup and verification in November. Google may ask you to record a short video to prove the business is yours.</li>
       <li>Updates twice a month in December and January</li>
-      <li>Monthly review requests sent to your past clients</li>
+      <li>Review requests every month</li>
     </ul>
   </div>
 </section>
@@ -338,8 +425,10 @@ footer{border-top:1px solid var(--line);padding-block:28px 40px;font-size:13px;c
   <h2>Leads come to you already educated.</h2>
   <div class="card mt-l">
     <ul class="list">
-      <li>Keywords: <span class="kw">KEYED</span> and <span class="kw">NUMBERS</span></li>
-      <li>Viewers who comment or DM a keyword get your guide or an intro link right away</li>
+      <li><span class="kw">KEYED</span> sends the Let's Get Keyed Buyers Guide</li>
+      <li><span class="kw">BUILD</span> sends the New Construction Blueprint</li>
+      <li><span class="kw">NUMBERS</span> sends the "Are You Mortgage-Ready?" check</li>
+      <li>Viewers who comment or DM a keyword get the link right away</li>
     </ul>
   </div>
 </section>
@@ -420,8 +509,8 @@ footer{border-top:1px solid var(--line);padding-block:28px 40px;font-size:13px;c
   <p class="eyebrow"><b>12</b> Payments, renewal and communication</p>
   <div class="two">
     <div class="card"><p class="label on">Payments and renewal</p><ul class="list"><li>$1,000 due October 30, 2026</li><li>$1,000 due December 1, 2026</li><li>Work pauses if a payment is late</li><li>Renewal terms for after January will be set by January 1, 2027</li></ul></div>
-    <div class="card"><p class="label on">Communication</p><ul class="list"><li>Email is our main channel</li><li>Send scripts, approvals, photos and questions to parry@moreprofitusa.com</li></ul>
-      <div class="contact"><span class="who">Parry Moss, MoreProfitUSA</span><span class="em">parry@moreprofitusa.com</span></div></div>
+    <div class="card"><p class="label on">Communication</p><ul class="list"><li>Email is our main channel</li><li>Send scripts, approvals, photos and questions to parry@moreprofitusa.com</li><li>For anything urgent, call or text 310.345.3033</li></ul>
+      <div class="contact"><span class="who">Parry Moss, MoreProfitUSA</span><span class="em">parry@moreprofitusa.com</span><span class="em">310.345.3033</span></div></div>
   </div>
 </section>
 
