@@ -183,6 +183,12 @@ footer{border-top:1px solid var(--line);padding-block:28px 40px;font-size:13px;c
 .qa p{color:var(--soft);font-size:16px}
 .qa p.label{font-size:12px;color:var(--brass);margin:0}
 .qa p.fine{font-size:14px;color:var(--muted)}
+.example{border-color:var(--brass)}
+.ex-line{font-family:var(--display);font-weight:900;font-size:clamp(26px,3.4vw,36px);letter-spacing:-.02em;line-height:1.1;margin:0}
+.ex-proof{font-family:var(--mono);font-size:14px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--brass);margin:10px 0 0;line-height:1.6}
+.qhead{font-family:var(--display);font-weight:800;font-size:18px;margin:0 0 10px}
+.qs{margin:0;padding-left:22px;display:flex;flex-direction:column;gap:10px;color:var(--soft);font-size:16px}
+.qs li::marker{color:var(--brass);font-family:var(--mono);font-weight:700}
 .two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
 @media (max-width:860px){.lines,.two{grid-template-columns:minmax(0,1fr)}}
 </style>
@@ -211,53 +217,14 @@ footer{border-top:1px solid var(--line);padding-block:28px 40px;font-size:13px;c
 <section id="brand-line">
   <p class="eyebrow"><b>01</b> Brand foundation</p>
   <h2>Your <em>brand line.</em></h2>
-  <p class="lede">Your brand line goes in every bio, at the top of your flagship site and on your Google profile. It tells buyers and AI tools who you serve in one line. Here are 4 directions to start from. "Let's Get Keyed" stays as your sign-off on every post.</p>
-  <div class="lines four mt-l">
-      <div class="opt">
-        <span class="k">Option 1 · Relatable</span>
-        <span class="line">The agent who works like you do.</span>
-        <dl>
-          <div><dt>Why it works</dt><dd>You work full time at PG&amp;E and full time in real estate. Busy buyers trust someone who lives the same schedule.</dd></div>
-          <div><dt>Best for</dt><dd>Union members, trades and working professionals who need an agent who fits their life.</dd></div>
-          <div><dt>Where it shows</dt><dd>Bios, site hero, LinkedIn headline</dd></div>
-        </dl>
-      </div>
-      <div class="opt">
-        <span class="k">Option 2 · Real Talk</span>
-        <span class="line">Real numbers. Real advice. Real homes.</span>
-        <dl>
-          <div><dt>Why it works</dt><dd>It matches your Real Talk standard. You lead with verifiable income, clear math and honest advice.</dd></div>
-          <div><dt>Best for</dt><dd>Buyers who want the truth about what they can afford before they shop.</dd></div>
-          <div><dt>Where it shows</dt><dd>Bios and video intros</dd></div>
-        </dl>
-      </div>
-      <div class="opt">
-        <span class="k">Option 3 · Mission</span>
-        <span class="line">100 families. 100 homes. By 2027.</span>
-        <dl>
-          <div><dt>Why it works</dt><dd>It puts your goal in public. Every closing becomes proof, and buyers can see you moving toward it.</dd></div>
-          <div><dt>Best for</dt><dd>Telling your legacy story and building a following that roots for you.</dd></div>
-          <div><dt>Where it shows</dt><dd>Bios, site hero, a progress count on your site</dd></div>
-        </dl>
-      </div>
-      <div class="opt">
-        <span class="k">Option 4 · Rich Blood</span>
-        <span class="line">Rich Blood Real Estate. A solid foundation starts here.</span>
-        <dl>
-          <div><dt>Why it works</dt><dd>It puts your Rich Blood philosophy behind your real estate. When your foundation is solid, you are rich within. One name ties your apparel and your real estate together.</dd></div>
-          <div><dt>Best for</dt><dd>Buyers who relate to your story and your elevated streetwear style, and want an agent who talks their language.</dd></div>
-          <div><dt>Where it shows</dt><dd>Bios, site hero, Rich Blood apparel and merch tags</dd></div>
-        </dl>
-      </div>
-  </div>
-  <p class="fine mt-m" style="font-size:15px">These are starting points. We will shape your final brand line together on a call, using your 33 Rich Blood notes.</p>
+  <p class="lede">Your brand line has two parts. The first line says what you want to be known for, in 4 or 5 words. The second line is your proof: real numbers that back it up. "Let's Get Keyed" stays as your sign-off on every post.</p>
   <div class="two mt-l">
     <div class="card qa">
-      <p class="label on">Why your brand line matters more now</p>
-      <p>Buyers now ask Google and AI tools like ChatGPT to name a good agent. Those tools don't read one post. They compare your website, Google profile, reviews, YouTube and LinkedIn, then decide who you are and who you serve.</p>
-      <p>When the same brand line shows up in every one of those places, the AI tools get one clear story. That makes it easier for them to name you for the right search, like "agent for working professionals in Solano County."</p>
-      <p>When every profile says something different, the tools can't tell what you do best. So they name someone else.</p>
-      <p>Your brand line also does the job with people. A buyer who sees it on TikTok, then on Google, then on your site knows they found the same person each time. That builds trust before they ever call you.</p>
+      <p class="label on">Why it matters</p>
+      <p>Buyers now ask Google and AI tools like ChatGPT to name a good agent. Before those tools answer, they check your website, Google profile, LinkedIn, YouTube, Zillow and social bios.</p>
+      <p>When every profile says the same thing, they see one clear expert. That gives them a reason to name you. When your profiles say different things, they can't tell what you do best, so they name someone else.</p>
+      <p>That's why we rebuild your LinkedIn profile and put the same brand line on every platform.</p>
+      <p>Once we agree on your brand line, it becomes the source for everything we make: your scripts, carousels, guides, flagship site and Google profile.</p>
     </div>
     <div class="card">
       <p class="label on">Where your brand line will show up</p>
@@ -266,12 +233,48 @@ footer{border-top:1px solid var(--line);padding-block:28px 40px;font-size:13px;c
       </div>
     </div>
   </div>
-  <div class="card mt-l">
+
+  <div class="card mt-m example">
+    <p class="label on">Example only · how it's built</p>
+    <p class="ex-line">Bay Area New Construction Agent.</p>
+    <p class="ex-proof">Licensed since 2019. [Number] new construction homes closed. $[Amount] in builder incentives secured for buyers.</p>
+    <p class="fine" style="margin-top:14px">This shows the format, not your final line. Your answers below will decide what you're known for and what proof we use.</p>
+  </div>
+
+  <div class="card mt-m">
+    <p class="label on">Questions for you</p>
+    <p class="fine" style="font-size:15px;margin:0 0 18px">Bring your answers to our call, or email them to parry@moreprofitusa.com. Use your own deals only, not your team's.</p>
+    <div class="two qlist">
+      <div>
+        <p class="qhead">What you're known for</p>
+        <ol class="qs">
+          <li>In 4 or 5 words, what do you want buyers to know you for?</li>
+          <li>When a past client tells a friend about you, what do you want them to say?</li>
+          <li>Which buyers do you help most? For example: first-time buyers, new construction buyers, union and trades workers, VA buyers or move-up buyers.</li>
+          <li>Which deals do you enjoy most, and why?</li>
+          <li>What do you do better than most agents?</li>
+          <li>Which Bay Area cities have you closed the most homes in?</li>
+        </ol>
+      </div>
+      <div>
+        <p class="qhead">Your proof</p>
+        <ol class="qs" start="7">
+          <li>What year did you get your real estate license?</li>
+          <li>How many homes have you closed in total? How many in the past 24 months?</li>
+          <li>Of those, how many were first-time buyers? How many were new construction? How many used VA or FHA loans?</li>
+          <li>About how much in seller credits, builder incentives and down payment assistance have you secured for your buyers?</li>
+          <li>What else can you prove? For example: awards, rankings, reviews or languages you speak.</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+  <div class="card mt-m">
     <p class="label on">Once your brand line is set</p>
     <ul class="list">
-      <li>We match your name, photo, bio and brand line on every platform.</li>
+      <li>We put the same brand line on every platform.</li>
+      <li>We rebuild your LinkedIn profile around it.</li>
       <li>We rename your TikTok handle to include your name.</li>
-      <li>We rewrite your LinkedIn About section.</li>
       <li>We set up your Facebook business page and YouTube channel.</li>
     </ul>
   </div>
