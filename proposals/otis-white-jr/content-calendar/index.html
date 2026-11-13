@@ -1,0 +1,480 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Otis White, Jr. 2027 Content Calendar</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@600;700;800;900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+/* Same dark MoreProfitUSA shell as the proposal pages. Brass marks dates and the current week. */
+:root{
+  --ink:#050506;--panel:#0d0e10;--panel2:#131417;--line:#26272b;
+  --text:#f4f4f2;--soft:#d6d6d3;--muted:#a3a3a8;
+  --brass:#d2ad62;--brass-dim:#d2ad6224;--on-brass:#14100a;
+  --c-watch:#d2ad62;--c-plan:#5ec7b8;--c-local:#7fc77a;--c-talk:#b99cf0;--c-pick:#6fa8f5;--c-quiz:#f09a5a;--c-new:#f07a9a;
+  --display:"Inter Tight","Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --body:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--ink);color:var(--text);font-family:var(--body);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;padding-bottom:env(safe-area-inset-bottom,0px)}
+a{color:var(--text);text-decoration-color:var(--brass);text-underline-offset:3px}
+button{font:inherit;color:inherit}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--brass);outline-offset:3px}
+.wrap{max-width:1080px;margin:0 auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+section{border-top:1px solid var(--line);padding-block:56px}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0;letter-spacing:-.03em}
+h1{font-size:clamp(38px,6.4vw,74px);font-weight:900;line-height:1.03}
+h1 em,h2 em{font-style:normal;color:var(--brass)}
+h2{font-size:clamp(28px,4.2vw,44px);font-weight:800;line-height:1.1;max-width:24ch}
+h3{font-size:19px;font-weight:700;line-height:1.25;letter-spacing:-.015em}
+p{margin:0}
+.eyebrow{font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);display:flex;gap:12px;align-items:center;margin:0 0 18px}
+.eyebrow b{color:var(--brass);font-weight:700}
+.lede{font-size:clamp(18px,2vw,21px);color:var(--soft);max-width:60ch;margin:20px 0 0;line-height:1.55}
+.fine{font-size:14px;color:var(--muted);line-height:1.5}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;padding-block:22px;border-bottom:1px solid var(--line)}
+.brand{font-family:var(--display);font-weight:800;font-size:19px;letter-spacing:-.02em}
+.brand span{color:var(--muted)}
+.who{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.hero{padding-block:44px 56px;border-top:0}
+.kicker{font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--brass);margin:0}
+.hero h1{margin-top:36px;max-width:16ch}
+.facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin:44px 0 0;border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.facts div{padding:18px 22px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);min-width:0}
+.facts div:nth-child(3n){border-right:0}
+.facts div:nth-last-child(-n+3){border-bottom:0}
+.facts dt{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.facts dd{margin:6px 0 0;font-weight:600;font-size:16px;line-height:1.4}
+.facts dd.hi{color:var(--brass)}
+
+/* This week */
+.now{border:1px solid var(--brass);border-radius:18px;padding:28px;background:linear-gradient(180deg,#d2ad6214,var(--panel));margin-top:28px}
+.now h3{font-size:24px}
+.now .when{font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--brass)}
+.todo{list-style:none;margin:18px 0 0;padding:0;display:flex;flex-direction:column;gap:10px}
+.todo label{display:flex;gap:12px;align-items:flex-start;cursor:pointer;color:var(--soft);font-size:16px}
+.todo input{width:22px;height:22px;margin-top:2px;accent-color:var(--brass);flex:none}
+.todo input:checked + span{color:var(--muted);text-decoration:line-through}
+
+/* Series */
+.series{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:32px}
+.s-card{border:1px solid var(--line);background:var(--panel);border-radius:14px;padding:22px;min-width:0}
+.s-card h3{display:flex;align-items:center;gap:10px}
+.s-card p{color:var(--soft);font-size:15px;margin-top:8px}
+.s-card .count{font-family:var(--mono);font-size:12px;color:var(--muted);margin-top:12px;letter-spacing:.06em}
+.dot{width:10px;height:10px;border-radius:50%;flex:none;display:inline-block}
+
+/* Controls */
+.bar{position:sticky;top:0;z-index:5;background:var(--ink);padding:14px 0 14px;margin-top:24px;border-bottom:1px solid var(--line)}
+.tabs,.chips{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;padding-bottom:2px}
+.tabs::-webkit-scrollbar,.chips::-webkit-scrollbar{display:none}
+.chips{margin-top:10px}
+.tab,.chip{flex:none;border:1px solid var(--line);background:var(--panel);border-radius:999px;padding:9px 15px;cursor:pointer;font-size:14px;font-weight:600;white-space:nowrap;color:var(--soft)}
+.tab small{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.08em;color:var(--muted);font-weight:500}
+.tab{border-radius:12px;text-align:left;padding:8px 14px}
+.tab[aria-selected="true"]{background:var(--brass);color:var(--on-brass);border-color:var(--brass)}
+.tab[aria-selected="true"] small{color:#14100abb}
+.tab.is-now:not([aria-selected="true"]){border-color:var(--brass)}
+.chip{font-size:13px;padding:7px 13px}
+.chip[aria-pressed="true"]{border-color:var(--text);color:var(--text);background:var(--panel2)}
+
+/* Week */
+.weekhead{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-top:6px}
+.weekhead .film{font-size:15px;color:var(--soft)}
+.weekhead .film b{color:var(--brass);font-weight:600}
+.days{display:flex;flex-direction:column;gap:14px;margin-top:22px}
+.day{border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--panel)}
+.day.today{border-color:var(--brass)}
+.dayhead{display:flex;align-items:baseline;gap:12px;padding:14px 20px;border-bottom:1px solid var(--line);background:var(--panel2)}
+.dayhead .dn{font-family:var(--display);font-weight:900;font-size:22px;letter-spacing:-.03em}
+.dayhead .dd{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--brass)}
+.dayhead .tag{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--brass);letter-spacing:.1em;text-transform:uppercase}
+.item{border-top:1px solid var(--line)}
+.item:first-of-type{border-top:0}
+.item > button{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 14px;width:100%;text-align:left;background:none;border:0;padding:16px 20px;cursor:pointer}
+.item .meta{display:flex;gap:10px;align-items:center;flex-wrap:wrap;font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.item .type{border:1px solid var(--line);border-radius:999px;padding:2px 8px;color:var(--soft)}
+.item .title{grid-column:1;font-weight:600;font-size:17px;line-height:1.35;color:var(--text)}
+.item .arrow{grid-column:2;grid-row:1 / span 2;align-self:center;color:var(--muted);transition:transform .2s;font-size:18px}
+.item[data-open="true"] .arrow{transform:rotate(90deg);color:var(--brass)}
+.item.done .title{color:var(--muted);text-decoration:line-through;text-decoration-color:var(--muted)}
+.detail{display:none;padding:0 20px 20px}
+.item[data-open="true"] .detail{display:block}
+.hlabel{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 8px}
+.hook{border-left:3px solid var(--brass);padding:4px 0 4px 16px;font-family:var(--display);font-weight:700;font-size:19px;line-height:1.35;letter-spacing:-.01em}
+.rows{display:grid;grid-template-columns:110px minmax(0,1fr);gap:8px 16px;margin-top:16px;font-size:15px}
+.rows dt{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);padding-top:3px}
+.rows dd{margin:0;color:var(--soft)}
+.donebox{display:flex;gap:10px;align-items:center;margin-top:16px;font-size:15px;color:var(--soft);cursor:pointer}
+.donebox input{width:20px;height:20px;accent-color:var(--brass)}
+.empty{color:var(--muted);padding:20px}
+
+/* Sessions */
+.steps{list-style:none;margin:32px 0 0;padding:0;display:flex;flex-direction:column;border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.steps li{display:grid;grid-template-columns:170px minmax(0,1fr);gap:16px;padding:18px 22px;border-top:1px solid var(--line);background:var(--panel)}
+.steps li:first-child{border-top:0}
+.steps .d{font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--brass);padding-top:3px}
+.steps .t{font-size:16px}
+.steps .t span{display:block;font-size:14px;color:var(--muted);margin-top:4px}
+.tips{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:28px}
+.tips .s-card p{margin-top:6px}
+footer{border-top:1px solid var(--line);padding-block:36px 56px;color:var(--muted);font-size:14px}
+footer b{color:var(--text)}
+
+@media (max-width:820px){
+  .series,.tips{grid-template-columns:minmax(0,1fr)}
+  .facts{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .facts div{border-right:1px solid var(--line)!important;border-bottom:1px solid var(--line)!important}
+  .facts div:nth-child(2n){border-right:0!important}
+  .facts div:nth-last-child(-n+2){border-bottom:0!important}
+  .steps li{grid-template-columns:minmax(0,1fr);gap:4px}
+  .rows{grid-template-columns:minmax(0,1fr);gap:2px}
+  .rows dd{margin-bottom:8px}
+  section{padding-block:44px}
+}
+.reach{margin-top:16px;border:1px solid var(--line);border-radius:14px;padding:18px 22px;background:var(--panel);max-width:60ch;color:var(--soft)}
+.label{font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:0 0 8px}
+.label.on{color:var(--brass)}
+.callout{margin-top:28px;border:1px solid var(--brass);border-radius:14px;padding:18px 22px;background:var(--brass-dim);font-family:var(--display);font-weight:700;font-size:19px;line-height:1.35;max-width:46ch}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="topbar">
+  <div class="brand">MoreProfitUSA <span>/ Real Estate</span></div>
+  <div class="who">For Otis White, Jr.</div>
+</header>
+
+<section class="hero">
+  <p class="kicker">Content plan · Nov 17, 2026 to Jan 6, 2027</p>
+  <h1>Be the first agent talking about <em>2027</em>.</h1>
+  <p class="lede">Most agents go quiet for the holidays. People don't. They're home and on their phones. This plan answers the questions first-time buyers ask most, updated for 2027, and adds quizzes and fun posts people want to share.</p>
+  <dl class="facts">
+    <div><dt>Reels</dt><dd>49, one every day</dd></div>
+    <div><dt>Long-form videos</dt><dd>7, every Monday</dd></div>
+    <div><dt>Carousels</dt><dd>12, no filming needed</dd></div>
+    <div><dt>Filming</dt><dd class="hi">Every Tuesday, starting Nov 17</dd></div>
+    <div><dt>Each session</dt><dd>About 2 hours: 7 reels and 1 long-form</dd></div>
+    <div><dt>Where you film</dt><dd class="hi">Home, on location or car, parked</dd></div>
+  </dl>
+  <p class="callout">Posting begins Thursday, Nov&nbsp;19. Once you approve these topics, the first 25 scripts will be delivered the next day.</p>
+  <div class="reach">
+    <p class="label on">Where every post goes</p>
+    <p>Every post lands on your Facebook, Instagram, TikTok, YouTube Shorts and Threads, and on LinkedIn 3 times a week. Your Google Business Profile and your flagship site get updates every two weeks.</p>
+  </div>
+</section>
+
+<section id="now">
+  <p class="eyebrow"><b>01</b> This week</p>
+  <h2>What to do <em>now</em></h2>
+  <div class="now" id="nowCard"></div>
+</section>
+
+<section id="series">
+  <p class="eyebrow"><b>02</b> The series</p>
+  <h2>Every post fits one of these</h2>
+  <p class="lede">Most weeks you film 5 Buyer Questions and 2 more reels, either a Guide Answer or a 2027 Watch reel. New Year week is all 2027 reels. Carousels and long-form fill in the rest.</p>
+  <div class="series" id="seriesGrid"></div>
+</section>
+
+<section id="calendar">
+  <p class="eyebrow"><b>03</b> The calendar</p>
+  <h2>Tap a week, then tap a post</h2>
+  <div class="bar">
+    <div class="tabs" id="tabs" role="tablist" aria-label="Weeks"></div>
+    <div class="chips" id="chips" aria-label="Filter by type"></div>
+  </div>
+  <div id="week"></div>
+</section>
+
+<section id="sessions">
+  <p class="eyebrow"><b>04</b> Filming</p>
+  <h2>Seven sessions, every Tuesday</h2>
+  <p class="lede">You film 7 reels and one long-form video each Tuesday. Reels post starting that Thursday. The long-form posts the next Monday.</p>
+  <ol class="steps" id="steps"></ol>
+  <div class="tips">
+    <div class="s-card"><h3>Film the opening 3 times</h3><p>Each reel gets 3 takes of the first line. We test the extra takes to see which opening keeps the most people watching.</p></div>
+    <div class="s-card"><h3>Pick the right spot</h3><p>Home works for most scripts. When a script is about a place, film there if you can. In the car, stay parked with the engine off.</p></div>
+    <div class="s-card"><h3>Check every script</h3><p>Read each script before you film and change anything that doesn't fit your license or how you talk. You have the final say.</p></div>
+  </div>
+</section>
+
+<section id="richmond">
+  <p class="eyebrow"><b>05</b> Bonus</p>
+  <h2>Richmond, <em>on location</em></h2>
+  <p class="lede">Six Richmond reels are already written. They need one trip to Richmond: Marina Bay and the ferry, the BART station and Point Richmond. Plan on about 3 hours. You pick the day, and they post the week after you film them.</p>
+  <ol class="steps" id="rich"></ol>
+</section>
+
+<footer>
+  <p><b>Parry Moss</b> · MoreProfitUSA · 1.310.345.3033 · parry@moreprofitusa.com</p>
+  <p class="fine" style="margin-top:8px">First lines on this page are drafts or the current version of each script. Final wording comes in each week's script doc. Check marks save on the device you use.</p>
+</footer>
+</div>
+
+<script>
+var SERIES = {
+  "Buyer Questions": {c:"var(--c-plan)", d:"The questions first-time buyers ask most on social media, picked through research. Each script gets updated for 2027. You film 5 a week."},
+  "Guide Answers": {c:"var(--c-local)", d:"Short answers to the questions in your First-Time Buyers Guide. Each video also goes on your site next to its written answer."},
+  "2027 Watch": {c:"var(--c-watch)", d:"News that changes how people buy in 2027: rates, Prop 37, loan limits and new laws. Almost no agent is posting this yet."},
+  "East Bay 5 for 5": {c:"var(--c-quiz)", d:"Quiz carousels: 5 questions about East Bay parks, BART, slang and more. People comment their score and tag friends."},
+  "New Year": {c:"var(--c-new)", d:"Goals, quick quizzes and a vote on which city comes first. These post the week of January 1."},
+  "Fun carousels": {c:"var(--c-talk)", d:"Wrapped, holiday lights and this or that. Easy to share, and no filming."},
+  "Long-form": {c:"var(--c-pick)", d:"One YouTube video every Monday. Each one is the full story behind that week's reels."}
+};
+
+var SESSIONS = [
+  {n:1, film:"2026-11-17", due:"The day after you approve the topics", lf:"10 things to watch in 2027", posts:"Reels Nov 19 to 25. Long-form posts Nov 23."},
+  {n:2, film:"2026-11-24", due:"The day after you approve the topics", lf:"Antioch in 2027", posts:"Reels Nov 26 to Dec 2. Long-form posts Nov 30."},
+  {n:3, film:"2026-12-01", due:"The day after you approve the topics", lf:"My 6 cities ranked for 2027", posts:"Reels Dec 3 to 9. Long-form posts Dec 7."},
+  {n:4, film:"2026-12-08", due:"Fri Dec 4", lf:"Your 2027 plan, month by month", posts:"Reels Dec 10 to 16. Long-form posts Dec 14."},
+  {n:5, film:"2026-12-15", due:"Fri Dec 11", lf:"Down payment help in 2027", posts:"Reels Dec 17 to 23. Long-form posts Dec 21."},
+  {n:6, film:"2026-12-22", due:"Fri Dec 18", lf:"What $600,000 buys in each of my 6 cities", posts:"Reels Dec 24 to 30. Long-form posts Dec 28."},
+  {n:7, film:"2026-12-29", due:"Wed Dec 23", lf:"Your first 90 days of 2027", posts:"Reels Dec 31 to Jan 6. Long-form posts Jan 4."}
+];
+
+var WEEKS = [
+  {n:1, start:"2026-11-19", end:"2026-11-25", label:"Oakland week"},
+  {n:2, start:"2026-11-26", end:"2026-12-02", label:"Antioch and Thanksgiving week"},
+  {n:3, start:"2026-12-03", end:"2026-12-09", label:"Richmond week"},
+  {n:4, start:"2026-12-10", end:"2026-12-16", label:"Berkeley week"},
+  {n:5, start:"2026-12-17", end:"2026-12-23", label:"Vallejo week"},
+  {n:6, start:"2026-12-24", end:"2026-12-30", label:"Fairfield and Christmas week"},
+  {n:7, start:"2026-12-31", end:"2027-01-06", label:"New Year week"}
+];
+
+var BQ = "One of the questions first-time buyers ask most on social. The script gets a 2027 update.";
+var GA = "Answers a question in your First-Time Buyers Guide. The video also goes on your site.";
+var FOLLOW = "Follow if you're buying in the East Bay";
+
+var POSTS = [
+ {d:"2026-11-19",t:"Reel",s:"Guide Answers",o:1,title:"The first step 26 buyers took",hook:"First-time buyers, I've helped 26 of you close in the East Bay in the past 24 months.",cta:FOLLOW,why:"Opens the plan with your proof. " + GA},
+ {d:"2026-11-20",t:"Reel",s:"Buyer Questions",o:1,title:"Buying in Oakland on $120,000",hook:"If you make $120,000 a year, your first home in Oakland is not out of reach.",cta:"Send this to a friend who thinks Oakland is out of reach",why:BQ},
+ {d:"2026-11-21",t:"Reel",s:"Buyer Questions",o:1,title:"Lake Merritt condo or Uptown rent",hook:"If you rent in Uptown, run this math before you buy your first condo.",cta:"Share this with a friend who rents in Oakland",why:BQ},
+ {d:"2026-11-22",t:"Reel",s:"Buyer Questions",o:1,title:"3 Oakland areas under $650,000",hook:"A $650,000 budget can still buy your first house in Oakland.",cta:FOLLOW,why:BQ},
+ {d:"2026-11-22",t:"Carousel",s:"East Bay 5 for 5",title:"East Bay parks 5 for 5",hook:"East Bay parks 5 for 5. If you get all 5, you're a true local.",cta:"Comment your score and your favorite park",why:"Weekend scrolling."},
+ {d:"2026-11-23",t:"Long-form",s:"Long-form",title:"10 things East Bay first-time buyers should watch in 2027",hook:"First-time buyers in the East Bay, these are the 10 things I'm watching in 2027, and number 7 changes how you shop.",cta:"Subscribe for the 2027 series",why:"Opens the series with the full 2027 story."},
+ {d:"2026-11-23",t:"Reel",s:"Buyer Questions",o:1,title:"The $10,000 sewer pipe",hook:"First-time buyers in Oakland, this pipe can cost you $10,000 after you close.",cta:FOLLOW,why:BQ},
+ {d:"2026-11-24",t:"Reel",s:"Buyer Questions",o:1,title:"Oakland's home sale tax",hook:"This Oakland tax surprises a lot of first-time buyers at closing.",cta:FOLLOW,why:BQ},
+ {d:"2026-11-25",t:"Reel",s:"2027 Watch",title:"Waiting for rates to drop in 2027? What the forecasts say",hook:"Renters waiting for rates to fall in 2027, Fannie Mae's new forecast is not what you want to hear.",cta:"Comment if you're waiting or buying",why:"Fannie Mae's October forecast says about 7.5% all of 2027. Families talk money the day before Thanksgiving."},
+ {d:"2026-11-26",t:"Reel",s:"Buyer Questions",o:1,title:"Antioch: the trade",hook:"Four bedrooms and a two car garage for about $625,000.",cta:FOLLOW,why:"Thanksgiving Day. " + BQ},
+ {d:"2026-11-26",t:"Carousel",s:"East Bay 5 for 5",title:"East Bay 5 for 5: Thanksgiving edition",hook:"Only real East Bay people go 5 for 5. Thanksgiving edition.",cta:"Comment your score and tag the family member who'd win",why:"Thanksgiving Day. People are on their phones all day."},
+ {d:"2026-11-27",t:"Reel",s:"Buyer Questions",o:1,title:"The 2-1 rate buydown",hook:"Stop asking sellers for a price cut.",cta:FOLLOW,why:"Black Friday. A deal buyers can ask for, with rates forecast to stay high in 2027. " + BQ},
+ {d:"2026-11-28",t:"Reel",s:"Buyer Questions",o:1,title:"The Mello-Roos tax",hook:"Before you buy your first home in East County, find out if it has this tax.",cta:FOLLOW,why:BQ},
+ {d:"2026-11-29",t:"Reel",s:"Buyer Questions",o:1,title:"FHA in Antioch",hook:"If you're using an FHA loan for your first home, peeling paint can cost you the house.",cta:FOLLOW,why:BQ},
+ {d:"2026-11-30",t:"Long-form",s:"Long-form",title:"Antioch in 2027: new homes, BART and what first-time buyers should know",hook:"First-time buyers looking at Antioch in 2027, here's what I'd want to know before I made an offer.",cta:"Subscribe for one East Bay city a week",why:"Antioch has about 12 new-home communities, and Prop 37 is for new homes."},
+ {d:"2026-11-30",t:"Reel",s:"Buyer Questions",o:1,title:"Two sides of Antioch",hook:"If your first home is in Antioch, the side of town you pick changes your monthly bill.",cta:FOLLOW,why:"Same day as the Antioch long-form. " + BQ},
+ {d:"2026-12-01",t:"Reel",s:"2027 Watch",title:"Prop 37 passed: what it could mean for buyers in 2027",hook:"California voters just passed a way to buy a new home with 3% down. First-time buyers, here's the catch.",cta:"Send this to someone who's been saving",why:"Passed Nov 3. It's for new homes, which ties to Antioch week. CalHFA still has to set the rules."},
+ {d:"2026-12-02",t:"Reel",s:"Guide Answers",o:1,title:"The $100,000 you may not need",hook:"First-time buyers, stop saving for a $100,000 down payment.",cta:FOLLOW,why:GA},
+ {d:"2026-12-03",t:"Reel",s:"Buyer Questions",o:1,title:"Richmond: a house under $600,000",hook:"Your first home could be under $600,000, and 35 minutes from San Francisco by ferry.",cta:FOLLOW,why:BQ},
+ {d:"2026-12-03",t:"Carousel",s:"Fun carousels",title:"2026 Wrapped for East Bay first-time buyers",hook:"Everyone's posting their Wrapped. Here's 2026 Wrapped for East Bay first-time buyers.",cta:"Send this to your co-buyer",why:"Wrapped posts are everywhere in early December."},
+ {d:"2026-12-04",t:"Reel",s:"Buyer Questions",o:1,title:"3 Richmond areas, 3 prices",hook:"If you're buying your first place in Richmond, the area you pick can change the price by hundreds of thousands.",cta:FOLLOW,why:BQ},
+ {d:"2026-12-05",t:"Reel",s:"Buyer Questions",o:1,title:"Listed at $599,000, sold at $780,000",hook:"Listed at $599,000. Sold at $780,000.",cta:"Send this to a friend who keeps losing offers",why:"C.A.R. expects more sales in 2027, so more buyers compete. " + BQ},
+ {d:"2026-12-06",t:"Reel",s:"Buyer Questions",o:1,title:"Down payment help in Richmond",hook:"If you're saving for your first down payment in Contra Costa, one program lists up to $38,000.",cta:"Send this to a friend saving for a down payment",why:BQ},
+ {d:"2026-12-06",t:"Carousel",s:"East Bay 5 for 5",title:"Name the city from one photo",hook:"Name the East Bay city from one photo. 5 photos. Number 3 is the hardest.",cta:"Comment your score",why:"Photo quizzes get the most swipes."},
+ {d:"2026-12-07",t:"Long-form",s:"Long-form",title:"My 6 East Bay cities ranked for first-time buyers in 2027",hook:"I ranked Oakland, Berkeley, Richmond, Antioch, Vallejo and Fairfield for first-time buyers in 2027. Here's the full list.",cta:"Subscribe for one city a week",why:"Ranked by price, commute, new homes and weekends."},
+ {d:"2026-12-07",t:"Reel",s:"Guide Answers",o:1,title:"The $15,000 bill a seller can pay",hook:"First-time buyers, a seller may pay a $15,000 bill you think is yours.",cta:FOLLOW,why:GA},
+ {d:"2026-12-08",t:"Reel",s:"2027 Watch",title:"The 2027 loan limits are out",hook:"The 2027 loan limits just came out. First-time buyers in the East Bay, here's the number that matters.",cta:"Save this for when you talk to a lender",why:"FHFA announces in late November. The script gets written after the number is out."},
+ {d:"2026-12-09",t:"Reel",s:"Buyer Questions",o:1,title:"Student loans and a mortgage",hook:"Student loans don't stop you from buying your first home.",cta:FOLLOW,why:BQ},
+ {d:"2026-12-10",t:"Reel",s:"Buyer Questions",o:1,title:"Two ways into Berkeley",hook:"If you love Berkeley but can't afford a house there, there are two ways in under $700,000.",cta:"Send this to a friend who loves Berkeley",why:BQ},
+ {d:"2026-12-10",t:"Carousel",s:"East Bay 5 for 5",title:"BART 5 for 5: which city is this station in?",hook:"BART 5 for 5. Name the city each station is in.",cta:"Comment your score",why:"Everyone who rides BART thinks they'll get 5."},
+ {d:"2026-12-11",t:"Reel",s:"Buyer Questions",o:1,title:"What a TIC is",hook:"This Berkeley home type can cost 15% to 25% less than a condo.",cta:"Share this with a friend who's priced out of Berkeley condos",why:BQ},
+ {d:"2026-12-12",t:"Reel",s:"Buyer Questions",o:1,title:"Berkeley's earthquake refund",hook:"Berkeley can refund up to one third of a tax you pay when you buy your first home.",cta:FOLLOW,why:BQ},
+ {d:"2026-12-13",t:"Reel",s:"Buyer Questions",o:1,title:"Berkeley fire insurance",hook:"Fall for a view in the Berkeley hills, and your first home could cost $8,000 a year to insure.",cta:FOLLOW,why:BQ},
+ {d:"2026-12-13",t:"Carousel",s:"Fun carousels",title:"Holiday lights worth the drive in my 6 cities",hook:"One holiday light spot worth the drive in each of my 6 East Bay cities.",cta:"Comment the spot I missed",why:"Weekend holiday plans. People save these."},
+ {d:"2026-12-14",t:"Long-form",s:"Long-form",title:"Your 2027 first-home plan, month by month",hook:"First-time buyers, if you want your first East Bay home in 2027, here's what to do every month starting in January.",cta:"Subscribe for the 2027 series",why:"People start planning the New Year."},
+ {d:"2026-12-14",t:"Reel",s:"Guide Answers",o:1,title:"6 cities, 6 rides to work",hook:"First-time buyers, I work in 6 cities, and each one gets you to San Francisco a different way.",cta:FOLLOW,why:GA},
+ {d:"2026-12-15",t:"Reel",s:"2027 Watch",title:"A new California law if you buy with a partner",hook:"Buying your first home with a partner in 2027? A new California law starts January 1.",cta:"Send this to your partner",why:"AB 3100 covers new conventional loans from Jan 1, 2027."},
+ {d:"2026-12-16",t:"Reel",s:"Buyer Questions",o:1,title:"Fairfield or Vallejo",hook:"Fairfield or Vallejo for your first home comes down to three things.",cta:FOLLOW,why:BQ},
+ {d:"2026-12-17",t:"Reel",s:"Buyer Questions",o:1,title:"Vallejo: a house by the water",hook:"Waterfront cities in the Bay cost $800,000 and up. Except one.",cta:FOLLOW,why:BQ},
+ {d:"2026-12-17",t:"Carousel",s:"East Bay 5 for 5",title:"True or false: 2027 home buying edition",hook:"True or false? 5 things first-time buyers believe about buying in 2027.",cta:"Comment your score",why:"A quiz that also teaches the 2027 news."},
+ {d:"2026-12-18",t:"Reel",s:"Buyer Questions",o:1,title:"Seller credits in Vallejo",hook:"Some Vallejo sellers are giving $10,000 to $20,000 in credits.",cta:FOLLOW,why:BQ},
+ {d:"2026-12-19",t:"Reel",s:"Buyer Questions",o:1,title:"3 Vallejo areas to know",hook:"If Vallejo is on your list for a first home, know this.",cta:FOLLOW,why:BQ},
+ {d:"2026-12-20",t:"Reel",s:"Guide Answers",o:1,title:"4 costs the list price leaves out",hook:"First-time buyers, 4 East Bay costs never show up in the list price.",cta:FOLLOW,why:GA},
+ {d:"2026-12-20",t:"Carousel",s:"East Bay 5 for 5",title:"Bay Area slang 5 for 5",hook:"Bay Area slang 5 for 5. If you miss one, you might not be from here.",cta:"Comment your score and a word we missed",why:"Slang quizzes get shared to group chats."},
+ {d:"2026-12-21",t:"Long-form",s:"Long-form",title:"Down payment help in California for 2027: what we know so far",hook:"First-time buyers, here's every kind of down payment help I'm watching in California for 2027, and which ones are still waiting on rules.",cta:"Subscribe for the 2027 series",why:"Right before January, when buyers search for programs."},
+ {d:"2026-12-21",t:"Reel",s:"Buyer Questions",o:1,title:"What a $500,000 house costs each month",hook:"Your loan payment is not what your first house really costs each month.",cta:FOLLOW,why:BQ},
+ {d:"2026-12-22",t:"Reel",s:"Guide Answers",o:1,title:"The VA loan and the $21,000 check",hook:"First-time buyers who served, you may never have to write a $21,000 check.",cta:"Send this to a friend who served",why:"Family time over the holidays. " + GA},
+ {d:"2026-12-23",t:"Reel",s:"Buyer Questions",o:1,title:"Fix an old Vallejo house with the loan",hook:"Old houses scare off a lot of first-time buyers.",cta:FOLLOW,why:BQ},
+ {d:"2026-12-24",t:"Reel",s:"Buyer Questions",o:1,title:"A second unit that helps pay",hook:"There's a way to buy your first home and have rent help cover the payment.",cta:FOLLOW,why:BQ},
+ {d:"2026-12-24",t:"Carousel",s:"East Bay 5 for 5",title:"East Bay holiday 5 for 5",hook:"East Bay holiday 5 for 5. Christmas Eve edition.",cta:"Comment your score",why:"Lots of phone time on Christmas Eve."},
+ {d:"2026-12-25",t:"Reel",s:"Buyer Questions",o:1,title:"Buy with very little cash",hook:"You may not need $50,000 saved to buy your first house.",cta:FOLLOW,why:"Christmas Day. Money on the mind for the New Year. " + BQ},
+ {d:"2026-12-26",t:"Reel",s:"2027 Watch",title:"What changes Jan 1 for East Bay buyers",hook:"Six days from now, 2 things change for first-time buyers in the East Bay.",cta:"Save this",why:"New loan limits and the partner law start Jan 1."},
+ {d:"2026-12-27",t:"Reel",s:"Buyer Questions",o:1,title:"Fairfield without the drive",hook:"You can buy your first home in Fairfield and never touch I-80 on your commute.",cta:FOLLOW,why:BQ},
+ {d:"2026-12-27",t:"Carousel",s:"East Bay 5 for 5",title:"Which East Bay city fits your weekend?",hook:"Answer 5 questions and find out which East Bay city fits your weekend.",cta:"Comment the city you got",why:"People share results about themselves."},
+ {d:"2026-12-28",t:"Long-form",s:"Long-form",title:"What $600,000 buys in each of my 6 cities in 2027",hook:"First-time buyers, I took one budget, $600,000, to all 6 of my East Bay cities. Here's what it buys in each one.",cta:"Subscribe for one city a week",why:"Holiday week. People compare cities before they plan the year. Prices shown as examples."},
+ {d:"2026-12-28",t:"Reel",s:"Buyer Questions",o:1,title:"New homes in Fairfield",hook:"First-time buyers, don't walk into a builder's sales office alone.",cta:"Send this to a friend who wants a brand new home",why:"Prop 37 is for new homes. " + BQ},
+ {d:"2026-12-29",t:"Reel",s:"Guide Answers",o:1,title:"Student loans are not the problem",hook:"First-time buyers with student loans, a $500 car payment can hurt you more.",cta:FOLLOW,why:"New Year's money goals. " + GA},
+ {d:"2026-12-30",t:"Reel",s:"Buyer Questions",o:1,title:"Sell first, move once",hook:"If you're ready to sell your first home for a bigger one, you don't have to move twice.",cta:"Send this to a friend who's outgrown their first home",why:BQ},
+ {d:"2026-12-31",t:"Reel",s:"New Year",title:"The one habit first-time buyers who win in 2027 will start tomorrow",hook:"The first-time buyers who get a home in 2027 will start this habit tomorrow.",cta:"Follow if you're buying in the East Bay",why:"New Year's Eve."},
+ {d:"2026-12-31",t:"Carousel",s:"East Bay 5 for 5",title:"Guess the 2026 number",hook:"Guess the 2026 number. 5 East Bay home buying stats from this year.",cta:"Comment your score",why:"Year in review, with real numbers people learn from."},
+ {d:"2027-01-01",t:"Reel",s:"2027 Watch",title:"It's January 1: here's what just changed",hook:"It's January 1, 2027. First-time buyers in the East Bay, 2 things changed overnight.",cta:"Save this",why:"New loan limits and the partner law take effect."},
+ {d:"2027-01-02",t:"Reel",s:"New Year",title:"Make 2027 the year you stop renting: step one",hook:"If you rent in Oakland and want to buy in 2027, do this in the next 3 days.",cta:"Save this",why:"New Year's goals."},
+ {d:"2027-01-03",t:"Reel",s:"New Year",title:"Your 2027 goal: buy, save or wait",hook:"Renters in the East Bay, pick your 2027 goal. Buy, save or wait.",cta:"Comment your goal",why:"Goal-setting week."},
+ {d:"2027-01-03",t:"Carousel",s:"Fun carousels",title:"This or that: 5 first-home choices",hook:"First-time buyers, 5 choices. Pick one each time.",cta:"Comment your picks",why:"Easy choices get the most comments."},
+ {d:"2027-01-04",t:"Long-form",s:"Long-form",title:"Your first 90 days of 2027 as a first-time buyer",hook:"First-time buyers, the next 90 days decide if you buy in 2027. Here's what to do in each one of them.",cta:"Subscribe for the 2027 series",why:"Posts the first Monday of 2027."},
+ {d:"2027-01-04",t:"Reel",s:"New Year",title:"Ready to buy in 2027? 5 yes or no questions",hook:"First-time buyers, answer these 5 with yes or no. Then comment how many times you said yes.",cta:"Comment your number",why:"Same day as the first 90 days long-form."},
+ {d:"2027-01-05",t:"Reel",s:"New Year",title:"Which city should I break down first in 2027?",hook:"First-time buyers, I'm breaking down one East Bay city a week in 2027. You pick the first one.",cta:"Comment a city",why:"Gives viewers a vote and gives us topics."},
+ {d:"2027-01-06",t:"Reel",s:"2027 Watch",title:"The 2027 change almost nobody is talking about",hook:"Of everything changing for first-time buyers in 2027, this is the one almost nobody's talking about.",cta:"Send this to someone buying this year",why:"First full week of 2027."}
+];
+
+var RICHMOND = [
+  ["The $5.20 commute", "The ferry from Marina Bay to the Ferry Building in about 35 minutes."],
+  ["The most Bay Trail in the Bay", "Richmond has over 36 miles of Bay Trail, more than any other city on the trail."],
+  ["747 ships", "The Kaiser shipyards, the Rosie the Riveter Memorial, and the waterfront homes there now."],
+  ["The small town inside Richmond", "Point Richmond's main street, then Keller Beach a few minutes away."],
+  ["The Richmond number", "What homes sold for in Richmond, and what the city has that buyers miss."],
+  ["Down payment help", "The help listed on the City of Richmond's homebuyer page."]
+];
+
+var LF_SESSION = {"2026-11-23":1,"2026-11-30":2,"2026-12-07":3,"2026-12-14":4,"2026-12-21":5,"2026-12-28":6,"2027-01-04":7};
+POSTS.forEach(function(p, i){ p.id = "p" + i; });
+
+var store = {
+  get: function(k){ try { return JSON.parse(localStorage.getItem("otisCal2:" + k) || "null"); } catch(e){ return null; } },
+  set: function(k, v){ try { localStorage.setItem("otisCal2:" + k, JSON.stringify(v)); } catch(e){} }
+};
+var done = store.get("done") || {};
+var filmed = store.get("filmed") || {};
+
+function parse(s){ var a = s.split("-"); return new Date(+a[0], +a[1]-1, +a[2]); }
+var MON = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+var DOW = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+function fmt(s){ var d = parse(s); return MON[d.getMonth()] + " " + d.getDate(); }
+function dow(s){ return DOW[parse(s).getDay()]; }
+function today(){ var n = new Date(); return new Date(n.getFullYear(), n.getMonth(), n.getDate()); }
+function iso(d){ return d.getFullYear() + "-" + String(d.getMonth()+1).padStart(2,"0") + "-" + String(d.getDate()).padStart(2,"0"); }
+function esc(s){ return String(s).replace(/[&<>"]/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c]; }); }
+
+function weekFor(s){
+  for (var i = 0; i < WEEKS.length; i++) if (s >= WEEKS[i].start && s <= WEEKS[i].end) return WEEKS[i];
+  return null;
+}
+function postsIn(w){ return POSTS.filter(function(p){ return p.d >= w.start && p.d <= w.end; }); }
+function sessionForPost(p){
+  var w = weekFor(p.d); if (!w) return null;
+  if (p.t === "Carousel") return null;
+  if (p.t === "Long-form") return SESSIONS[LF_SESSION[p.d] - 1] || null;
+  return SESSIONS[w.n - 1];
+}
+
+var t = iso(today());
+var nowWeek = weekFor(t) || (t < WEEKS[0].start ? WEEKS[0] : WEEKS[WEEKS.length - 1]);
+var selWeek = nowWeek.n;
+var filter = "All";
+
+function renderNow(){
+  var next = SESSIONS.filter(function(s){ return s.film >= t; })[0];
+  var el = document.getElementById("nowCard");
+  if (!next){ el.innerHTML = "<h3>All seven sessions are done.</h3><p class='fine' style='margin-top:8px'>Next up: the January plan.</p>"; return; }
+  var w = WEEKS[next.n - 1];
+  var reels = postsIn(w).filter(function(p){ return p.t === "Reel"; });
+  var html = "<p class='when'>Session " + next.n + " · film by " + dow(next.film) + " " + fmt(next.film) + "</p>";
+  html += "<h3 style='margin-top:8px'>" + reels.length + " reels for " + fmt(w.start) + " to " + fmt(w.end) + ", plus the \"" + esc(next.lf) + "\" long-form</h3>";
+  html += "<p class='fine' style='margin-top:6px'>Scripts reach you: " + esc(next.due) + ". Check them off as you film.</p>";
+  html += "<ul class='todo'>";
+  reels.forEach(function(p){
+    html += "<li><label><input type='checkbox' data-film='" + p.id + "'" + (filmed[p.id] ? " checked" : "") + "><span>" + esc(p.title) + "</span></label></li>";
+  });
+  var lk = "lf" + next.n;
+  html += "<li><label><input type='checkbox' data-film='" + lk + "'" + (filmed[lk] ? " checked" : "") + "><span>Long-form: " + esc(next.lf) + "</span></label></li>";
+  html += "</ul>";
+  el.innerHTML = html;
+  el.querySelectorAll("input[data-film]").forEach(function(cb){
+    cb.addEventListener("change", function(){ filmed[cb.dataset.film] = cb.checked; store.set("filmed", filmed); });
+  });
+}
+
+function renderSeries(){
+  var g = document.getElementById("seriesGrid"), html = "";
+  Object.keys(SERIES).forEach(function(name){
+    var n = POSTS.filter(function(p){ return p.s === name; }).length;
+    html += "<div class='s-card'><h3><span class='dot' style='background:" + SERIES[name].c + "'></span>" + esc(name) + "</h3><p>" + esc(SERIES[name].d) + "</p><p class='count'>" + n + " posts</p></div>";
+  });
+  g.innerHTML = html;
+}
+
+function renderTabs(){
+  var el = document.getElementById("tabs"), html = "";
+  WEEKS.forEach(function(w){
+    html += "<button class='tab" + (w.n === nowWeek.n ? " is-now" : "") + "' role='tab' aria-selected='" + (w.n === selWeek) + "' data-w='" + w.n + "'>Week " + w.n + "<small>" + fmt(w.start) + " to " + fmt(w.end) + "</small></button>";
+  });
+  el.innerHTML = html;
+  el.querySelectorAll(".tab").forEach(function(b){
+    b.addEventListener("click", function(){ selWeek = +b.dataset.w; renderTabs(); renderWeek(); });
+  });
+}
+
+function renderChips(){
+  var el = document.getElementById("chips");
+  var opts = ["All","Reel","Long-form","Carousel"];
+  var labels = {"All":"All posts","Reel":"Reels","Long-form":"Long-form","Carousel":"Carousels"};
+  el.innerHTML = opts.map(function(o){ return "<button class='chip' aria-pressed='" + (o === filter) + "' data-f='" + o + "'>" + labels[o] + "</button>"; }).join("");
+  el.querySelectorAll(".chip").forEach(function(b){
+    b.addEventListener("click", function(){ filter = b.dataset.f; renderChips(); renderWeek(); });
+  });
+}
+
+function renderWeek(){
+  var w = WEEKS[selWeek - 1];
+  var s = SESSIONS[w.n - 1];
+  var list = postsIn(w).filter(function(p){ return filter === "All" || p.t === filter; });
+  var html = "<div class='weekhead'><div><p class='eyebrow' style='margin:0'><b>Week " + w.n + "</b> " + esc(w.label) + "</p></div>";
+  html += "<p class='film'>Reels filmed in <b>session " + s.n + "</b>, by " + dow(s.film) + " " + fmt(s.film) + "</p></div>";
+  html += "<div class='days'>";
+  var days = {};
+  list.forEach(function(p){ (days[p.d] = days[p.d] || []).push(p); });
+  var keys = Object.keys(days).sort();
+  if (!keys.length) html += "<div class='day'><p class='empty'>Nothing of this type this week.</p></div>";
+  keys.forEach(function(d){
+    html += "<div class='day" + (d === t ? " today" : "") + "'><div class='dayhead'><span class='dn'>" + dow(d) + "</span><span class='dd'>" + fmt(d) + "</span>" + (d === t ? "<span class='tag'>Today</span>" : "") + "</div>";
+    days[d].forEach(function(p){
+      var ses = sessionForPost(p);
+      var filmLine = p.t === "Carousel" ? "No filming. Parry builds this one." : (ses ? "Session " + ses.n + ", by " + dow(ses.film) + " " + fmt(ses.film) : "");
+      var label = p.t === "Carousel" ? "Slide 1" : (p.o ? "Current first line" : "Draft first line");
+      var note = p.o ? "<p class='fine' style='margin-top:10px'>From the scripts you already have. The 2027 version comes in the script doc.</p>" : "";
+      html += "<div class='item" + (done[p.id] ? " done" : "") + "' data-open='false' data-id='" + p.id + "'>";
+      html += "<button aria-expanded='false'><span class='meta'><span class='dot' style='background:" + SERIES[p.s].c + "'></span>" + esc(p.s) + (p.s !== p.t ? "<span class='type'>" + esc(p.t) + "</span>" : "") + "</span><span class='title'>" + esc(p.title) + "</span><span class='arrow' aria-hidden='true'>›</span></button>";
+      html += "<div class='detail'><p class='hlabel'>" + label + "</p><p class='hook'>" + esc(p.hook) + "</p>" + note + "<dl class='rows'>";
+      html += "<dt>Ask</dt><dd>" + esc(p.cta) + "</dd>";
+      html += "<dt>Why now</dt><dd>" + esc(p.why) + "</dd>";
+      html += "<dt>Filming</dt><dd>" + esc(filmLine) + "</dd>";
+      html += "</dl><label class='donebox'><input type='checkbox' data-done='" + p.id + "'" + (done[p.id] ? " checked" : "") + "> Posted</label></div></div>";
+    });
+    html += "</div>";
+  });
+  html += "</div>";
+  document.getElementById("week").innerHTML = html;
+  document.querySelectorAll("#week .item > button").forEach(function(b){
+    b.addEventListener("click", function(){
+      var it = b.parentNode, open = it.dataset.open !== "true";
+      it.dataset.open = open; b.setAttribute("aria-expanded", open);
+    });
+  });
+  document.querySelectorAll("#week input[data-done]").forEach(function(cb){
+    cb.addEventListener("change", function(){
+      done[cb.dataset.done] = cb.checked; store.set("done", done);
+      cb.closest(".item").classList.toggle("done", cb.checked);
+    });
+  });
+}
+
+function renderSteps(){
+  document.getElementById("steps").innerHTML = SESSIONS.map(function(s){
+    return "<li><div class='d'>Session " + s.n + " · " + dow(s.film) + " " + fmt(s.film) + "</div><div class='t'>7 reels and the long-form: " + esc(s.lf) + "<span>Scripts reach you: " + esc(s.due) + ". " + esc(s.posts) + "</span></div></li>";
+  }).join("");
+  document.getElementById("rich").innerHTML = RICHMOND.map(function(r, i){
+    return "<li><div class='d'>Reel " + (i + 1) + "</div><div class='t'>" + esc(r[0]) + "<span>" + esc(r[1]) + "</span></div></li>";
+  }).join("");
+}
+
+renderNow(); renderSeries(); renderTabs(); renderChips(); renderWeek(); renderSteps();
+</script>
+</body>
+</html>
